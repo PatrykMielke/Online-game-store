@@ -12,13 +12,13 @@
 
 <body class="body-main">
 
-  <!-- Pierwszy navbar -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-light custom-navbar">
-    <!-- Zastąpienie tekstu logo własnym zdjęciem -->
-    <a class="navbar-brand custom-navbar-brand" href="#"><img src="../zdj/stadia_controller_FILL0_wght400_GRAD0_opsz24.png" alt="Logo" style="max-width: 100px;"></a>
-    
-   
+  <?php 
+    include '../templates/navbar.php';
+    include '../templates/header.php';
+    include '../templates/navbar2.php';
+  ?>
 
+<<<<<<< HEAD
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent1" aria-controls="navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation">
       
       <span class="navbar-toggler-icon"></span>
@@ -59,6 +59,8 @@
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
   </div>
+=======
+>>>>>>> 008063d9a8dffbc96c854ee79e9682c55908c000
   <section id="najnowsze-oferty" class="container my-5 custom-section">
     <h2 class="text-center mb-4">Najnowsze oferty</h2><br>
 
