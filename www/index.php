@@ -27,7 +27,7 @@
     <div class="collapse navbar-collapse custom-navbar-nav" id="navbarSupportedContent1">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link custom-nav-link" href="../html/profilPage.html">Strona 1</a>
+          <a class="nav-link custom-nav-link" href="../html/userPage.html">Strona 1</a>
         </li>
         <li class="nav-item">
           <a class="nav-link custom-nav-link" href="#">Strona 2</a>
