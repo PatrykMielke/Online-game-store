@@ -1,0 +1,293 @@
+/* Stylizacja nawigacji */
+.custom-navbar {
+    background-image: linear-gradient(45deg, rgba(169, 49, 238, 0.856), rgba(31, 68, 189, 0.815));
+    animation: gradient 5s infinite;
+    margin: 0;
+    padding: 0;
+  }
+  .custom-section {
+    display: flex;
+    justify-content: center;
+  }
+  
+  /* Styl dla sekcji o zespole */
+  #nowosci-i-aktualnosci {
+    color: white;
+  }
+  
+  .custom-navbar-brand img {
+    max-height: 150px; /* Dostosuj wysokość logo */
+  }
+  
+  .custom-navbar-nav .custom-nav-link {
+    padding: 0.5rem 1rem;
+  }
+  
+  /* Stylizacja nagłówka */
+  .custom-jumbotron {
+    background-image: linear-gradient(45deg, rgba(169, 49, 238, 0.856), rgba(31, 68, 189, 0.815));
+    animation: gradient 5s infinite;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .custom-jumbotron-heading {
+    font-size: 3rem; /* Rozmiar czcionki */
+  }
+  
+  /* Stylizacja stopki */
+  .custom-footer {
+    background-color: #00f7ff; /* Kolor tła */
+    color: #fff; /* Kolor tekstu */
+  }
+  
+  /* Stylizacja sekcji */
+  .custom-section {
+    padding: 50px 0; /* Wewnętrzny odstęp */
+  }
+  
+  /* Stylizacja linków w drugim navbarze */
+  .second-navbar .nav-link {
+    color: #000000; /* Kolor tekstu */
+    padding: 0.5rem 1rem; /* Dostosuj wypełnienie dla lepszego wyglądu */
+  }
+  
+  .second-navbar .nav-link:hover {
+    color: rgb(161, 12, 12); /* Zmiana koloru tekstu po najechaniu myszą */
+  }
+  
+  /* Dodatkowe niestandardowe style dla linków w drugim navbarze */
+  .second-navbar a.nav-link {
+    margin-right: 20px; /* Dostosuj margines prawy dla większego odstępu */
+    color: #000000; /* Kolor tekstu */
+    padding: 0.5rem 1rem; /* Dostosuj wypełnienie dla lepszego wyglądu */
+  }
+  
+  .second-navbar a.nav-link:hover {
+    color: rgb(192, 4, 250); /* Zmiana koloru tekstu po najechaniu myszą */
+  }
+  
+  /* Stylizacja kart */
+  .card {
+    overflow: visible;
+    width: 190px;
+    margin: 20px;
+    height: 254px;
+  }
+  
+  .content {
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 300ms;
+    box-shadow: 0px 0px 10px 1px #5c5c5cee;
+    border-radius: 5px;
+  }
+  .body-main{
+    background-color: #f5f5f5f3;
+  }
+  .front,
+  .back {
+    background-color: #020202;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  
+  .back {
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+  
+  .back::before {
+    position: absolute;
+    content: ' ';
+    display: block;
+    width: 160px;
+    height: 160%;
+    background: linear-gradient(90deg, transparent, #6201ff, #7515f1, #4c1cf7, #9c66ff, transparent);
+    animation: rotation_481 5000ms infinite linear;
+  }
+  
+  .back-content {
+    position: absolute;
+    width: 99%;
+    height: 99%;
+    background-color: #151515;
+    border-radius: 5px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+  }
+  
+  .card:hover .content {
+    transform: rotateY(180deg);
+  }
+  
+  @keyframes rotation_481 {
+    0% {
+      transform: rotateZ(0deg);
+    }
+  
+    0% {
+      transform: rotateZ(360deg);
+    }
+  }
+  
+  .front {
+    transform: rotateY(180deg);
+    color: rgb(255, 255, 255);
+  }
+  
+  .front .front-content {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .front-content .badge {
+    background-color: #00000055;
+    padding: 2px 10px;
+    border-radius: 10px;
+    backdrop-filter: blur(2px);
+    width: fit-content;
+  }
+  
+  .description {
+    box-shadow: 0px 0px 10px 5px #00000088;
+    width: 100%;
+    padding: 10px;
+    background-color: #00000099;
+    backdrop-filter: blur(5px);
+    border-radius: 5px;
+  }
+  
+  .title {
+    font-size: 11px;
+    max-width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .title p {
+    width: 50%;
+  }
+  
+  .card-footer {
+    color: #ffffff88;
+    margin-top: 5px;
+    font-size: 8px;
+  }
+  
+  .front .img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+  
+  .circle {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background-color: #7dfa09;
+    position: relative;
+    filter: blur(15px);
+    animation: floating 2600ms infinite linear;
+  }
+  
+  #bottom {
+    background-color: #00ff55;
+    left: 50px;
+    top: 0px;
+    width: 150px;
+    height: 150px;
+    animation-delay: -800ms;
+  }
+  
+  #right {
+    background-color: #b3ff00;
+    left: 160px;
+    top: -80px;
+    width: 30px;
+    height: 30px;
+    animation-delay: -1800ms;
+  }
+  
+  @keyframes floating {
+    0% {
+      transform: translateY(0px);
+    }
+  
+    50% {
+      transform: translateY(10px);
+    }
+  
+    100% {
+      transform: translateY(0px);
+    }
+  }
+  
+  .wallpaper {
+    width: 100%;
+    height: 100%;
+    --s: 84px;
+    --c1: #8f28f0;
+    --c2: #5017d4;
+    --c3: #9f15df;
+  
+    --_g: 0 120deg, #0000 0;
+    background: conic-gradient(
+        from 0deg at calc(500% / 6) calc(100% / 3),
+        var(--c3) var(--_g)
+      ),
+      conic-gradient(
+        from -120deg at calc(100% / 6) calc(100% / 3),
+        var(--c2) var(--_g)
+      ),
+      conic-gradient(
+        from 120deg at calc(100% / 3) calc(500% / 6),
+        var(--c1) var(--_g)
+      ),
+      conic-gradient(
+        from 120deg at calc(200% / 3) calc(500% / 6),
+        var(--c1) var(--_g)
+      ),
+      conic-gradient(
+        from -180deg at calc(100% / 3) 50%,
+        var(--c2) 60deg,
+        var(--c1) var(--_g)
+      ),
+      conic-gradient(
+        from 60deg at calc(200% / 3) 50%,
+        var(--c1) 60deg,
+        var(--c3) var(--_g)
+      ),
+      conic-gradient(
+        from -60deg at 50% calc(100% / 3),
+        var(--c1) 120deg,
+        var(--c2) 0 240deg,
+        var(--c3) 0
+      );
+    background-size: calc(var(--s) * 1.732) var(--s);
+  }
+  
+  
+  
+  
