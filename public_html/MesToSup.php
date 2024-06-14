@@ -8,7 +8,7 @@
 			href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
 			rel="stylesheet"
 		/>
-		<link rel="stylesheet" href="../css/MesToSup.css" />
+		<link rel="stylesheet" href="css/MesToSup.css" />
 	</head>
 	<body class="body-main">
 		<nav class="navbar navbar-expand-lg navbar-light bg-light custom-navbar">

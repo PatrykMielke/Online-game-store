@@ -6,16 +6,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nowoczesna Strona Główna</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="../css/MainPage.css"> <!-- Dodajemy link do pliku CSS -->
+  <link rel="stylesheet" href="css/MainPage.css"> <!-- Dodajemy link do pliku CSS -->
  
 </head>
 
 <body class="body-main">
 
   <?php 
-    include '../templates/navbar.php';
-    include '../templates/header.php';
-    include '../templates/navbar2.php';
+    include 'private/templates/navbar.php';
+    include 'private/templates/header.php';
+    include 'private/templates/navbar2.php';
   ?>
 
   <section id="najnowsze-oferty" class="container my-5 custom-section">

@@ -8,7 +8,7 @@
     href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     rel="stylesheet"
 />
-    <link rel="stylesheet" href="../css/Game.css">
+    <link rel="stylesheet" href="css/Game.css">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light custom-navbar">

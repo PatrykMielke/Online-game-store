@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Doładowanie Środków</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="../css/AddMoney.css" />
+    <link rel="stylesheet" href="css/AddMoney.css" />
 </head>
 <body class="body-main">
     <nav class="navbar navbar-expand-lg navbar-light bg-light custom-navbar">
