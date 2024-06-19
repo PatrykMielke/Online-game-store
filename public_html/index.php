@@ -13,9 +13,9 @@
 <body class="body-main">
 
   <?php 
-    include 'private/templates/navbar.php';
-    include 'private/templates/header.php';
-    include 'private/templates/navbar2.php';
+    include 'templates/navbar.php';
+    include 'templates/header.php';
+    include 'templates/navbar2.php';
   ?>
 
   <section id="najnowsze-oferty" class="container my-5 custom-section">

@@ -1,3 +1,5 @@
+$_SESSION start()
+
   <!-- Pierwszy navbar -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light custom-navbar">
     <!-- Zastąpienie tekstu logo własnym zdjęciem -->
@@ -17,9 +19,11 @@
           <a class="nav-link custom-nav-link" href="#">Strona 2</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link custom-nav-link" href="#">Strona 3</a>
-
+          <a class="nav-link custom-nav-link" href="strona.php">Strona 3</a>
         </li>
+
+
+
         <li>  <a href="login.php"><img src="../zdj/login_FILL0_wght400_GRAD0_opsz24.png" alt="Logowanie"></a></li>
       </ul>
     </div>
