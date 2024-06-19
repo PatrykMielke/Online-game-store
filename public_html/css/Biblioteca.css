@@ -1,0 +1,187 @@
+.body-biblo {
+    background-color: #ffffff;
+    color: #7711eb;
+}
+.sidebar {
+    background-color: #ffffff;
+    padding: 15px;
+    height: 100vh;
+}
+.sidebar h5, .sidebar p {
+    color: #a01febf6;
+}
+.sidebar a {
+    color: #7011ec !important;
+    text-decoration: none;
+}
+.promo-banner {
+    background: url('path_to_promo_image.jpg') no-repeat center;
+    background-size: cover;
+    height: 150px;
+    color: rgb(102, 8, 253);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-radius: 10px;
+}
+.promo-banner h2 {
+    font-size: 24px;
+    font-weight: bold;
+}
+.promo-banner p {
+    font-size: 16px;
+}
+.card {
+    background-color: #070707;
+    color: rgb(109, 39, 240);
+    border: none;
+}
+.card img {
+    border-radius: 5px;
+}
+.card-title {
+    color: #5c1feb;
+}
+.custom-navbar {
+	background-image: linear-gradient(
+		45deg,
+		rgba(169, 49, 238, 0.856),
+		rgba(31, 68, 189, 0.815)
+	);
+	animation: gradient 5s infinite;
+	margin: 0;
+	padding: 0;
+}
+.custom-section {
+	display: flex;
+	justify-content: center;
+}
+
+/* Styl dla sekcji o zespole */
+#nowosci-i-aktualnosci {
+	color: rgb(255, 0, 0);
+}
+
+.custom-navbar-brand img {
+	max-height: 150px; /* Dostosuj wysokość logo */
+}
+
+.custom-navbar-nav .custom-nav-link {
+	padding: 0.5rem 1rem;
+}
+
+/* Stylizacja nagłówka */
+.custom-jumbotron {
+	background-image: linear-gradient(
+		45deg,
+		rgba(169, 49, 238, 0.856),
+		rgba(31, 68, 189, 0.815)
+	);
+	animation: gradient 5s infinite;
+	margin: 0;
+	padding: 0;
+}
+
+.custom-jumbotron-heading {
+	font-size: 3rem; /* Rozmiar czcionki */
+}
+
+/* Stylizacja stopki */
+
+
+/* Stylizacja sekcji */
+.custom-section {
+	padding: 50px 0; /* Wewnętrzny odstęp */
+}
+.glitch,button::after {
+    padding: 10px 50px;
+    font-size: 20px;
+    border: none;
+    border-radius: 5px;
+    color: rgb(95, 50, 221);
+    background-color: transparent;
+    position: relative;
+}
+.glitch::after{
+    --move1: inset(50% 50% 50% 50%);
+    --move2: inset(31% 0 40% 0);
+    --move3: inset(39% 0 15% 0);
+    --move4: inset(45% 0 40% 0);
+    --move5: inset(45% 0 6% 0);
+    --move6: inset(14% 0 61% 0);
+    clip-path: var(--move1);
+    content: 'GLITCH';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: block;
+}
+.glitch:hover::after{  animation: glitch_4011 1s;
+    text-shadow: 10 10px 10px black;
+    animation-timing-function: steps(2, end);
+    text-shadow: -3px -3px 0px #1df2f0, 3px 3px 0px #E94BE8;
+    background-color: transparent;
+    border: 3px solid rgb(0, 255, 213);}
+.glitch:hover{  text-shadow: -1px -1px 0px #1df2f0, 1px 1px 0px #E94BE8;}
+.glitch:hover{ background-color: transparent;
+    border: 1px solid rgb(0, 255, 213);
+    box-shadow: 0px 10px 10px -10px rgb(0, 255, 213);}
+    @keyframes glitch_4011 {
+        0% {
+          clip-path: var(--move1);
+          transform: translate(0px,-10px);
+        }
+      
+        10% {
+          clip-path: var(--move2);
+          transform: translate(-10px,10px);
+        }
+      
+        20% {
+          clip-path: var(--move3);
+          transform: translate(10px,0px);
+        }
+      
+        30% {
+          clip-path: var(--move4);
+          transform: translate(-10px,10px);
+        }
+      
+        40% {
+          clip-path: var(--move5);
+          transform: translate(10px,-10px);
+        }
+      
+        50% {
+          clip-path: var(--move6);
+          transform: translate(-10px,10px);
+        }
+      
+        60% {
+          clip-path: var(--move1);
+          transform: translate(10px,-10px);
+        }
+      
+        70% {
+          clip-path: var(--move3);
+          transform: translate(-10px,10px);
+        }
+      
+        80% {
+          clip-path: var(--move2);
+          transform: translate(10px,-10px);
+        }
+      
+        90% {
+          clip-path: var(--move4);
+          transform: translate(-10px,10px);
+        }
+      
+        100% {
+          clip-path: var(--move1);
+          transform: translate(0);
+        }
+      }
