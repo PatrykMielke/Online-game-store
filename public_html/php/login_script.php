@@ -14,33 +14,29 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     
     include 'conn_string.php';
 
-
-    $password = password_hash($password, PASSWORD_BCRYPT);
-    
-    $stmt = $conn->prepare("select * from uzytkownicy where email = ? and haslo = ?");
-    $stmt -> bind_param("ss", $emailXD, $passwordXD);
+    $stmt = $conn->prepare("select * from uzytkownicy where email = ?");
+    $stmt -> bind_param("s", $emailXD);
 
     $emailXD = $email;
-    $passwordXD = $password;
-
+    
     if($stmt->execute()){
         $result = $stmt->get_result();
-
+        
         if ($result->num_rows > 0){
-    
-          
-        }
+            $row = $result -> fetch_assoc();
+            if(password_verify($password, $row['haslo']))
+            {
+                $_SESSION["zalogowany"] = true;
+                $_SESSION["id"] = $id_uzytkownika;
+                $_SESSION["email"] = $email;                            
+                $_SESSION["rola"] = $rola;
+                $_SESSION["nazwa"] = $nazwa;
 
-            if($password === )
+                $result -> free_result();
 
-
-            $_SESSION["zalogowany"] = true;
-            $_SESSION["id"] = $id;
-            $_SESSION["email"] = $email;                            
-            $_SESSION["rola"] = $rola;
-            $_SESSION["nazwa"] = $nazwa;
-            header("location: gamestore/Online-game-store/public_html/index.php");
-            
+                header("location: ../index.php");
+                exit;
+            }
         }
         else{
             echo "Błędne dane logowania.";
@@ -50,5 +46,5 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     else{
         echo 'Błąd';
     }
-
+}
 ?>

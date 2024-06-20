@@ -1,5 +1,4 @@
-
-  <!-- Pierwszy navbar -->
+<!-- Pierwszy navbar -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light custom-navbar">
     <!-- Zastąpienie tekstu logo własnym zdjęciem -->
     <a class="navbar-brand custom-navbar-brand" href="index.php"><img src="zdj/stadia_controller_FILL0_wght400_GRAD0_opsz24.png" alt="Logo" style="max-width: 100px;"></a>
@@ -46,8 +45,12 @@
         </li>
 
 
-        <li>  <a href="login.php"><img src="zdj/login_FILL0_wght400_GRAD0_opsz24.png" alt="Logowanie"></a></li>
-        <li> <img src="zdj/logout_24dp_FILL0_wght400_GRAD0_opsz24.png" alt="wyloguj">        
+        <li>  <a href="logowanie.php"><img src="zdj/login_FILL0_wght400_GRAD0_opsz24.png" alt="Logowanie"></a>
+        <?php
+          if (isset($_SESSION['zalogowany']) and $_SESSION['zalogowany']){
+            echo '<li> <a href="php/logout.php"><img src="zdj/logout_24dp_FILL0_wght400_GRAD0_opsz24.png" alt="wyloguj"></a></li> ';
+          }
+        ?>   
       </ul>
     </div>
     </nav>
