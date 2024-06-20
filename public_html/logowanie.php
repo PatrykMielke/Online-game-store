@@ -23,7 +23,7 @@
                <div class="flip-card__inner">
                   <div class="flip-card__front">
                      <div class="title">Log in</div>
-                     <form class="flip-card__form" method="post" action="php/login_script.php">
+                     <form id="logowanie" class="flip-card__form" method="post" action="php/login_script.php">
                         <input class="flip-card__input" name="email" placeholder="Email" type="email">
                         <input class="flip-card__input" name="password" placeholder="Password" type="password">
                         <button class="flip-card__btn">Let`s go!</button>
@@ -31,8 +31,8 @@
                   </div>
                   <div class="flip-card__back">
                      <div class="title">Sign up</div>
-                     <form class="flip-card__form" method="post" action="php/register_script.php">
-                        <input class="flip-card__input" placeholder="Name" type="name">
+                     <form id="rejestracja" class="flip-card__form" method="post" action="php/register_script.php">
+                        <input class="flip-card__input" name="name" placeholder="Name" type="name">
                         <input class="flip-card__input" name="email" placeholder="Email" type="email">
                         <input class="flip-card__input" name="password" placeholder="Password" type="password">
                         <button class="flip-card__btn">Confirm!</button>
@@ -46,6 +46,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <!-- Dodanie skryptu JavaScript z innego folderu -->
-    <script src="../js/register.js"></script>
+    <script src="js/register.js"></script>
 </body>
 </html>

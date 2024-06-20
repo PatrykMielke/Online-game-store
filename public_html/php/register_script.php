@@ -2,22 +2,36 @@
 session_start();
 
 // Check if the user is already logged in, if yes, redirect to home page
-if(isset($_SESSION["zalogowany"]) && $_SESSION["zalogowany"] === true){
-    header("location: index.php");
-    exit;
-}
+
 
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     
-    //$name = trim($_POST["name"]);
-    $name = "admin";
+    $name = trim($_POST["name"]);
     $email = trim($_POST["email"]);
     $password = password_hash(trim($_POST["password"]), PASSWORD_BCRYPT);
-    // Prepare a select statement
+
+    if(empty($name) or empty($name) or empty($name)){
+        echo 'Przesłano formularz z pustymi danymi';
+        return;
+    }
+
     require_once "conn_string.php";
 
-    $stmt = $conn->prepare("select 1 from uzytkownicy");
+    // Check if user or email already exists
+    $stmt = $conn->prepare("select email from uzytkownicy where email = ? or nazwa = ?;");
+    $stmt ->bind_param("ss", $emailXD,$nameXD);
+    $nameXD = $name;
+    $emailXD = $email;
+
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0){
+        echo "Podana nazwa użytkownika lub hasło jest już zajęte.";
+        return;
+    }
+
 
     $stmt = $conn->prepare("INSERT INTO `uzytkownicy`( `nazwa`, `email`, `haslo`, `rola`, `saldo`, `czy_aktywny`) VALUES (?,?,?,'kupujący',0,1)
     ");
