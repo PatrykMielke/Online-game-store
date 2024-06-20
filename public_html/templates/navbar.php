@@ -1,4 +1,3 @@
-$_SESSION start()
 
   <!-- Pierwszy navbar -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light custom-navbar">

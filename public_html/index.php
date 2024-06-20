@@ -1,3 +1,13 @@
+<?php
+  // sprawdź czy instnieje plik konfiguracyjny
+  if (file_exists("config.php")) {
+      include 'config.php';
+  }
+  else{
+    header('location:install.php');
+  }
+  
+?>
 <!DOCTYPE html>
 <html lang="en">
 

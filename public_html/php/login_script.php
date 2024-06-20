@@ -2,8 +2,8 @@
 session_start();
 
 // Check if the user is already logged in, if yes, redirect to home page
-if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
-    header("location: ../www/index.php.php");
+if(isset($_SESSION["zalogowany"]) && $_SESSION["zalogowany"] === true){
+    header("location: index.php");
     exit;
 }
 
@@ -31,7 +31,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Validate credentials
     if(empty($email_err) && empty($password_err)){
         // Prepare a select statement
-        $query = "SELECT id, email, password FROM users WHERE email = ?";
+        $query = "SELECT id, nazwa, email, password, rola FROM users WHERE email = ?";
         
         require_once "conn.php";
 
@@ -50,19 +50,25 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 // Check if email exists, if yes then verify password
                 if(mysqli_stmt_num_rows($stmt) == 1){                    
                     // Bind result variables
-                    mysqli_stmt_bind_result($stmt, $id, $email, $hashed_password);
+                    mysqli_stmt_bind_result($stmt, $id, $email, $hashed_password, $rola, $nazwa, $czy_aktywny);
+
                     if(mysqli_stmt_fetch($stmt)){
                         if(password_verify($password, $hashed_password)){
                             // Password is correct, so start a new session
-                            session_start();
-                            
+
+                            if ($czy_aktywny == 0)
+                            {
+                                echo 'konto nieaktywne.';
+                            }
+
                             // Store data in session variables
-                            $_SESSION["loggedin"] = true;
+                            $_SESSION["zalogowany"] = true;
                             $_SESSION["id"] = $id;
                             $_SESSION["email"] = $email;                            
-                            
+                            $_SESSION["rola"] = $rola;
+                            $_SESSION["nazwa"] = $nazwa;
                             // Redirect user to home page
-                            header("location: ../www/index.php");
+                            header("location: /index.php");
                         } else{
                             // Display an error message if password is not valid
                             $password_err = "The password you entered was not valid.";
