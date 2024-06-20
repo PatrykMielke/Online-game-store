@@ -15,6 +15,7 @@
   <!-- Pierwszy navbar -->
   <?php 
     include 'templates/navbar.php';
+    include 'templates/header.php';
   ?>
     
     <!-- Sekcja z osiągnięciami użytkownika -->

@@ -13,73 +13,13 @@
 	</head>
 
 	<body class="body-regulation">
-		<!-- Pierwszy navbar -->
-		<nav class="navbar navbar-expand-lg navbar-light bg-light custom-navbar">
-			<!-- Zastąpienie tekstu logo własnym zdjęciem -->
-			<a class="navbar-brand custom-navbar-brand" href="../html/"
-				><img
-					src="../zdj/stadia_controller_FILL0_wght400_GRAD0_opsz24.png"
-					alt="Logo"
-					style="max-width: 100px"
-			/></a>
-
-			<button
-				class="navbar-toggler"
-				type="button"
-				data-toggle="collapse"
-				data-target="#navbarSupportedContent1"
-				aria-controls="navbarSupportedContent1"
-				aria-expanded="false"
-				aria-label="Toggle navigation"
-			>
-				<span class="navbar-toggler-icon"></span>
-			</button>
-
-			<div
-				class="collapse navbar-collapse custom-navbar-nav"
-				id="navbarSupportedContent1"
-			>
-				<ul class="navbar-nav mr-auto">
-					<li class="nav-item">
-						<a class="nav-link custom-nav-link" href="../html/profilPage.html"
-							>Strona 1</a
-						>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link custom-nav-link" href="#">Strona 2</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link custom-nav-link" href="#">Strona 3</a>
-					</li>
-					<li>
-						<a href="../html/login.html"
-							><img
-								src="../zdj/login_FILL0_wght400_GRAD0_opsz24.png"
-								alt="Logowanie"
-						/></a>
-					</li>
-				</ul>
-			</div>
-		</nav>
-		<header
-			class="jumbotron jumbotron-fluid text-white text-center custom-jumbotron"
-		>
-			<div class="container">
-				<h1 class="display-4 custom-jumbotron-heading">TRITON</h1>
-			</div>
-			
-		</header>
+	<?php 
+    include 'templates/navbar.php';
+    include 'templates/header.php';
+    include 'templates/navbar2.php';
+  ?>
 		<!-- Drugi navbar -->
-		<div class="navbar second-navbar">
-			<a class="nav-link" href="#wprowadzenie">Wprowadzenie</a>
-			<a class="nav-link" href="#wprowadzenie">Definicje</a>
-			<a class="nav-link" href="#rejestracja">Rejestracja</a>
-			<a class="nav-link" href="#zakupy">Zakupy i Płatności</a>
-			<a class="nav-link" href="#zwroty">Zwroty i Reklamacje</a>
-			<a class="nav-link" href="#odpowiedzialnosc">Odpowiedzialnosc</a>
-			<a class="nav-link" href="#polityka">Polityka Prywatności</a>
-			<a class="nav-link" href="#postanowienia-koncowe">Postanowienia Końcowe</a>
-		</div>
+	
 		<div class="wallpaper">
 		<div class="container mt-5">
 			<h2 class="mb-4 text-center">Regulamin</h2>
