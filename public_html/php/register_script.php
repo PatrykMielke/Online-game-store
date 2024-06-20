@@ -11,7 +11,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $email = trim($_POST["email"]);
     $password = password_hash(trim($_POST["password"]), PASSWORD_BCRYPT);
 
-    if(empty($name) or empty($name) or empty($name)){
+    if(empty($name) or empty($email) or empty($_POST["password"])){
         echo 'Przesłano formularz z pustymi danymi';
         return;
     }
@@ -35,7 +35,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     $stmt = $conn->prepare("INSERT INTO `uzytkownicy`( `nazwa`, `email`, `haslo`, `rola`, `saldo`, `czy_aktywny`) VALUES (?,?,?,'kupujący',0,1)
     ");
-    $stmt ->bind_param("sss", $nameXD, $emailXD, $passwordXD);
+    $stmt -> bind_param("sss", $nameXD, $emailXD, $passwordXD);
 
     $nameXD = $name;
     $emailXD = $email;
@@ -43,12 +43,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     if($stmt->execute())
     {
-        $_SESSION["zalogowany"] = true;
-        $_SESSION["id"] = $id;
-        $_SESSION["email"] = $email;                            
-        $_SESSION["rola"] = $rola;
-        $_SESSION["nazwa"] = $nazwa;
-        header("location: /index.php");
+        echo "Zarejestrowano pomyślnie, teraz można się zalogować";
     }
     else {
         echo 'Błąd';
