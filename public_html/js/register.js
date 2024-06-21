@@ -57,3 +57,21 @@ function addFallingIcons() {
 
 // Wywołanie funkcji dodającej pierwszą ikonę
 addFallingIcons();
+
+
+
+function submitRegisterForm() {
+
+    var request_data = $('#search-form').serialize();
+    $.post('search.php', request_data, function(data, textStatus, jqXHR){
+        $('#search-results').html(data);
+        }, 'html');
+    }
+
+function submitLoginForm() {
+
+    var request_data = $('#search-form').serialize();
+    $.post('search.php', request_data, function(data, textStatus, jqXHR){
+        $('#search-results').html(data);
+        }, 'html');
+    }
