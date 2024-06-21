@@ -15,10 +15,9 @@
 		<link rel="stylesheet" href="css/MesToSup.css" />
 	</head>
 	<?php 
-    include 'templates/navbar.php';
-    include 'templates/header.php';
-    
-  ?>
+		include 'templates/navbar.php';
+		include 'templates/header.php';
+  	?>
 
 
 		<div class="container mt-5">
@@ -37,17 +36,7 @@
 								kompetentnego zespołu pomocy skontaktuje się z Tobą tak szybko,
 								jak to możliwe (zazwyczaj w ciągu 24 godzin).
 							</p>
-							<form action="send_message.php" method="POST">
-								<div class="form-group">
-									<label for="email">Email</label>
-									<input
-										type="email"
-										class="form-control"
-										id="email"
-										name="email"
-										required
-									/>
-								</div>
+							<form method="POST">
 								<div class="form-group">
 									<label for="subject">Temat</label>
 									<input
@@ -87,7 +76,11 @@
 											</div>
 										</div>
 										<span>Wyślij</span>
+										
 									</button>
+									<?php 
+										require 'php/send_message.php';
+                                	?> 
 								</div></div>
 						
 							</form>

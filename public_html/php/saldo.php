@@ -2,7 +2,7 @@
 
 function pokazSaldo(){
 
-    include 'conn_string.php';
+    include 'config.php';
       // Check if user or email already exists
       $stmt = $conn->prepare("select saldo from uzytkownicy where id_uzytkownik = ?");
       $stmt ->bind_param("s", $id);
@@ -31,7 +31,7 @@ function dodajSaldo(){
 
     if ($wartosc > 0 && gettype($wartosc) == "double"){
 
-        include 'conn_string.php';
+        include 'config.php';
 
         $stmt = $conn->prepare("update uzytkownicy set saldo = saldo + ? where id_uzytkownik = ?");
         $stmt->bind_param("ss", $wartoscXD,$idXD);

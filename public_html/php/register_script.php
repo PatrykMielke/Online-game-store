@@ -16,7 +16,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         return;
     }
 
-    require_once "conn_string.php";
+    require_once "config.php";
 
     // Check if user or email already exists
     $stmt = $conn->prepare("select email from uzytkownicy where email = ? or nazwa = ?;");

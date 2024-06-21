@@ -12,7 +12,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         return;
     }
     
-    include 'conn_string.php';
+    include 'config.php';
 
     $stmt = $conn->prepare("select * from uzytkownicy where email = ?");
     $stmt -> bind_param("s", $emailXD);

@@ -1,31 +1,36 @@
 <?php
-
-if(isset($_POST['submit'])){
-    send_message();
+if ($_SERVER['REQUEST_METHOD'] === 'POST'){
+    if(isset($_POST['submit'])){
+        $status = send_message();
+        if ($status == 1){
+            echo "Wiadomość wysłana.";
+        }
+        else{
+            echo "Błąd przy przesyłaniu formularza";
+        }
+    }
 }
 
-function send_message(){
-    if( !isset($_POST['email']) or !isset($_POST['subject']) or !isset($_POST['message'])){
 
-        include 'conn_string.php';
-        $stmt = $conn->prepare("INSERT INTO `wiadomosci`( `email`, `temat`, `opis`) VALUES (?,?,?)
+function send_message(){
+    if( isset($_POST['subject']) and isset($_POST['message'])){
+
+        include 'config.php';
+        $stmt = $conn->prepare("INSERT INTO `wiadomosci_od_uzytkownikow`( `id_uzytkownik`, `temat`, `opis`) VALUES (?,?,?)
         ");
-        $stmt -> bind_param("sss", $emailXD, $tematXD, $opisXD);
+        $stmt -> bind_param("iss", $id, $tematXD, $opisXD);
     
-        $emailXD= trim($_POST['email']);
+        $id= $_SESSION['id'];
         $tematXD =trim($_POST['subject']);
         $opisXD = trim($_POST['message']);
 
         if($stmt->execute())
         {
-            echo "Wiadomość wysłana.";
+            return 1;
         }
         else {
-            echo 'Błąd';
+            return 0;
         }
-    }
-    else{
-        echo "blad przysylania danych formularza";
     }
 }
 
