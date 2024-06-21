@@ -51,6 +51,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <!-- Dodanie skryptu JavaScript z innego folderu -->
-    <script src="../js/register.js"></script>
+    <script src="js/register.js"></script>
 </body>
 </html>
