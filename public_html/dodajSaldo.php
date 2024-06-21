@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -10,7 +11,6 @@
 <body class="body-main">
    ---
    <?php 
-   session_start();
     include 'templates/navbar.php';
     include 'templates/header.php';
   ?>
