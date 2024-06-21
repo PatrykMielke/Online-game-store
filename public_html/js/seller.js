@@ -59,3 +59,19 @@ var salesChart = new Chart(ctx, {
 
         // Zamknij modal
         modal.modal('hide'); });
+
+         // Skrypt do obsługi potwierdzenia usunięcia produktu
+         $('#deleteProductModal').on('show.bs.modal', function (event) {
+          var button = $(event.relatedTarget); // Przycisk, który otworzył modal
+          var productName = button.data('product-name'); // Pobierz nazwę produktu z atrybutu data-product-name
+
+          var modal = $(this);
+          modal.find('#deleteProductName').text(productName);
+      });
+
+      // Obsługa kliknięcia przycisku "Usuń produkt"
+      $('#deleteProductButton').on('click', function () {
+          // Tutaj można dodać kod obsługi usunięcia produktu
+          alert('Produkt został usunięty.'); // Przykładowe powiadomienie, można usunąć lub zmodyfikować zależnie od potrzeb
+          $('#deleteProductModal').modal('hide'); // Zamknij modal po potwierdzeniu usunięcia
+      });

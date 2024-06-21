@@ -14,7 +14,7 @@
     include 'templates/navbar.php';
     include 'templates/header.php';
   ?>
-    <div class="container mt-5">
+     <div class="container mt-5">
         <div class="row">
             <div class="col-md-8">
                 <div class="infoCard">
@@ -31,7 +31,7 @@
                     <div class="option card mb-3">
                         <div class="card-body d-flex justify-content-between align-items-center">
                             <span>Dodaj 20,00zł</span>
-                            <button role="button" class="golden-button">
+                            <button role="button" class="golden-button" data-toggle="modal" data-target="#confirmModal" data-amount="20.00">
                                 <span class="golden-text">Dodaj środki</span>
                             </button>
                         </div>
@@ -39,7 +39,7 @@
                     <div class="option card mb-3">
                         <div class="card-body d-flex justify-content-between align-items-center">
                             <span>Dodaj 40,00zł</span>
-                            <button role="button" class="golden-button">
+                            <button role="button" class="golden-button" data-toggle="modal" data-target="#confirmModal" data-amount="40.00">
                                 <span class="golden-text">Dodaj środki</span>
                             </button>
                         </div>
@@ -47,7 +47,7 @@
                     <div class="option card mb-3">
                         <div class="card-body d-flex justify-content-between align-items-center">
                             <span>Dodaj 100,00zł</span>
-                            <button role="button" class="golden-button">
+                            <button role="button" class="golden-button" data-toggle="modal" data-target="#confirmModal" data-amount="100.00">
                                 <span class="golden-text">Dodaj środki</span>
                             </button>
                         </div>
@@ -55,7 +55,7 @@
                     <div class="option card mb-3">
                         <div class="card-body d-flex justify-content-between align-items-center">
                             <span>Dodaj 200,00zł</span>
-                            <button role="button" class="golden-button">
+                            <button role="button" class="golden-button" data-toggle="modal" data-target="#confirmModal" data-amount="200.00">
                                 <span class="golden-text">Dodaj środki</span>
                             </button>
                         </div>
@@ -63,7 +63,7 @@
                     <div class="option card mb-3">
                         <div class="card-body d-flex justify-content-between align-items-center">
                             <span>Dodaj 400,00zł</span>
-                            <button role="button" class="golden-button">
+                            <button role="button" class="golden-button" data-toggle="modal" data-target="#confirmModal" data-amount="400.00">
                                 <span class="golden-text">Dodaj środki</span>
                             </button>
                         </div>
@@ -75,7 +75,7 @@
                     <div class="card-body">
                         <h4 class="card-title">TWOJE KONTO STEAM</h4>
                         <p class="card-text">
-                            Obecne saldo portfela <strong>0,00zł</strong>
+                            Obecne saldo portfela <strong id="currentBalance">0,00</strong>zł
                         </p>
                         <button class="btn btn-secondary btn-block">Zobacz szczegóły konta</button>
                         <button class="btn btn-secondary btn-block">Aktywuj kartę podarunkową lub kod portfela</button>
@@ -84,8 +84,42 @@
             </div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
+    <!-- Modal do potwierdzenia doładowania -->
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmModalLabel">Potwierdzenie Doładowania</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Zamknij">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Kwota doładowania:</strong> <span id="modalAmount"></span>zł</p>
+                    <p><strong>Saldo po doładowaniu:</strong> <span id="modalNewBalance"></span>zł</p>
+                    <p>Czy na pewno chcesz doładować tę kwotę?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Zrezygnuj</button>
+                    <button type="button" class="btn btn-primary" id="confirmAddFundsButton">Dodaj środki</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white text-center py-4">
+        <div class="container">
+            <p>&copy; 2024 Nazwa Gry. Wszelkie prawa zastrzeżone.</p>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <script src= "js/saldo.js">
+    
+    </script>
 </body>
 </html>
