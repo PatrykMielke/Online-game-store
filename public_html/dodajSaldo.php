@@ -1,4 +1,11 @@
-<?php session_start(); 
+<?php 
+    session_start();
+    
+    if (!isset($_SESSION['zalogowany'])){
+        header('location:index.php');
+    }
+
+
     require 'php/saldo.php';
 ?>
 <!DOCTYPE html>
@@ -74,7 +81,7 @@
             <div class="col-md-4">
                 <div class="account-info card text-black">
                     <div class="card-body">
-                        <h4 class="card-title">TWOJE KONTO STEAM</h4>
+                        <h4 class="card-title">TWÓJ PORTFEL</h4>
                         <p class="card-text">
                             Obecne saldo portfela <strong id="currentBalance"> 
                                 <?php 

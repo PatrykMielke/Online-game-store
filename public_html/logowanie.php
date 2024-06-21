@@ -15,9 +15,9 @@
 <body class="loginRej">
     <div class="falling-image-container" id="fallingIconsContainer"></div>
     <?php 
-      include 'templates/navbar.php';
-      include 'templates/header.php';
-    ?>
+    include 'templates/navbar.php';
+    include 'templates/header.php';
+  ?>
     
     <div class="wrapper">
         <div class="card-switch">

@@ -1,4 +1,7 @@
-<?php session_start(); ?>
+<?php session_start(); if (!isset($_SESSION['zalogowany'])){
+        header('location:index.php');
+		include 'send_message.php';
+    }?>
 <!DOCTYPE html>
 <html lang="pl">
 	<head>
@@ -66,7 +69,7 @@
 									></textarea>
 								</div>
 								<div class="text-center">		<div class="ButtonWyslij ">
-									<button>
+									<button type='submit' name="submit">
 										<div class="svg-wrapper-1">
 											<div class="svg-wrapper">
 												<svg

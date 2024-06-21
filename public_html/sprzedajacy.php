@@ -1,3 +1,4 @@
+<?php session_start() ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +15,8 @@
     <div class="container mt-5">
         <div class="row">
             <div class="col-lg-12">
-                <h2>Szczegóły Produktu</h2>
+                <h2>Sprzedawane produkty <a href="dodajgre.php"><button type="button" class="btn btn-primary">Wystaw nową grę</button></a></h2>
+                
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Product Name</h5>
@@ -22,8 +24,8 @@
                             Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut aliquam, odio a suscipit blandit.
                         </p>
                         <p class="card-text">Price: $10</p>
-                        <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#editProductModal">Edit</a>
-                        <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#deleteProductModal" data-product-name="Product Name">Delete</a>
+                        <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#editProductModal">Edytuj</a>
+                        <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#deleteProductModal" data-product-name="Product Name">Zakończ sprzedaż</a>
                     </div>
                 </div>
             </div>

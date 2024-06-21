@@ -21,9 +21,6 @@
         <li class="nav-item">
           <a class="nav-link custom-nav-link" href="sklepGier.php">Sklep gier</a>
         </li>
-        
-        
-        
 
         <?php
           // niezalogowany
@@ -51,8 +48,7 @@
           <a class="nav-link custom-nav-link" href="edytujProfil.php">Edycja Profilu</a>
         </li>';
 
-            echo '<li> <a href="wyloguj.php"><img src="zdj/logout_24dp_FILL0_wght400_GRAD0_opsz24.png" alt="wyloguj"></a></li> ';
-          
+            
           
 
           // sprzedający
@@ -87,6 +83,9 @@
           <a class="nav-link custom-nav-link" href="panelAdmina.php">Panel Admina</a>
         </li>';
           }
+
+          echo '<li> <a href="wyloguj.php"><img src="zdj/logout_24dp_FILL0_wght400_GRAD0_opsz24.png" alt="wyloguj"></a></li> ';
+          
         }
 
 
