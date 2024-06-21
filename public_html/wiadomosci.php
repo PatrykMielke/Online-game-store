@@ -25,53 +25,17 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Imię i Nazwisko</th>
-                        <th>Email</th>
+                        <th>Nazwa</th>
                         <th>Temat</th>
-                        <th>Wiadomość</th>
+                        <th>Akcja</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Jan Kowalski</td>
-                        <td>jan.kowalski@example.com</td>
-                        <td>Problem z logowaniem</td>
-                        <td>
-                            <button
-                                class="btn btn-primary"
-                                data-toggle="modal"
-                                data-target="#messageModal"
-                                data-name="Jan Kowalski"
-                                data-email="jan.kowalski@example.com"
-                                data-subject="Problem z logowaniem"
-                                data-message="Opis problemu..."
-                                type="button"
-                            >
-                                Otwórz
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Anna Nowak</td>
-                        <td>anna.nowak@example.com</td>
-                        <td>Zapytanie o produkt</td>
-                        <td>
-                            <button
-                                class="btn btn-primary"
-                                data-toggle="modal"
-                                data-target="#messageModal"
-                                data-name="Anna Nowak"
-                                data-email="anna.nowak@example.com"
-                                data-subject="Zapytanie o produkt"
-                                data-message="Opis zapytania..."
-                                type="button"
-                            >
-                                Otwórz
-                            </button>
-                        </td>
-                    </tr>
+                    <?php
+                        require 'php/load_messages.php';
+                        load_messages();
+                    ?>
+                    
                     <!-- Dodaj więcej wierszy według potrzeb -->
                 </tbody>
             </table>
@@ -89,8 +53,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p><strong>Imię i Nazwisko:</strong> <span id="modalName"></span></p>
-                    <p><strong>Email:</strong> <span id="modalEmail"></span></p>
+                    <p><strong>Nadawca:</strong> <span id="modalName"></span></p>
                     <p><strong>Temat:</strong> <span id="modalSubject"></span></p>
                     <p><strong>Wiadomość:</strong> <span id="modalMessage"></span></p>
                     <hr>
@@ -110,8 +73,11 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="js/wiadomosc.js">
-       
+    <script src="js/wiadomosci.js"></script>
+    <script> 
+     
+
+
     </script>
 </body>
 </html>
