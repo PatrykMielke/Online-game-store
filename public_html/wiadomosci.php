@@ -58,13 +58,17 @@
                     <p><strong>Wiadomość:</strong> <span id="modalMessage"></span></p>
                     <hr>
                     <div class="form-group">
+                    <form method="POST">
                         <label for="modalReply">Twoja Odpowiedź:</label>
-                        <textarea class="form-control" id="modalReply" rows="4" placeholder="Wpisz swoją odpowiedź tutaj..."></textarea>
+                        <textarea required name="odpowiedz" class="form-control" id="modalReply" rows="4" placeholder="Wpisz swoją odpowiedź tutaj..."></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
-                    <button type="button" class="btn btn-primary" id="sendReplyButton">Wyślij</button>
+                    
+                        <button type="submit" class="btn btn-primary" id="sendReplyButton" name="submit" value="XD">Wyślij</button>
+                    </form>
+
                 </div>
             </div>
         </div>

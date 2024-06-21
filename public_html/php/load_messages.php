@@ -2,15 +2,16 @@
 include 'config.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST'){
     if(isset($_POST['submit'])){
-        $stmt = $conn->prepare("SELECT id_wiadomosci, nazwa,temat,wiadomosci_od_uzytkownikow.opis FROM `wiadomosci_od_uzytkownikow` inner join uzytkownicy on uzytkownicy.id_uzytkownik = wiadomosci_od_uzytkownikow.id_uzytkownik where id_wiadomosci=?;");
-        $stmt -> bind_param("i",$_POST['id']);
+        
+        $stmt = $conn->prepare("INSERT INTO `odpowiedzi_od_supportu`(`id_wiadomosci`, `odpowiedz`) VALUES (?,?)");
+        $stmt -> bind_param("is",$_POST['submit'],$_POST['odpowiedz']);
 
         if ($stmt->execute()){
-            $result = $stmt ->get_result();
-            $row = $result -> fetch_assoc();
-            
-            
-
+            echo "git";
+            header('Location: wiadomosci.php');
+        }
+        else{
+            echo "chuj";
         }
         
     }
@@ -18,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 
 function load_messages(){
     include 'config.php';
-    $stmt = $conn->prepare("SELECT id_wiadomosci, nazwa,temat,wiadomosci_od_uzytkownikow.opis o FROM `wiadomosci_od_uzytkownikow` inner join uzytkownicy on uzytkownicy.id_uzytkownik = wiadomosci_od_uzytkownikow.id_uzytkownik;");
+    $stmt = $conn->prepare("SELECT id_wiadomosci, nazwa,temat,wiadomosci_od_uzytkownikow.opis o FROM `wiadomosci_od_uzytkownikow` inner join uzytkownicy on uzytkownicy.id_uzytkownik = wiadomosci_od_uzytkownikow.id_uzytkownik where id_wiadomosci not in(select id_wiadomosci from odpowiedzi_od_supportu);;");
 
     if($stmt->execute())
     {
@@ -46,7 +47,7 @@ function load_messages(){
                             data-subject="'.$row['temat'].'"
                             data-name="'.$row['nazwa'].'"
                             data-message="'.$row['o'].'"
-                            value="'.$row['id_wiadomosci'].'"
+                            data-id="'.$row['id_wiadomosci'].'"
                             type="button"
                         >
                             Odpowiedz
