@@ -10,6 +10,7 @@
 <body class="body-main">
    ---
    <?php 
+   session_start();
     include 'templates/navbar.php';
     include 'templates/header.php';
   ?>

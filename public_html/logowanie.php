@@ -7,17 +7,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/Login.css">
-  
     <title>Document</title>
 </head>
 <body class="loginRej">
     <div class="falling-image-container" id="fallingIconsContainer"></div>
     <?php 
-    include 'templates/navbar.php';
-    include 'templates/header.php';
-    include 'templates/navbar2.php';
-  ?>
+      include 'templates/navbar.php';
+      include 'templates/header.php';
+    ?>
     
     <div class="wrapper">
         <div class="card-switch">
@@ -47,10 +47,11 @@
             </label>
         </div>   
    
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+   
     <!-- Dodanie skryptu JavaScript z innego folderu -->
     <script src="js/register.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

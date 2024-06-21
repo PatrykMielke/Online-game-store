@@ -19,7 +19,7 @@ function addIcon() {
     var icon = document.createElement("img");
     // Ustawianie atrybutów
     var randomIconIndex = Math.floor(Math.random() * iconList.length);
-    icon.src = "../zdj/" + iconList[randomIconIndex];
+    icon.src = "img/" + iconList[randomIconIndex];
     icon.alt = "Falling Icon";
     icon.style.position = "absolute";
     var position = getRandomPosition();

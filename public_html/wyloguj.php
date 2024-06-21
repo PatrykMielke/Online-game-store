@@ -21,6 +21,10 @@
                 </circle>
             </svg>
         </div>
+        <?php
+        session_start();
+        include 'php/logout.php';
+        ?>
         <p>Zostaniesz automatycznie przekierowany do strony głównej po zakończeniu animacji.</p>
     </div>
 
