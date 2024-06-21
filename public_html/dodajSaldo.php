@@ -1,4 +1,6 @@
-<?php session_start(); ?>
+<?php session_start(); 
+    require 'php/saldo.php';
+?>
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -9,7 +11,6 @@
     <link rel="stylesheet" href="css/AddMoney.css" />
 </head>
 <body class="body-main">
-   ---
    <?php 
     include 'templates/navbar.php';
     include 'templates/header.php';
@@ -75,7 +76,12 @@
                     <div class="card-body">
                         <h4 class="card-title">TWOJE KONTO STEAM</h4>
                         <p class="card-text">
-                            Obecne saldo portfela <strong id="currentBalance">0,00</strong>zł
+                            Obecne saldo portfela <strong id="currentBalance"> 
+                                <?php 
+                                    include_once 'php/saldo.php'; 
+                                    pokazSaldo(); 
+                                ?> 
+                            </strong>zł
                         </p>
                         <button class="btn btn-secondary btn-block">Zobacz szczegóły konta</button>
                         <button class="btn btn-secondary btn-block">Aktywuj kartę podarunkową lub kod portfela</button>
@@ -97,12 +103,15 @@
                 </div>
                 <div class="modal-body">
                     <p><strong>Kwota doładowania:</strong> <span id="modalAmount"></span>zł</p>
-                    <p><strong>Saldo po doładowaniu:</strong> <span id="modalNewBalance"></span>zł</p>
                     <p>Czy na pewno chcesz doładować tę kwotę?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Zrezygnuj</button>
-                    <button type="button" class="btn btn-primary" id="confirmAddFundsButton">Dodaj środki</button>
+                    <form method="post">
+                        <input type="text" id="wartosc" name="wartosc" value="">
+                        <button type="submit" class="btn btn-primary" id="confirmAddFundsButton" name="submit">Dodaj środki</button>
+                    </form>
+                    
                 </div>
             </div>
         </div>

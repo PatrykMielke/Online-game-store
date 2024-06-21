@@ -12,8 +12,6 @@
       <ul class="navbar-nav mr-auto">
         
         
-        
-        
         <li class="nav-item">
           <a class="nav-link custom-nav-link" href="index.php">Strona główna</a>
         </li>
@@ -38,7 +36,7 @@
         // zalogowany
           if (isset($_SESSION['zalogowany']) and $_SESSION['zalogowany']){
             echo '<li class="nav-item">
-                    <a class="nav-link custom-nav-link" href="profil.php">Mój profil</a>
+                    <a class="nav-link custom-nav-link" href="profil.php'.'?id='.$_SESSION['id'].'">Mój profil</a>
                  </li>';
             
             echo '<li class="nav-item">

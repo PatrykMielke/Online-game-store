@@ -27,10 +27,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             if(password_verify($password, $row['haslo']))
             {
                 $_SESSION["zalogowany"] = true;
-                $_SESSION["id"] = $id_uzytkownika;
-                $_SESSION["email"] = $email;                            
-                $_SESSION["rola"] = $rola;
-                $_SESSION["nazwa"] = $nazwa;
+                $_SESSION["id"] = $row['id_uzytkownik'];
+                $_SESSION["email"] = $row['email'];                      
+                $_SESSION["rola"] = $row['rola'];
+                $_SESSION["nazwa"] = $row['nazwa'];
+                $_SESSION["saldo"] = $row['saldo'];
 
                 $result -> free_result();
 
