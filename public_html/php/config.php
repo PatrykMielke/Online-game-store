@@ -1,5 +1,5 @@
 <?php
- $host = "localhost";
+ $host = "localhost:3308";
  $db_user = "root";
  $db_password = "";
  $db_name = "steam";

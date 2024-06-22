@@ -18,7 +18,38 @@ session_start();
   <title>Nowoczesna Strona Główna</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="css/MainPage.css"> <!-- Dodajemy link do pliku CSS -->
- 
+  <style>
+        .card .content {
+            width: 100%;
+            height: 100%;
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover .content {
+            transform: rotateY(180deg);
+        }
+
+        .card .front,
+        .card .back {
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            top: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .card .back {
+            transform: rotateY(180deg);
+        }
+
+        .card .back-content {
+            padding: 20px;
+        }
+    </style>
 </head>
 
 <body class="body-main">
@@ -28,142 +59,42 @@ session_start();
     include 'templates/header.php';
     include 'templates/navbar2.php';
   ?>
-
-  <section id="najnowsze-oferty" class="container my-5 custom-section">
-    <h2 class="text-center mb-4">Najnowsze oferty</h2><br>
-
-    <div class="row justify-content-center"> <!-- Dodaliśmy justify-content-center -->
-      <div class="col-md-3">
-        <div class="card">
-          <div class="content">
-            <div class="back">
-              <div class="back-content">
-                <svg stroke="#ffffff" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" height="50px" width="50px" fill="#ffffff">
-                  <!-- Tutaj SVG ikony -->
-                </svg>
-                <strong>Hover Me</strong>
-              </div>
-            </div>
-            <div class="front">
-              <div class="img">
-                <div class="circle"></div>
-                <div class="circle" id="right"></div>
-                <div class="circle" id="bottom"></div>
-              </div>
-              <div class="front-content">
-                <small class="badge">Pasta</small>
-                <div class="description">
-                  <div class="title">
-                    <p class="title"><strong>Spaguetti Bolognese</strong></p>
-                    <svg fill-rule="nonzero" height="15px" width="15px" viewBox="0,0,256,256" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"><g style="mix-blend-mode: normal" text-anchor="none" font-size="none" font-weight="none" font-family="none" stroke-dashoffset="0" stroke-dasharray="" stroke-miterlimit="10" stroke-linejoin="miter" stroke-linecap="butt" stroke-width="1" stroke="none" fill-rule="nonzero" fill="#20c997"><g transform="scale(8,8)"><path d="M25,27l-9,-6.75l-9,6.75v-23h18z"></path></g></g></svg>
+<h2 class="text-center pt-4">Najnowsze gry</h2><br>
+<section id="najnowsze-gry" class="container custom-section">
+    <div class="row justify-content-center">
+        <?php 
+        // Include the database connection
+        include './php/config.php';
+        
+        // Fetch the 4 most recent games
+        $query = "SELECT * FROM produkty ORDER BY id_produktu DESC LIMIT 4";
+        $result = $conn->query($query);
+        $recentGames = array();
+        
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $recentGames[] = $row;
+            }
+        }
+        
+        foreach ($recentGames as $game) : ?>
+          <div class="col-md-3">
+              <div class="card">
+                <a href="stronaGry.php?id=<?php echo htmlspecialchars($game['id_produktu']); ?>" class="content text-decoration-none bg-gray-700 text-center"> 
+                  <h4><?php echo htmlspecialchars($game['nazwa']); ?></h4>
+                      <div class="back">
+                          <div class="back-content">
+                          <img src="./img/products/<?php echo htmlspecialchars($game['ikona']); ?>" alt="<?php echo htmlspecialchars($game['nazwa']); ?>" class="img-fluid">
+                          <p><?php echo htmlspecialchars($game['opis']); ?></p>
+                          </div>
+                      </div>
                   </div>
-                  <p class="card-footer">30 Mins &nbsp; | &nbsp; 1 Serving</p>
-                </div>
-              </div>
-            </div>
+                  </a>
           </div>
-        </div>
-      </div>
-      <!-- Druga karta -->
-      <div class="col-md-3">
-        <div class="card">
-          <div class="content">
-            <div class="back">
-              <div class="back-content">
-                <svg stroke="#ffffff" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" height="50px" width="50px" fill="#ffffff">
-                  <!-- Tutaj SVG ikony -->
-                </svg>
-                <strong>Hover Me</strong>
-              </div>
-            </div>
-            <div class="front">
-              <div class="img">
-                <div class="circle"></div>
-                <div class="circle" id="right"></div>
-                <div class="circle" id="bottom"></div>
-              </div>
-              <div class="front-content">
-                <small class="badge">Pasta</small>
-                <div class="description">
-                  <div class="title">
-                    <p class="title"><strong>Spaguetti Bolognese</strong></p>
-                    <svg fill-rule="nonzero" height="15px" width="15px" viewBox="0,0,256,256" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"><g style="mix-blend-mode: normal" text-anchor="none" font-size="none" font-weight="none" font-family="none" stroke-dashoffset="0" stroke-dasharray="" stroke-miterlimit="10" stroke-linejoin="miter" stroke-linecap="butt" stroke-width="1" stroke="none" fill-rule="nonzero" fill="#20c997"><g transform="scale(8,8)"><path d="M25,27l-9,-6.75l-9,6.75v-23h18z"></path></g></g></svg>
-                  </div>
-                  <p class="card-footer">30 Mins &nbsp; | &nbsp; 1 Serving</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Trzecia karta -->
-      <div class="col-md-3">
-        <div class="card">
-          <div class="content">
-            <div class="back">
-              <div class="back-content">
-                <svg stroke="#ffffff" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" height="50px" width="50px" fill="#ffffff">
-                  <!-- Tutaj SVG ikony -->
-                </svg>
-                <strong>Hover Me</strong>
-              </div>
-            </div>
-            <div class="front">
-              <div class="img">
-                <div class="circle"></div>
-                <div class="circle" id="right"></div>
-                <div class="circle" id="bottom"></div>
-              </div>
-              <div class="front-content">
-                <small class="badge">Pasta</small>
-                <div class="description">
-                  <div class="title">
-                    <p class="title"><strong>Spaguetti Bolognese</strong></p>
-                    <svg fill-rule="nonzero" height="15px" width="15px" viewBox="0,0,256,256" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"><g style="mix-blend-mode: normal" text-anchor="none" font-size="none" font-weight="none" font-family="none" stroke-dashoffset="0" stroke-dasharray="" stroke-miterlimit="10" stroke-linejoin="miter" stroke-linecap="butt" stroke-width="1" stroke="none" fill-rule="nonzero" fill="#20c997"><g transform="scale(8,8)"><path d="M25,27l-9,-6.75l-9,6.75v-23h18z"></path></g></g></svg>
-                  </div>
-                  <p class="card-footer">30 Mins &nbsp; | &nbsp; 1 Serving</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Czwarta karta -->
-      <div class="col-md-3">
-        <div class="card">
-          <div class="content">
-            <div class="back">
-              <div class="back-content">
-                <svg stroke="#ffffff" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" height="50px" width="50px" fill="#ffffff">
-                  <!-- Tutaj SVG ikony -->
-                </svg>
-                <strong>Hover Me</strong>
-              </div>
-            </div>
-            <div class="front">
-              <div class="img">
-                <div class="circle"></div>
-                <div class="circle" id="right"></div>
-                <div class="circle" id="bottom"></div>
-              </div>
-              <div class="front-content">
-                <small class="badge">Pasta</small>
-                <div class="description">
-                  <div class="title">
-                    <p class="title"><strong>Spaguetti Bolognese</strong></p>
-                    <svg fill-rule="nonzero" height="15px" width="15px" viewBox="0,0,256,256" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"><g style="mix-blend-mode: normal" text-anchor="none" font-size="none" font-weight="none" font-family="none" stroke-dashoffset="0" stroke-dasharray="" stroke-miterlimit="10" stroke-linejoin="miter" stroke-linecap="butt" stroke-width="1" stroke="none" fill-rule="nonzero" fill="#20c997"><g transform="scale(8,8)"><path d="M25,27l-9,-6.75l-9,6.75v-23h18z"></path></g></g></svg>
-                  </div>
-                  <p class="card-footer">30 Mins &nbsp; | &nbsp; 1 Serving</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <?php endforeach; ?>
     </div>
+</section>
 
-  </section>
-  <div></div>
 
   <!-- Sekcja Nowości i aktualności -->
   <div class="wallpaper">

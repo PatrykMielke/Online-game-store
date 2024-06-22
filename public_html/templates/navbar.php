@@ -1,7 +1,12 @@
 <!-- Pierwszy navbar -->
+<script>
+  function confirmLogout() {
+    return confirm("Czy na pewno chcesz się wylogować?");
+}
+</script>
   <nav class="navbar navbar-expand-lg navbar-light bg-light custom-navbar">
-    <!-- Zastąpienie tekstu logo własnym zdjęciem -->
-    <a class="navbar-brand custom-navbar-brand" href="index.php"><img src="zdj/stadia_controller_FILL0_wght400_GRAD0_opsz24.png" alt="Logo" style="max-width: 100px;"></a>
+    <!-- Zastąpienie tekstu logo własnym imgęciem -->
+    <a class="navbar-brand custom-navbar-brand" href="index.php"><img src="img/stadia_controller_FILL0_wght400_GRAD0_opsz24.png" alt="Logo" style="max-width: 100px;"></a>
     
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent1" aria-controls="navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation">
       
@@ -25,7 +30,7 @@
         <?php
           // niezalogowany
           if (!isset($_SESSION['zalogowany'])){
-            echo '<li>  <a href="logowanie.php"><img src="zdj/login_FILL0_wght400_GRAD0_opsz24.png" alt="Logowanie"></a></li> ';
+            echo '<li>  <a href="logowanie.php"><img src="img/login_FILL0_wght400_GRAD0_opsz24.png" alt="Logowanie"></a></li> ';
           }
         ?>   
         
@@ -77,15 +82,14 @@
           //admin
 
           if (isset($_SESSION['zalogowany']) and $_SESSION['rola'] == "administrator"){
-            echo '<li>  <a href="logowanie.php"><img src="zdj/login_FILL0_wght400_GRAD0_opsz24.png" alt="Logowanie"></a></li> ';
+            echo '<li>  <a href="logowanie.php"><img src="img/login_FILL0_wght400_GRAD0_opsz24.png" alt="Logowanie"></a></li> ';
 
             echo '<li class="nav-item">
           <a class="nav-link custom-nav-link" href="panelAdmina.php">Panel Admina</a>
         </li>';
           }
 
-          echo '<li> <a href="wyloguj.php"><img src="zdj/logout_24dp_FILL0_wght400_GRAD0_opsz24.png" alt="wyloguj"></a></li> ';
-          
+          echo '<li> <a href="wyloguj.php" onclick="return confirmLogout();"><img src="img/logout_24dp_FILL0_wght400_GRAD0_opsz24.png" alt="wyloguj"></a></li>';
         }
 
 
