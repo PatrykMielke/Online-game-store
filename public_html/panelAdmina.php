@@ -19,64 +19,11 @@
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-12">
-            <h2 class="mb-4">User Management</h2>
-
-            <!-- User Table -->
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h4>Users</h4>
-                </div>
-                <div class="card-body">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Login</th>
-                                <th>Role</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="userTableBody">
-                            <!-- Placeholder for user rows -->
-                            <tr>
-                                <td>1</td>
-                                <td>john_doe</td>
-                                <td>
-                                    <select class="form-select form-select-sm role-select">
-                                        <option value="kupujący">Kupujący</option>
-                                        <option value="niezarejestrowany">Niezarejestrowany</option>
-                                        <option value="sprzedający">Sprzedający</option>
-                                        <option value="administrator">Administrator</option>
-                                        <option value="support">Support</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <button class="btn btn-sm btn-primary">Save</button>
-                                    <button class="btn btn-sm btn-danger">Delete</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>jane_smith</td>
-                                <td>
-                                    <select class="form-select form-select-sm role-select">
-                                        <option value="kupujący">Kupujący</option>
-                                        <option value="niezarejestrowany">Niezarejestrowany</option>
-                                        <option value="sprzedający">Sprzedający</option>
-                                        <option value="administrator">Administrator</option>
-                                        <option value="support">Support</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <button class="btn btn-sm btn-primary">Save</button>
-                                    <button class="btn btn-sm btn-danger">Delete</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+            <h2 class="mb-4">Panel Admina</h2>
+            <div class="card-body">
+                <button class="btn btn-secondary mr-2" onclick="location.href='panelUzytkownikow.php'">Zarządzaj użytkownikami</button>
+                <button class="btn btn-secondary mr-2" onclick="location.href='panelGier.php'">Zarządzaj grami</button>
             </div>
-
         </div>
     </div>
 

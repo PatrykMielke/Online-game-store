@@ -1,4 +1,9 @@
 <!-- Pierwszy navbar -->
+<script>
+  function confirmLogout() {
+    return confirm("Czy na pewno chcesz się wylogować?");
+}
+</script>
   <nav class="navbar navbar-expand-lg navbar-light bg-light custom-navbar">
     <!-- Zastąpienie tekstu logo własnym zdjęciem -->
     <a class="navbar-brand custom-navbar-brand" href="index.php"><img src="img/stadia_controller_FILL0_wght400_GRAD0_opsz24.png" alt="Logo" style="max-width: 100px;"></a>
@@ -75,8 +80,7 @@
         </li>';
           }
 
-          echo '<li> <a href="wyloguj.php"><img src="img/logout_24dp_FILL0_wght400_GRAD0_opsz24.png" alt="wyloguj"></a></li> ';
-          
+          echo '<li> <a href="wyloguj.php" onclick="return confirmLogout();"><img src="img/logout_24dp_FILL0_wght400_GRAD0_opsz24.png" alt="wyloguj"></a></li>';
         }
 
 
