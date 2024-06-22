@@ -46,7 +46,8 @@ require 'php/profile_functions.php';
 			
 		<?php
 			if (isset($_SESSION['zalogowany']) and $_SESSION['id'] == $_GET['id'])
-			{ echo '<a class="btn btn-primary" href="edytujProfil.php">Edytuj profil</a></div>'; }
+			{ echo '<a class="btn btn-primary" href="edytujProfil.php">Edytuj profil</a></div>';
+				echo '<a class="btn btn-primary" href="edytujDane.php">Edytuj dane</a></div>'; }
 
 			if (isset($_SESSION['zalogowany']) and $_SESSION['id'] != $_GET['id'])
 			{ echo '<a class="btn btn-primary" href="dodajDoZnajomych.php">Dodaj do znajomych</a></div>'; }
