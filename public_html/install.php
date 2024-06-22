@@ -7,10 +7,9 @@ $config_file = 'config.php';
 
 if (file_exists($config_file)) {
 
-
     $file = fopen($config_file, 'w'); 
     if ($file) {
-        fwrite($file, "Plik konfiguracyjny");
+        fwrite($file,"");
         fclose($file);
     }
 

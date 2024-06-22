@@ -40,9 +40,11 @@
                     <a class="nav-link custom-nav-link" href="wyslijWiadomosc.php">Pomoc</a>
                   </li>';
 
+            include_once 'php/saldo.php';
+            $navbar = pokazSaldoNavbar(); 
             echo '<li class="nav-item">
-          <a class="nav-link custom-nav-link" href="dodajSaldo.php">Dodaj środki</a>
-        </li>';
+              <a class="nav-link custom-nav-link" href="dodajSaldo.php">'.$navbar.'zł</a>
+            </li>';
             
           
 
