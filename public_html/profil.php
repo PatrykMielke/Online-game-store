@@ -1,4 +1,11 @@
-<?php session_start(); ?>
+<?php session_start(); 
+if(!isset($_SESSION['zalogowany'])){
+	header("Location: logowanie.php");
+    exit();
+}
+
+require 'php/profile_functions.php'; 
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,14 +32,11 @@
 				<div class="col-md-8 offset-md-2">
 					<div class="profile-header">
 						<div class="wallpaper">
-							<img
-								src="https://picsum.photos/200?image=1027"
-								alt="Zdjęcie profilowe"
-								class="profile-image"
-								id="profileImage"
-							/>
+								<?php load_avatar(); ?>
 							<div class="profile-info">
-								<h2>GamerX</h2>
+								<h2> <?php  
+									load_name();
+								?></h2>
 								<p>Gamer od 2010</p>
 							</div>
 						</div>
@@ -52,35 +56,22 @@
 					<div class="profile-details">
 						<h3>Opis</h3>
 						<p>
-							<?php require 'php/profile_functions.php'; load_description();?>
+							<?php load_description();?>
 						</p>
 
 						<h3> Posiadane gry</h3>
 						<ul>
-							<li>The Witcher 3: Wild Hunt</li>
-							
+							<?php
+								load_games();
+							?>
 						</ul>
-						<h3>Statystyki gier</h3>
-						<div class="game-stats">
-							<div class="stat">
-								<p><strong>Łączny czas gry:</strong> 1500 godzin</p>
-							</div>
-							<div class="stat">
-								<p><strong>Ostatnia aktywność:</strong> 2024-06-21</p>
-							</div>
-							<div class="stat">
-								<p>
-									<strong>Najczęściej grana gra:</strong> Wiedźmin 3: Wild Hunt
-								</p>
-							</div>
-						</div>
 
 						<h3>Znajomi</h3>
 						<div class="friends-list">
 
 
 							<?php 
-									load_friends();
+								load_friends();
 							?>
 
 						</div>

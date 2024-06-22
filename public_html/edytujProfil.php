@@ -1,4 +1,6 @@
-<?php session_start(); ?>
+<?php session_start(); if(!isset($_SESSION['zalogowany'])){
+    header('location:logowanie.php');
+} ?>
 <!DOCTYPE html>
 <html lang="pl">
 	<head>
