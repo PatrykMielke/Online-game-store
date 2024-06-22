@@ -37,25 +37,28 @@
 							</div>
 						</div>
 					</div>
-          <div> <a class="btn btn-primary" href="../html/EditPage.html">Edytuj profil</a></div>
+          <div> 
+			<?php
+
+				if (isset($_SESSION['zalogowany']) and $_SESSION['id'] == $_GET['id'])
+				{ echo '<a class="btn btn-primary" href="edytujProfil.php">Edytuj profil</a></div>'; }
+			?>
+		 
+		  
          
 
 
 
 					<div class="profile-details">
-						<h3>Biografia</h3>
+						<h3>Opis</h3>
 						<p>
-							Uwielbiam gry RPG i strategie. Gram od dzieciństwa i nadal czerpię
-							ogromną frajdę z eksplorowania wirtualnych światów i wymyślania
-							taktyk. W wolnym czasie streamuję rozgrywki i dzielę się
-							doświadczeniem z innymi graczami.
+							<?php require 'php/profile_functions.php'; load_description();?>
 						</p>
 
 						<h3> Posiadane gry</h3>
 						<ul>
 							<li>The Witcher 3: Wild Hunt</li>
-							<li>StarCraft II</li>
-							<li>Cities: Skylines</li>
+							
 						</ul>
 						<h3>Statystyki gier</h3>
 						<div class="game-stats">
@@ -74,14 +77,12 @@
 
 						<h3>Znajomi</h3>
 						<div class="friends-list">
-							<div class="friend">
-								<img src="https://picsum.photos/200?image=1005" alt="Znajomy" />
-								<p>PlayerOne</p>
-							</div>
-							<div class="friend">
-								<img src="https://picsum.photos/200?image=1021" alt="Znajomy" />
-								<p>PixelPusher</p>
-							</div>
+
+
+							<?php 
+									load_friends();
+							?>
+
 						</div>
 						</div>
 					</div>

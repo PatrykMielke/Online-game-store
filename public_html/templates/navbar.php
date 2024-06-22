@@ -1,7 +1,7 @@
 <!-- Pierwszy navbar -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light custom-navbar">
     <!-- Zastąpienie tekstu logo własnym zdjęciem -->
-    <a class="navbar-brand custom-navbar-brand" href="index.php"><img src="zdj/stadia_controller_FILL0_wght400_GRAD0_opsz24.png" alt="Logo" style="max-width: 100px;"></a>
+    <a class="navbar-brand custom-navbar-brand" href="index.php"><img src="img/stadia_controller_FILL0_wght400_GRAD0_opsz24.png" alt="Logo" style="max-width: 100px;"></a>
     
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent1" aria-controls="navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation">
       
@@ -25,7 +25,7 @@
         <?php
           // niezalogowany
           if (!isset($_SESSION['zalogowany'])){
-            echo '<li>  <a href="logowanie.php"><img src="zdj/login_FILL0_wght400_GRAD0_opsz24.png" alt="Logowanie"></a></li> ';
+            echo '<li>  <a href="logowanie.php"><img src="img/login_FILL0_wght400_GRAD0_opsz24.png" alt="Logowanie" style="max-width: 100px;""></a></li> ';
           }
         ?>   
         
@@ -43,11 +43,6 @@
             echo '<li class="nav-item">
           <a class="nav-link custom-nav-link" href="dodajSaldo.php">Dodaj środki</a>
         </li>';
-
-            echo '<li class="nav-item">
-          <a class="nav-link custom-nav-link" href="edytujProfil.php">Edycja Profilu</a>
-        </li>';
-
             
           
 
@@ -56,9 +51,6 @@
           if(isset($_SESSION['zalogowany']) and $_SESSION['rola'] == "sprzedajacy"){
             echo '<li class="nav-item">
           <a class="nav-link custom-nav-link" href="sprzedajacy.php">Panel sprzedaży</a>
-        </li>';
-        echo '<li class="nav-item">
-          <a class="nav-link custom-nav-link" href="dodajGre.php">Dodaj nową Gre</a>
         </li>';
           }
 
@@ -77,14 +69,14 @@
           //admin
 
           if (isset($_SESSION['zalogowany']) and $_SESSION['rola'] == "administrator"){
-            echo '<li>  <a href="logowanie.php"><img src="zdj/login_FILL0_wght400_GRAD0_opsz24.png" alt="Logowanie"></a></li> ';
+            echo '<li>  <a href="logowanie.php"><img src="img/login_FILL0_wght400_GRAD0_opsz24.png" alt="Logowanie"></a></li> ';
 
             echo '<li class="nav-item">
           <a class="nav-link custom-nav-link" href="panelAdmina.php">Panel Admina</a>
         </li>';
           }
 
-          echo '<li> <a href="wyloguj.php"><img src="zdj/logout_24dp_FILL0_wght400_GRAD0_opsz24.png" alt="wyloguj"></a></li> ';
+          echo '<li> <a href="wyloguj.php"><img src="img/logout_24dp_FILL0_wght400_GRAD0_opsz24.png" alt="wyloguj"></a></li> ';
           
         }
 
