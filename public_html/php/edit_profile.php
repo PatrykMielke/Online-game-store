@@ -29,14 +29,14 @@ function load_description(){
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $opis = $_POST['description'];
-        $uploadDir = '../img/products/';
+        $uploadDir = '../img/avatars/';
 
 
         $uploadedFiles = array();
         $errors = array();
 
-        foreach ($_FILES['productImages']['name'] as $key => $name) {
-            $tmp_name = $_FILES['productImages']['tmp_name'][$key];
+        foreach ($_FILES['profilePic']['name'] as $key => $name) {
+            $tmp_name = $_FILES['profilePic']['tmp_name'][$key];
             $target_file = $uploadDir . basename($name);
             $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
     
@@ -48,7 +48,7 @@ function load_description(){
             }
     
             // Check file size (5MB limit)
-            if ($_FILES['productImages']['size'][$key] > 5000000) {
+            if ($_FILES['profilePic']['size'][$key] > 5000000) {
                 $errors[] = "Sorry, file {$name} is too large.";
                 continue;
             }
