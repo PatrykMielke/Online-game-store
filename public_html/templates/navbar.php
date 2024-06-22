@@ -5,7 +5,7 @@
 }
 </script>
   <nav class="navbar navbar-expand-lg navbar-light bg-light custom-navbar">
-    <!-- Zastąpienie tekstu logo własnym imgęciem -->
+    <!-- Zastąpienie tekstu logo własnym zdjęciem -->
     <a class="navbar-brand custom-navbar-brand" href="index.php"><img src="img/stadia_controller_FILL0_wght400_GRAD0_opsz24.png" alt="Logo" style="max-width: 100px;"></a>
     
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent1" aria-controls="navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,7 +30,7 @@
         <?php
           // niezalogowany
           if (!isset($_SESSION['zalogowany'])){
-            echo '<li>  <a href="logowanie.php"><img src="img/login_FILL0_wght400_GRAD0_opsz24.png" alt="Logowanie"></a></li> ';
+            echo '<li>  <a href="logowanie.php"><img src="img/login_FILL0_wght400_GRAD0_opsz24.png" alt="Logowanie" style="max-width: 100px;""></a></li> ';
           }
         ?>   
         
@@ -45,14 +45,11 @@
                     <a class="nav-link custom-nav-link" href="wyslijWiadomosc.php">Pomoc</a>
                   </li>';
 
+            include_once 'php/saldo.php';
+            $navbar = pokazSaldoNavbar(); 
             echo '<li class="nav-item">
-          <a class="nav-link custom-nav-link" href="dodajSaldo.php">Dodaj środki</a>
-        </li>';
-
-            echo '<li class="nav-item">
-          <a class="nav-link custom-nav-link" href="edytujProfil.php">Edycja Profilu</a>
-        </li>';
-
+              <a class="nav-link custom-nav-link" href="dodajSaldo.php">'.$navbar.'zł</a>
+            </li>';
             
           
 
@@ -61,9 +58,6 @@
           if(isset($_SESSION['zalogowany']) and $_SESSION['rola'] == "sprzedajacy"){
             echo '<li class="nav-item">
           <a class="nav-link custom-nav-link" href="sprzedajacy.php">Panel sprzedaży</a>
-        </li>';
-        echo '<li class="nav-item">
-          <a class="nav-link custom-nav-link" href="dodajGre.php">Dodaj nową Gre</a>
         </li>';
           }
 

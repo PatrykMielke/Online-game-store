@@ -17,7 +17,7 @@
 	<?php 
     include 'templates/navbar.php';
     include 'templates/header.php';
-    include 'templates/navbar2.php';
+    include 'templates/navbar3.php';
   ?>
 		<!-- Drugi navbar -->
 	

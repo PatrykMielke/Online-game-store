@@ -1,5 +1,10 @@
 <?php
    session_start();
+
+   if (isset($_SESSION["zalogowany"])){
+      header('location: index.php');
+      exit;
+   }
 ?>
 
 <!DOCTYPE html>
@@ -28,25 +33,31 @@
                <div class="flip-card__inner">
                   <div class="flip-card__front">
                      <div class="title">Log in</div>
-                     <form id="logowanie" class="flip-card__form" method="post" action="php/login_script.php">
+                     <?php 
+         require 'php/login_script.php'; ?>
+                     <form id="logowanie" class="flip-card__form" method="post">
                         <input class="flip-card__input" name="email" placeholder="Email" type="email">
                         <input class="flip-card__input" name="password" placeholder="Password" type="password">
-                        <button class="flip-card__btn">Let`s go!</button>
+                        <input type="hidden" name="action" value="login">
+                        <button name="submit" class="flip-card__btn">Let`s go!</button>
                      </form>
                   </div>
                   <div class="flip-card__back">
                      <div class="title">Sign up</div>
-                     <form id="rejestracja" class="flip-card__form" method="post" action="php/register_script.php">
+                     <form id="rejestracja" class="flip-card__form" method="post">
                         <input class="flip-card__input" name="name" placeholder="Name" type="name">
                         <input class="flip-card__input" name="email" placeholder="Email" type="email">
                         <input class="flip-card__input" name="password" placeholder="Password" type="password">
-                        <button class="flip-card__btn">Confirm!</button>
+                        <input type="hidden" name="action" value="register">
+                        <button name="submit"  class="flip-card__btn">Confirm!</button>
                      </form>
                   </div>
+                  
+                
                </div>
             </label>
         </div>   
-   
+    
    
     <!-- Dodanie skryptu JavaScript z innego folderu -->
     <script src="js/register.js"></script>

@@ -2,7 +2,7 @@
     session_start();
     
     if (!isset($_SESSION['zalogowany'])){
-        header('location:index.php');
+        header('location:zalogowany.php');
     }
 
 
@@ -28,9 +28,9 @@
                 <div class="infoCard">
                     <div class="card text-black">
                         <div class="card-body">
-                            <h3 class="card-title">DODAJ ŚRODKI DO PORTFELA UŻYTKOWNIKA NAZWA KONTA</h3>
+                            <h3 class="card-title">DODAJ ŚRODKI DO PORTFELA</h3>
                             <p class="card-text">
-                                Środki w twoim Portfelu Steam mogą posłużyć do zakupu dowolnej gry na Steam lub do płatności w grach, które obsługują transakcje Steam. Możesz sprawdzić zamówienie przed jego realizacją.
+                                Środki w twoim portfelu mogą posłużyć do zakupu dowolnej gry lub płatności w grach.
                             </p>
                         </div>
                     </div>

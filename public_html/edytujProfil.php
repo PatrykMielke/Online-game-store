@@ -1,4 +1,6 @@
-<?php session_start(); ?>
+<?php session_start(); if(!isset($_SESSION['zalogowany'])){
+    header('location:logowanie.php');
+} ?>
 <!DOCTYPE html>
 <html lang="pl">
 	<head>
@@ -26,34 +28,15 @@
                 <form>
                     <!-- Pozostałe pola formularza -->
                     <div class="form-group">
-                        <label for="firstName">Imię</label>
-                        <input type="text" class="form-control" id="firstName" placeholder="Wpisz imię" />
+                        <label for="opis">Opis</label>
+                        <input type="text" class="form-control" id="opis" placeholder="Opis" />
                     </div>
-                    <div class="form-group">
-                        <label for="lastName">Nazwisko</label>
-                        <input type="text" class="form-control" id="lastName" placeholder="Wpisz nazwisko" />
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Adres email</label>
-                        <input type="email" class="form-control" id="email" placeholder="Wpisz adres email" />
-                    </div>
-                    <div class="form-group">
-                        <label for="country">Kraj</label>
-                        <input type="text" class="form-control" id="country" placeholder="Wpisz kraj" />
-                    </div>
-                    <div class="form-group">
-                        <label for="dob">Data urodzenia</label>
-                        <input type="date" class="form-control" id="dob" />
-                    </div>
-                    <div class="form-group">
-                        <label for="description">Opis</label>
-                        <textarea class="form-control" id="description" rows="3" placeholder="Wpisz krótki opis o sobie"></textarea>
-                    </div>
+
 
                     <!-- Zdjęcie profilowe -->
                     <div class="profile-image-section">
-                        <label for="profilePic" class="d-block">Zdjęcie profilowe</label>
-                        <img id="profileImage" src="../zdj/default_profile.png" alt="Zdjęcie profilowe" class="img-thumbnail mb-2" />
+                        <label for="profilePic" class="d-block">Avatar</label>
+                        <img id="profileImage" src="img/default_profile.png" alt="Zdjęcie profilowe" class="img-thumbnail mb-2" />
                         <input type="file" class="form-control-file" id="profilePic" accept="image/*" onchange="previewProfileImage(event)" />
                     </div>
 

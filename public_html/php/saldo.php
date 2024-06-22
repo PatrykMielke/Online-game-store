@@ -25,6 +25,31 @@ function pokazSaldo(){
       }
 }
 
+function pokazSaldoNavbar(){
+
+    include 'config.php';
+      // Check if user or email already exists
+      $stmt = $conn->prepare("select saldo from uzytkownicy where id_uzytkownik = ?");
+      $stmt ->bind_param("s", $id);
+      $id = $_SESSION['id'];
+  
+      if($stmt->execute()){
+        $result = $stmt->get_result();
+  
+        if ($result->num_rows > 0){
+            $row = $result -> fetch_assoc();
+            $saldo = $row['saldo'];
+            return $saldo;
+        }
+        else{
+            echo "błąd";
+        }
+      }
+      else{
+        echo "błąd";
+      }
+}
+
 function dodajSaldo(){
 
     $wartosc = doubleval($_POST['wartosc']) ;

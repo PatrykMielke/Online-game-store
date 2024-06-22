@@ -4,3 +4,19 @@ $_SESSION["email"]
 $_SESSION["rola"]
 $_SESSION["nazwa"]
 $_SESSION["saldo"]
+
+
+Patryk: Zabezpieczenie każdej strony
+
+Patryk: Edit page
+Patryk: User page
+Patryk: Strona wydawcy
+Patryk: Edycja gry przez wydawce
+Patryk: Wysalnie wiadomosci do supportu
+Patryk: Lista wiadomosci uzytkownikow
+
+
+
+todo:
+
+* czy można po przesłaniu formularza iść automatycznie do register?
