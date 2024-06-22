@@ -88,7 +88,7 @@ function register(){
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0){
-        echo "Podana nazwa użytkownika lub hasło jest już zajęte.";
+        echo "Podana nazwa użytkownika lub adres e-mail jest już zajęty.";
         return;
     }
 
