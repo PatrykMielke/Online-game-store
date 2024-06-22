@@ -68,10 +68,3 @@ var salesChart = new Chart(ctx, {
           var modal = $(this);
           modal.find('#deleteProductName').text(productName);
       });
-
-      // Obsługa kliknięcia przycisku "Usuń produkt"
-      $('#deleteProductButton').on('click', function () {
-          // Tutaj można dodać kod obsługi usunięcia produktu
-          alert('Produkt został usunięty.'); // Przykładowe powiadomienie, można usunąć lub zmodyfikować zależnie od potrzeb
-          $('#deleteProductModal').modal('hide'); // Zamknij modal po potwierdzeniu usunięcia
-      });

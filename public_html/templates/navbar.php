@@ -11,10 +11,7 @@
     <div class="collapse navbar-collapse custom-navbar-nav" id="navbarSupportedContent1">
       <ul class="navbar-nav mr-auto">
         
-        
-        <li class="nav-item">
-          <a class="nav-link custom-nav-link" href="index.php">Strona główna</a>
-        </li>
+
         <li class="nav-item">
           <a class="nav-link custom-nav-link" href="regulamin.php">Regulamin</a>
         </li>

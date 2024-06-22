@@ -16,21 +16,21 @@
 	<body class="body-NewGame">
 		<!-- Pierwszy navbar -->
 		<?php 
-    include 'templates/navbar.php';
-    include 'templates/header.php';
-  ?>
+			include 'templates/navbar.php';
+			include 'templates/header.php';
+		?>
 
 		<div class="container">
 			<div class="form-container">
-				<h1 class="text-center mb-4">Wystaw Produkt</h1>
+				<h1 class="text-center mb-4">Wystaw grę</h1>
 				<form>
 					<div class="mb-3">
-						<label for="productName" class="form-label">Nazwa Produktu</label>
+						<label for="productName" class="form-label">Tytuł</label>
 						<input
 							type="text"
 							class="form-control"
 							id="productName"
-							placeholder="Wpisz nazwę produktu"
+							placeholder="Wpisz tytuł"
 							required
 						/>
 					</div>

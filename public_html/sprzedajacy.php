@@ -1,4 +1,10 @@
-<?php session_start() ?>
+<?php session_start();
+
+if (!isset($_SESSION["rola"]) or $_SESSION["rola"] == "kupujący"){
+    header("location: index.php");
+}
+    
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,54 +17,30 @@
 <body>
     <?php 
         include 'templates/navbar.php';
+
     ?>
     <div class="container mt-5">
-        <div class="row">
-            <div class="col-lg-12">
-                <h2>Sprzedawane produkty <a href="dodajgre.php"><button type="button" class="btn btn-primary">Wystaw nową grę</button></a></h2>
-                
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Product Name</h5>
-                        <p class="card-text">
-                            Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut aliquam, odio a suscipit blandit.
-                        </p>
-                        <p class="card-text">Price: $10</p>
-                        <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#editProductModal">Edytuj</a>
-                        <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#deleteProductModal" data-product-name="Product Name">Zakończ sprzedaż</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-lg-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Total Sales</h5>
-                        <p class="card-text">$1000</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Total Orders</h5>
-                        <p class="card-text">50</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Average Order Value</h5>
-                        <p class="card-text">$20</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+        <table class="table">
+
+        <h2>Sprzedawane produkty <a href="dodajgre.php"><button type="button" class="btn btn-primary">Wystaw nową grę</button></a></h2>
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Tytuł</th>
+      <th scope="col">Cena</th>
+      <th scope="col">Akcje</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <?php
+        include 'php/sellerPanel.php';
+        load_games();
+      ?>
+    </tr>
+  </tbody>
+</table>
+        
     <div class="container mt-5">
         <div class="row">
             <div class="col-lg-6">
@@ -113,11 +95,15 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>Czy na pewno chcesz usunąć produkt "<span id="deleteProductName"></span>"?</p>
+                    <p>Czy na pewno chcesz usunąć produkt</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
-                    <button type="button" class="btn btn-danger" id="deleteProductButton">Usuń</button>
+                    <form method="post">
+                        <button type="button" class="btn btn-danger" id="deleteProductButton">Usuń</button>
+                    </form>
+                    
+
                 </div>
             </div>
         </div>

@@ -37,21 +37,20 @@ require 'php/profile_functions.php';
 								<h2> <?php  
 									load_name();
 								?></h2>
-								<p>Gamer od 2010</p>
+								
+								<p></p>
 							</div>
 						</div>
 					</div>
           <div> 
-			<?php
+			
+		<?php
+			if (isset($_SESSION['zalogowany']) and $_SESSION['id'] == $_GET['id'])
+			{ echo '<a class="btn btn-primary" href="edytujProfil.php">Edytuj profil</a></div>'; }
 
-				if (isset($_SESSION['zalogowany']) and $_SESSION['id'] == $_GET['id'])
-				{ echo '<a class="btn btn-primary" href="edytujProfil.php">Edytuj profil</a></div>'; }
-			?>
-		 
-		  
-         
-
-
+			if (isset($_SESSION['zalogowany']) and $_SESSION['id'] != $_GET['id'])
+			{ echo '<a class="btn btn-primary" href="dodajDoZnajomych.php">Dodaj do znajomych</a></div>'; }
+		?>
 
 					<div class="profile-details">
 						<h3>Opis</h3>
@@ -86,6 +85,8 @@ require 'php/profile_functions.php';
 			integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
 			crossorigin="anonymous"
 		></script>
+		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 
 	</body>
 </html>

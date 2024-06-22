@@ -103,7 +103,8 @@ function load_friends(){
 
 function load_games(){
     include 'config.php';
-      $stmt = $conn->prepare("SELECT produkty.id_produkt, nazwa, ikona FROM `produkty` inner join posiadane_programy on posiadane_programy.id_produkt = produkty.id_produkt where posiadane_programy.id_uzytkownik = ?;");
+      $stmt = $conn->prepare("SELECT produkty.id_produktu, nazwa, ikona FROM `produkty` inner join posiadane_programy on 
+      posiadane_programy.id_produkt = produkty.id_produktu where posiadane_programy.id_uzytkownik = ?;");
       $stmt ->bind_param("i", $id);
       $id = $_GET['id'];;
   
