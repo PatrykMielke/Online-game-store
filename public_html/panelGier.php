@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Lista gier</title>
+		<title>Panel gier</title>
 		<link
 			href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
 			rel="stylesheet"
@@ -32,38 +32,42 @@
 						</tr>
 					</thead>
 					<tbody id="tableBody">
-						<!-- Przykładowe dane w tabeli -->
-						<tr>
-							<td>1</td>
-							<td>Arcanoid</td>
-							<td>120pln</td>
-							<td>Tak</td>
-							<td>
-								<button class="btn btn-sm btn-primary">Edytuj</button>
-								<button class="btn btn-sm btn-danger">Usuń</button>
-							</td>
-						</tr>
-						<tr>
-                            <td>2</td>
-							<td>Arcanoid</td>
-							<td>120pln</td>
-							<td>Tak</td>
-							<td>
-                                <button class="btn btn-sm btn-primary">Edytuj</button>
-                                <button class="btn btn-sm btn-danger">Usuń</button>
-							</td>
-						</tr>
-						<tr>
-                            <td>3</td>
-							<td>Arcanoid</td>
-							<td>150pln</td>
-							<td>Nie</td>
-							<td>
-                                <button class="btn btn-sm btn-primary">Edytuj</button>
-                                <button class="btn btn-sm btn-danger">Usuń</button>
-							</td>
-						</tr>
-						<!-- Dodaj więcej danych w razie potrzeby -->
+					<?php 
+                    include './php/config.php';
+                    
+                    $query = "SELECT * FROM produkty ORDER BY id_produktu";
+                    $result = $conn->query($query);
+                    
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            $gameId = htmlspecialchars($row['id_produktu']);
+                            $gameName = htmlspecialchars($row['nazwa']);
+                            $gamePrice = htmlspecialchars($row['cena']) . " PLN";
+                            $gameAvailable = htmlspecialchars($row['czy_dostepny']) ? "Tak" : "Nie";
+                            $buttonLabel = htmlspecialchars($row['czy_dostepny']) ? "Usuń" : "Przywróć";
+                            $buttonClass = htmlspecialchars($row['czy_dostepny']) ? "btn-danger" : "btn-success";
+
+                            echo "<tr>
+                                    <td>{$gameId}</td>
+                                    <td>{$gameName}</td>
+                                    <td>{$gamePrice}</td>
+                                    <td>{$gameAvailable}</td>
+                                    <td>
+                                        <button class='btn btn-sm btn-primary' onclick=\"location.href='stronaGry.php?id={$gameId}'\">Zobacz stronę gry</button>
+                                        <button class='btn btn-sm btn-primary'>Edytuj</button>
+                                        <form method='post' action='php/remove_retrieve_game.php' style='display:inline;'>
+                                            <input type='hidden' name='id_produktu' value='{$gameId}'>
+                                            <button type='submit' class='btn btn-sm {$buttonClass}'>{$buttonLabel}</button>
+                                        </form>
+                                    </td>
+                                </tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='5'>Brak danych</td></tr>";
+                    }
+
+                    $conn->close();
+                    ?>
 					</tbody>
 				</table>
 			</div>

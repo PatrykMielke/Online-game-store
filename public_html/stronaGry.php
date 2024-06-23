@@ -15,26 +15,54 @@
 <?php 
     include 'templates/navbar.php';
     include 'templates/header.php';
-  
-  ?>
+
+    include './php/config.php';
+
+// Check if game ID is provided
+if (isset($_GET['id'])) {
+    $gameId = intval($_GET['id']);
+
+    // Fetch game details along with tags
+    $sql = "SELECT p.*, GROUP_CONCAT(t.nazwa SEPARATOR ', ') AS tagi
+            FROM produkty p
+            LEFT JOIN tagi t ON p.id_produktu = t.id_produktu
+            WHERE p.id_produktu = ?
+            GROUP BY p.id_produktu";
+    
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $gameId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $game = $result->fetch_assoc();
+    } else {
+        echo "<p class='text-center mt-5'>Gra o podanym ID nie istnieje.</p>";
+        exit;
+    }
+
+    $stmt->close();
+    $conn->close();
+} else {
+    echo "<p class='text-center mt-5'>Nie podano ID gry.</p>";
+    exit;
+}
+?>
 
   
 </header>
 
-<section id="features" class="py-5">
+<section class="text-center">
+    <div class="display-3 font-weight-bold shadow"><?php echo $game ? htmlspecialchars($game['nazwa']) : 'Tutuł gry'; ?></div>
+</section>
+
+<?php if ($game): ?>
+    <section id="screenshots" class="py-5 bg-light">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <h2>Funkcje Gry</h2>
-                    <ul>
-                        <li>Ekscytująca fabuła</li>
-                        <li>Wielu bohaterów do wyboru</li>
-                        <li>Rozbudowany system walki</li>
-                        <li>Piękne lokacje</li>
-                    </ul>
-                </div>
-                <div class="col-lg-6">
-                    <img src="images/game-screenshot1.jpg" class="img-fluid" alt="Screenshot gry">
+            <h2 class="text-center mb-4">Zdjęcie</h2>
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-6 mb-4">
+                    <img src="./img/products/<?php echo htmlspecialchars($game['ikona']); ?>" class="img-fluid" alt="Screenshot gry">
                 </div>
             </div>
         </div>
@@ -42,35 +70,51 @@
 
     <section id="screenshots" class="py-5 bg-light">
         <div class="container">
-            <h2 class="text-center mb-4">Zrzuty Ekranu</h2>
-            <div class="row">
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <img src="images/game-screenshot1.jpg" class="img-fluid" alt="Screenshot gry">
+            <h2 class="text-center mb-4">Opis</h2>
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-6 mb-4">
+                    <div>
+                        <?php echo htmlspecialchars($game['opis']); ?>
+                    </div>
                 </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <img src="images/game-screenshot2.jpg" class="img-fluid" alt="Screenshot gry">
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <img src="images/game-screenshot1.jpg" class="img-fluid" alt="Screenshot gry">
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-2">
+                    <h2>Tagi Gry</h2>
+                    <ul>
+                        <!-- Assuming the tags are stored in a comma-separated string -->
+                        <?php foreach (explode(',', $game['tagi']) as $tag): ?>
+                            <li><?php echo htmlspecialchars(trim($tag)); ?></li>
+                        <?php endforeach; ?>
+                    </ul>
                 </div>
             </div>
         </div>
     </section>
 
     <section id="pricing" class="py-5">
-        <div class="container">
-            <h2 class="text-center mb-4">Cena</h2>
-            <div class="row justify-content-center">
-                <div class="col-lg-4 col-md-6">
-                    <div class="card text-center">
-                        <div class="card-header">
-                            Standard Edition
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title">49.99 PLN</h5>
-                            <p class="card-text">Podstawowa wersja gry.</p>
-                            <button class="cssbuttons-io" data-toggle="modal" data-target="#purchaseModal"
-                            data-title="Standard Edition" data-price="49.99">
+    <div class="container">
+        <h2 class="text-center">Kup teraz</h2>
+        <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-6">
+                <div class="card text-center">
+                    <div class="card-header">
+                        Standard Edition
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title"><?php echo htmlspecialchars($game['cena']); ?> PLN</h5>
+                        <p class="card-text">Podstawowa wersja gry.</p>
+                        <!-- Form should enclose the button and hidden inputs -->
+                        <form id="purchaseForm" method="POST" action="php/kup_gre.php">
+                            <input type="hidden" name="game_id" value="<?php echo htmlspecialchars($game['id_produktu']); ?>">
+                            <input type="hidden" name="game_price" value="<?php echo htmlspecialchars($game['cena']); ?>">
+                            <button class="cssbuttons-io" data-toggle="modal" data-target="#purchaseModal" type="submit"
+                                    data-title="Standard Edition" data-price="<?php echo htmlspecialchars($game['cena']); ?>">
                                 <span>
                                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M0 0h24v24H0z" fill="none"></path>
@@ -79,36 +123,21 @@
                                     Kup
                                 </span>
                             </button>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- Modal do potwierdzenia zakupu -->
-    <div class="modal fade" id="purchaseModal" tabindex="-1" aria-labelledby="purchaseModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="purchaseModalLabel">Potwierdzenie Zakupu</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Zamknij">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p><strong>Tytuł gry:</strong> <span id="gameTitle"></span></p>
-                    <p><strong>Cena gry:</strong> <span id="gamePrice"></span> PLN</p>
-                    <p><strong>Stan konta po zakupie:</strong> <span id="balanceAfterPurchase"></span> PLN</p>
-                    <p>Czy na pewno chcesz kupić tę grę?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Zrezygnuj</button>
-                    <button type="button" class="btn btn-primary" id="confirmPurchaseButton">Kup</button>
-                </div>
-            </div>
-        </div>
     </div>
+</section>
+<?php else: ?>
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center">Nie znaleziono gry</h2>
+            <p class="text-center">ID gry nie zostało podane lub gra nie istnieje.</p>
+        </div>
+    </section>
+<?php endif; ?>
 
     <footer class="bg-dark text-white text-center py-4">
         <div class="container">

@@ -16,7 +16,6 @@
     <div class="collapse navbar-collapse custom-navbar-nav" id="navbarSupportedContent1">
       <ul class="navbar-nav mr-auto">
         
-        
         <li class="nav-item">
           <a class="nav-link custom-nav-link" href="index.php">Strona główna</a>
         </li>
@@ -51,19 +50,14 @@
               <a class="nav-link custom-nav-link" href="dodajSaldo.php">'.$navbar.'zł</a>
             </li>';
             
-          
-
           // sprzedający
-
           if(isset($_SESSION['zalogowany']) and $_SESSION['rola'] == "sprzedajacy"){
             echo '<li class="nav-item">
           <a class="nav-link custom-nav-link" href="sprzedajacy.php">Panel sprzedaży</a>
         </li>';
           }
 
-
           //support 
-
           if (isset($_SESSION['zalogowany']) and $_SESSION['rola'] == "support" or $_SESSION['rola'] == "administrator"){
             echo '<li class="nav-item">
                       <a class="nav-link custom-nav-link" href="wiadomosci.php">Wiadomości</a>
@@ -71,10 +65,7 @@
             
           }
 
-
-
           //admin
-
           if (isset($_SESSION['zalogowany']) and $_SESSION['rola'] == "administrator"){
             echo '<li>  <a href="logowanie.php"><img src="img/login_FILL0_wght400_GRAD0_opsz24.png" alt="Logowanie"></a></li> ';
 
@@ -82,13 +73,8 @@
           <a class="nav-link custom-nav-link" href="panelAdmina.php">Panel Admina</a>
         </li>';
           }
-
           echo '<li> <a href="wyloguj.php" onclick="return confirmLogout();"><img src="img/logout_24dp_FILL0_wght400_GRAD0_opsz24.png" alt="wyloguj"></a></li>';
         }
-
-
-
-
         ?>
     
       </ul>
