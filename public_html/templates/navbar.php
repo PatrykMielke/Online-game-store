@@ -41,6 +41,9 @@
             echo '<li class="nav-item">
                     <a class="nav-link custom-nav-link" href="wyslijWiadomosc.php">Pomoc</a>
                   </li>';
+                  echo '<li class="nav-item">
+                  <a class="nav-link custom-nav-link" href="wiadomoscOdSup.php">Odpowiedzi</a>
+              </li> ';
 
             include_once 'php/saldo.php';
             $navbar = pokazSaldoNavbar(); 
