@@ -81,7 +81,7 @@ session_start();
           <div class="col-9 col-md-2 mx-5 mb-4">
               <div class="card" style="height: 20vh; min-width: 10vw;">
                 <a href="stronaGry.php?id=<?php echo htmlspecialchars($game['id_produktu']); ?>" class="content text-decoration-none bg-gray-700 text-center"> 
-                <img src="./img/products/<?php echo htmlspecialchars($game['ikona']); ?>" alt="<?php echo htmlspecialchars($game['nazwa']); ?>" class="img-thumbnail">
+                <img src="./img/products/<?php echo htmlspecialchars($game['ikona']); ?>" alt="<?php echo htmlspecialchars($game['nazwa']); ?>" class="img-thumbnail" style="height: 80%; width: 100%;">
                   <h4><?php echo htmlspecialchars($game['nazwa']); ?></h4>
                       <div class="back">
                           <div class="back-content">

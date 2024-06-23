@@ -1,9 +1,9 @@
 <?php
-$host='localhost';
+$host='localhost:3308';
 $user='root';
 $password='';
-$dbname='test';
-$prefix='xD_';
+$dbname='steam';
+$prefix='';
 $conn = mysqli_connect($host, $user, $password, $dbname);
 
 # konfiguracja aplikacji
