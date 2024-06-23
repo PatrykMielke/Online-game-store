@@ -1,5 +1,5 @@
 <?php session_start(); 
-if (!isset($_SESSION["id"])){
+if (!isset($_SESSION["id"]) or $_SESSION['rola'] != "administrator"){
     header("location: index.php");
 }?>
 <!DOCTYPE html>

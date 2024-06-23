@@ -1,7 +1,7 @@
 <?php
 session_start();
   // sprawdź czy instnieje plik konfiguracyjny
-  if (file_exists("config.php")) {
+  if (file_exists("php/config.php")) {
       include 'config.php';
   }
   else{
