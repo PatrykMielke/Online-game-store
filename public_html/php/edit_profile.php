@@ -3,7 +3,7 @@
 function load_description(){
     include 'config.php';
     // Check if user or email already exists
-    $stmt = $conn->prepare(`select opis from {$prefix}uzytkownicy where id_uzytkownik = ?`);
+    $stmt = $conn->prepare(`select opis from {$prefix}uzytkownicy where id_uzytkownika = ?`);
     $stmt ->bind_param("i", $id);
     $id = $_SESSION['id'];
 
@@ -74,7 +74,7 @@ var_dump($_FILES) ;
             include 'config.php';
     
             // Prepare product insertion query
-            $sql = 'update uzytkownicy set opis = ? , avatar = ? where id_uzytkownika = ?';
+            $sql = `update {$prefix}uzytkownicy set opis = ? , avatar = ? where id_uzytkownika = ?`;
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("ssi", $opis, $newFileName, $_SESSION['id']);
             var_dump($newFileName);

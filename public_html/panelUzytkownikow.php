@@ -138,7 +138,7 @@ include 'templates/header.php';
                                             <input type='hidden' name='id_uzytkownik' value='{$userId}'>
                                             <select name='new_rola' class='form-control role-select' data-user-id='{$userId}'>
                                                 <option value='sprzedajacy'" . ($role == 'sprzedajacy' ? ' selected' : '') . ">Sprzedający</option>
-                                                <option value='kupujący'" . ($role == 'kupujący' ? ' selected' : '') . ">Kupujący</option>
+                                                <option value='kupujacy'" . ($role == 'kupujacy' ? ' selected' : '') . ">Kupujący</option>
                                                 <option value='administrator'" . ($role == 'administrator' ? ' selected' : '') . ">Administrator</option>
                                             </select>
                                             <button type='submit' class='btn btn-sm btn-success save-role-btn m-2' id='save-role-{$userId}' style='display: none;'>Zapisz rolę</button>

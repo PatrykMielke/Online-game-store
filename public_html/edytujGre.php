@@ -6,7 +6,7 @@ if (!isset($_SESSION["rola"]) or $_SESSION["rola"] == "kupujący"){
 // Function to fetch data from the database
 function getProductData($productId) {
     include 'php/config.php';
-    $stmt = $conn->prepare("SELECT produkty.`id_produktu`,produkty.nazwa pn,GROUP_CONCAT(tagi.nazwa SEPARATOR ', ') AS tn,opis, cena from produkty inner join tagi on tagi.id_produktu = produkty.id_produktu where produkty.id_produktu = ? GROUP BY produkty.id_produktu");
+    $stmt = $conn->prepare(`SELECT produkty.id_produktu,produkty.nazwa pn,GROUP_CONCAT(tagi.nazwa SEPARATOR ', ') AS tn,opis, cena from {$prefix}produkty p inner join {$prefix}tagi t on t.id_produktu = p.id_produktu where p.id_produktu = ? GROUP BY p.id_produktu`);
     $stmt->bind_param("i", $productId);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -16,7 +16,7 @@ function getProductData($productId) {
 // Function to update data in the database
 function updateProductData($productId, $name, $description, $price, $tags, $image) {
     include 'php/config.php';
-    $sql = "UPDATE products SET name = ?, description = ?, price = ?, tags = ?, image = ? WHERE id = ?";
+    $sql = `UPDATE {$prefix}products SET name = ?, description = ?, price = ?, tags = ?, image = ? WHERE id = ?`;
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ssdsbi", $name, $description, $price, $tags, $image, $productId);
     return $stmt->execute();

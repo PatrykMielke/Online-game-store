@@ -6,7 +6,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $gameId = $_POST['id_produktu'];
 
     // Retrieve the current value of 'czy_dostepny'
-    $query = "SELECT czy_dostepny FROM produkty WHERE id_produktu = ?";
+    $query = `SELECT czy_dostepny FROM {$prefix}produkty WHERE id_produktu = ?`;
     $stmt = $conn->prepare($query);
     $stmt->bind_param('i', $gameId);
     $stmt->execute();
@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $newStatus = $currentStatus == 1 ? 0 : 1;
 
         // Update the 'czy_dostepny' field
-        $updateQuery = "UPDATE produkty SET czy_dostepny = ? WHERE id_produktu = ?";
+        $updateQuery = `UPDATE {$prefix}produkty SET czy_dostepny = ? WHERE id_produktu = ?`;
         $updateStmt = $conn->prepare($updateQuery);
         $updateStmt->bind_param('ii', $newStatus, $gameId);
         $updateStmt->execute();

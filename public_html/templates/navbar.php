@@ -67,7 +67,7 @@
 
           //admin
           if (isset($_SESSION['zalogowany']) and $_SESSION['rola'] == "administrator"){
-            echo '<li>  <a href="logowanie.php"><img src="img/login_FILL0_wght400_GRAD0_opsz24.png" alt="Logowanie"></a></li> ';
+            
 
             echo '<li class="nav-item">
           <a class="nav-link custom-nav-link" href="panelAdmina.php">Panel Admina</a>
