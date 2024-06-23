@@ -28,23 +28,41 @@
                 <form method="POST" action="php/edit_profile.php">
                     <!-- Pozostałe pola formularza -->
                     <div class="form-group">
-                        <label for="opis">
-                        </label>
-                        <input type="text" class="form-control" id="opis" name="description" placeholder="Opis" value="<?php
+                        <label for="opis">Opis</label>
+                        <input type="text" class="form-control" id="opis" name="opis" placeholder="Opis" value="<?php
+                            load_description();
+                        ?>"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="nazwa">Nazwa</label>
+                        <input type="text" class="form-control" id="nazwa" name="nazwa" placeholder="nazwa" value="<?php
+                            load_description();
+                        ?>"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">E-mail</label>
+                        <input type="text" class="form-control" id="email" name="email" placeholder="email" value="<?php
                             load_description();
                         ?>"/>
                     </div>
 
-
-                    <!-- Zdjęcie profilowe -->
-                    <div class="profile-image-section">
-                        <label for="profilePic" class="d-block">Avatar</label>
-                        <img id="profileImage" src="img/default_profile.png" alt="Zdjęcie profilowe" class="img-thumbnail mb-2" />
-                        <input type="file" class="form-control-file" id="profilePic" onchange="previewProfileImage(event)" name="profilePic" />
-                    </div>
-
                     <button type="submit" class="btn btn-primary mt-3">Zapisz zmiany</button>
                 </form>
+
+                <form method="POST" action="php/edit_profile.php">
+                    <!-- Pozostałe pola formularza -->
+                    <div class="form-group">
+                        <label for="opis">Hasło</label>
+                        <input type="password" class="form-control" id="opis" name="password" placeholder="Hasło">
+                    </div>
+                    <div class="form-group">
+                        <label for="opis">Powtórz hasło</label>
+                        <input type="password" class="form-control" id="opis" name="password2" placeholder="Powtórz hasło">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary mt-3">Zmień hasło</button>
+                </form>
+
             </div>
         </div>
     </div>

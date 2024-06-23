@@ -28,7 +28,7 @@ if (isset($_POST['game_id']) && isset($_POST['game_price'])) {
     }
 
     // Fetch user balance
-    $fetchBalanceSql = "SELECT `{$prefix}saldo` FROM uzytkownicy WHERE id_uzytkownika = ?";
+    $fetchBalanceSql = "SELECT saldo FROM `{$prefix}uzytkownicy` WHERE id_uzytkownika = ?";
     $stmt = $conn->prepare($fetchBalanceSql);
     $stmt->bind_param("i", $userId);
     $stmt->execute();

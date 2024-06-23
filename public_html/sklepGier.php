@@ -5,7 +5,7 @@ session_start();
 include './php/config.php';
 
 // Fetch all tags from the database
-$sql_tags = "SELECT DISTINCT nazwa FROM tagi";
+$sql_tags = "SELECT DISTINCT nazwa FROM `{$prefix}tagi`";
 $result_tags = $conn->query($sql_tags);
 
 $tags = [];
@@ -23,8 +23,8 @@ if (!empty($_POST['tags'])) {
 
 // Construct the base SQL query
 $sql = "SELECT p.id_produktu, p.nazwa AS nazwa_produktu, p.id_wydawcy, p.ikona, p.cena, p.czy_dostepny, p.opis, GROUP_CONCAT(t.nazwa SEPARATOR ', ') AS tagi
-        FROM produkty p
-        LEFT JOIN tagi t ON p.id_produktu = t.id_produktu";
+        FROM `{$prefix}produkty` p
+        LEFT JOIN `{$prefix}tagi` t ON p.id_produktu = t.id_produktu";
 
 // Add availability condition
 $sql .= " WHERE p.czy_dostepny = 1";

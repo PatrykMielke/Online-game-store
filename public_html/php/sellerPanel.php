@@ -24,7 +24,7 @@
                     <td>'.$row['nazwa'].'</td>
                     <td>'.$row['cena'].'</td>
                     <td>
-                    <a href="edytujGre.php?id="'.$row['id_produktu'].'">
+                    <a href="edytujGre.php?id='.$row['id_produktu'].'">
                         <button
                             class="btn btn-primary"
                         >
@@ -35,7 +35,7 @@
                             name="submit"
                             data-toggle="modal"
                             data-target="#deleteProductModal"
-                            data-id="'.$row['id_produktu'].'"
+                            data-id="'.$row['id_produktu'].'" 
                             type="button"
                         >
                             Usuń
