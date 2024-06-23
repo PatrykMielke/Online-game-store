@@ -130,7 +130,7 @@ function load_games(){
                 
                 echo '<div class="card-body">
                 <a href="stronaGry.php?id='.$row['id_produktu'].'">
-                    <img src="https://picsum.photos/200?image=1005" alt="Gra" />
+                    <img src="./img/products/'.$row['ikona'].'" alt="Gra" style="max-width: 150px" />
                     <p>'.$row['nazwa'].'</p></a>
                 </div>';
                 echo '</div>';

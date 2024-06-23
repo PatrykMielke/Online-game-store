@@ -24,70 +24,123 @@ function load_description(){
     }
 }
 
+function load_name(){
+    include 'config.php';
+    // Check if user or email already exists
+    $stmt = $conn->prepare("select nazwa from `{$prefix}uzytkownicy` where id_uzytkownika = ?");
+    $stmt ->bind_param("i", $id);
+    $id = $_SESSION['id'];
 
+    if($stmt->execute()){
+      $result = $stmt->get_result();
+
+      if ($result->num_rows > 0){
+          $row = $result -> fetch_assoc();
+          $opis = $row['nazwa'];
+          echo $opis;
+      }
+      else{
+          echo "";
+      }
+    }
+    else{
+      echo "";
+    }
+}
+
+function load_email(){
+    include 'config.php';
+    // Check if user or email already exists
+    $stmt = $conn->prepare("select email from `{$prefix}uzytkownicy` where id_uzytkownika = ?");
+    $stmt ->bind_param("i", $id);
+    $id = $_SESSION['id'];
+
+    if($stmt->execute()){
+      $result = $stmt->get_result();
+
+      if ($result->num_rows > 0){
+          $row = $result -> fetch_assoc();
+          $opis = $row['email'];
+          echo $opis;
+      }
+      else{
+          echo "";
+      }
+    }
+    else{
+      echo "";
+    }
+}
 
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $opis = $_POST['description'];
-        $uploadDir = '../img/avatars/';
-
-
-        $uploadedFiles = array();
-        $errors = array();
-var_dump($_FILES) ;
-        foreach ($_FILES['profilePic']['name'] as $key => $name) {
-            $tmp_name = $_FILES['profilePic']['tmp_name'][$key];
-            $target_file = $uploadDir . basename($name);
-            $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-    
-            // Check if image file is a actual image or fake image
-            $check = getimagesize($tmp_name);
-            if ($check === false) {
-                $errors[] = "File {$name} is not an image.";
-                continue;
+        if(isset($_POST["zmiendane"])){
+            if(empty($_POST['nazwa']) or empty($_POST['email'])){
+                echo "przesłano formularz z pustymi danymi";
+                exit;
             }
-    
-            // Check file size (5MB limit)
-            if ($_FILES['profilePic']['size'][$key] > 5000000) {
-                $errors[] = "Sorry, file {$name} is too large.";
-                continue;
-            }
-    
-            // Allow certain file formats
-            $allowedTypes = array('jpg', 'jpeg', 'png', 'gif');
-            if (!in_array($imageFileType, $allowedTypes)) {
-                $errors[] = "Sorry, only JPG, JPEG, PNG & GIF files are allowed for {$name}.";
-                continue;
-            }
-    
-            // Move uploaded file to specified directory
-            $newFileName = "product-img_" . uniqid() . ".$imageFileType"; // Generate a unique filename
-            $target_file = $uploadDir . $newFileName;
-            if (move_uploaded_file($tmp_name, $target_file)) {
-                $uploadedFiles[] = $target_file;
-            } else {
-                $errors[] = "Sorry, there was an error uploading file {$name}.";
-            }
-        }
-        
-        if (!empty($uploadedFiles)) {
             include 'config.php';
-    
-            // Prepare product insertion query
-            $sql = "update `{$prefix}uzytkownicy` set opis = ? , avatar = ? where id_uzytkownika = ?";
+
+
+            // Check if user or email already exists
+            $stmt = $conn->prepare("SELECT email FROM `{$prefix}uzytkownicy` WHERE email = ?");
+            $stmt->bind_param("s", $email);
+            $email = trim($_POST['email']);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result->num_rows > 0) {
+                echo "Username or email already exists.";
+                return;
+            }
+
+
+
+            $sql = "UPDATE `{$prefix}uzytkownicy` SET nazwa = ?, opis = ?, email = ? WHERE id_uzytkownika = ?";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("ssi", $opis, $newFileName, $_SESSION['id']);
-            var_dump($newFileName);
-            if (!$stmt) {
-                echo "Error preparing statement: " . $conn->error;
+            $stmt->bind_param("sssi", $_POST['nazwa'], $_POST['opis'], $_POST['email'], $_SESSION['id']);
+           
+            if($stmt->execute()){
+                $id_sesji = $_SESSION['id'];
+                header("location: profil.php?id=$id_sesji");
+            }
+            else{
+                echo "blad";
+            }
+
+            
+        }
+        else if (isset($_POST["zmienhaslo"])){
+            if(empty($_POST['password']) or empty($_POST['password2'])){
+                echo "przesłano formularz z pustymi danymi";
                 exit;
             }
-            if (!$stmt->execute()) {
-                echo "Error updating data: " . $stmt->error;
+            if($_POST['password'] != $_POST['password2']){
+                echo "Hasła nie są identyczne";
                 exit;
+            }
+            include 'config.php';
+            
+
+
+
+            $noweHaslo = password_hash($_POST['password'],PASSWORD_BCRYPT);
+            $sql = "UPDATE `{$prefix}uzytkownicy` SET haslo = ? WHERE id_uzytkownika = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("si", $noweHaslo,$id);
+            $noweHaslo = password_hash(trim($_POST['password']),PASSWORD_BCRYPT) ;
+            $id = $_SESSION['id'];
+            if($stmt->execute()){
+                $id_sesji = $_SESSION['id'];
+                header("location: profil.php?id=$id_sesji");
+            }
+            else{
+                echo "blad";
             }
         }
-       
+
+
 
     }
+        
 ?>
