@@ -99,7 +99,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Zrezygnuj</button>
                     <form method="post">
-                        <input type="text" id="wartosc" name="wartosc" value="">
+                        <input type="hidden" id="wartosc" name="wartosc" value="">
                         <button type="submit" class="btn btn-primary" id="confirmAddFundsButton" name="submit">Dodaj środki</button>
                     </form>
                     

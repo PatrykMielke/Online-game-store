@@ -44,14 +44,16 @@ require 'php/profile_functions.php';
 					</div>
           <div> 
 			
-		<?php
-			if (isset($_SESSION['zalogowany']) and $_SESSION['id'] == $_GET['id'])
-			{ echo '<a class="btn btn-primary" href="edytujProfil.php">Edytuj profil</a></div>';
-				echo '<a class="btn btn-primary" href="edytujDane.php">Edytuj dane</a></div>'; }
-
-			if (isset($_SESSION['zalogowany']) and $_SESSION['id'] != $_GET['id'])
-			{ echo '<a class="btn btn-primary" href="dodajDoZnajomych.php">Dodaj do znajomych</a></div>'; }
-		?>
+		  <div class="mt-3 mb-3">
+          <?php
+          if (isset($_SESSION['zalogowany']) && $_SESSION['id'] == $_GET['id']) {
+            echo '<a class="btn btn-primary mb-2 mr-2" href="edytujProfil.php">Edytuj profil</a>';
+            echo '<a class="btn btn-primary mb-2" href="edytujDane.php">Edytuj dane</a>';
+          } elseif (isset($_SESSION['zalogowany']) && $_SESSION['id'] != $_GET['id']) {
+            echo '<a class="btn btn-primary mb-2" href="dodajDoZnajomych.php">Dodaj do znajomych</a>';
+          }
+          ?>
+        </div>
 
 					<div class="profile-details">
 						<h3>Opis</h3>
@@ -60,20 +62,22 @@ require 'php/profile_functions.php';
 						</p>
 
 						<h3> Posiadane gry</h3>
-						<ul>
+						
+						<div class="row">
 							<?php
 								load_games();
 							?>
-						</ul>
+							</div>
+						
 
 						<h3>Znajomi</h3>
 						<div class="friends-list">
-
+		  					<div class="row">
 
 							<?php 
 								load_friends();
 							?>
-
+</div>
 						</div>
 						</div>
 					</div>
