@@ -12,13 +12,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $userId = $_POST['id_uzytkownik'];
         $newRole = $_POST['new_rola'];
 
-        $updateSql = "UPDATE uzytkownicy SET rola = ? WHERE id_uzytkownika = ?";
+        $updateSql = "UPDATE `{$prefix}uzytkownicy` SET rola = ? WHERE id_uzytkownika = ?";
         $stmt = $conn->prepare($updateSql);
         $stmt->bind_param('si', $newRole, $userId);
         if ($stmt->execute()) {
             // Redirect back to the current page after updating
-            header("Location: {$_SERVER['PHP_SELF']}");
-            exit();
+            header("Location: {$_SERVER['PHP_SELF']}");exit();
         } else {
             echo "Error: " . $conn->error;
         }
@@ -32,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Toggle czy_aktywny field
         $newActive = $isActive == 1 ? 0 : 1;
 
-        $updateSql = "UPDATE uzytkownicy SET czy_aktywny = ? WHERE id_uzytkownika = ?";
+        $updateSql = "UPDATE `{$prefix}uzytkownicy` SET czy_aktywny = ? WHERE id_uzytkownika = ?";
         $stmt = $conn->prepare($updateSql);
         $stmt->bind_param('ii', $newActive, $userId);
         if ($stmt->execute()) {
@@ -46,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // Select all users
-$sql = "SELECT * FROM uzytkownicy";
+$sql = "SELECT * FROM `{$prefix}uzytkownicy`";
 $result = $conn->query($sql);
 
 ?>
@@ -110,7 +109,7 @@ include 'templates/header.php';
                 if ($result) {
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
-                            $userId = $row["id_uzytkownik"];
+                            $userId = $row["id_uzytkownika"];
                             $name = $row["nazwa"];
                             $email = $row["email"];
                             $role = $row["rola"];
@@ -138,7 +137,7 @@ include 'templates/header.php';
                                             <input type='hidden' name='id_uzytkownik' value='{$userId}'>
                                             <select name='new_rola' class='form-control role-select' data-user-id='{$userId}'>
                                                 <option value='sprzedajacy'" . ($role == 'sprzedajacy' ? ' selected' : '') . ">Sprzedający</option>
-                                                <option value='kupujący'" . ($role == 'kupujący' ? ' selected' : '') . ">Kupujący</option>
+                                                <option value='kupujacy'" . ($role == 'kupujacy' ? ' selected' : '') . ">Kupujący</option>
                                                 <option value='administrator'" . ($role == 'administrator' ? ' selected' : '') . ">Administrator</option>
                                             </select>
                                             <button type='submit' class='btn btn-sm btn-success save-role-btn m-2' id='save-role-{$userId}' style='display: none;'>Zapisz rolę</button>

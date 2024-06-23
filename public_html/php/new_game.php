@@ -65,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         include 'config.php';
 
         // Prepare product insertion query
-        $insertProductSql = 'INSERT INTO produkty (nazwa, cena, opis, ikona) VALUES (?, ?, ?, ?)';
+        $insertProductSql = "INSERT INTO `{$prefix}produkty` (nazwa, id_wydawcy, cena, opis, ikona) VALUES (?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($insertProductSql);
         if (!$stmt) {
             echo "Error preparing statement: " . $conn->error;
@@ -73,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         // Bind parameters and execute product insertion
-        $stmt->bind_param("sdss", $productName, $productPrice, $productDescription, $newFileName);
+        $stmt->bind_param("sidss", $productName,$_SESSION['id'], $productPrice, $productDescription, $newFileName);
         if (!$stmt->execute()) {
             echo "Error inserting product: " . $stmt->error;
             exit;
@@ -86,7 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->close();
 
         // Prepare tag insertion query
-        $insertTagSql = 'INSERT INTO tagi (nazwa, id_produktu) VALUES (?, ?)';
+        $insertTagSql = "INSERT INTO `{$prefix}tagi` (nazwa, id_produktu) VALUES (?, ?)";
         $stmt = $conn->prepare($insertTagSql);
         if (!$stmt) {
             echo "Error preparing statement: " . $conn->error;
@@ -121,6 +121,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         foreach ($uploadedFiles as $file) {
             echo "<img src='{$file}' width='200'><br>";
         }
+        header("Location: ../sprzedajacy.php");
     } else {
         // Display errors if any
         foreach ($errors as $error) {

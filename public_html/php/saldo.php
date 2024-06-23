@@ -1,11 +1,11 @@
 <?php
-error_reporting(E_PARSE);
+//error_reporting(E_PARSE);
 function pokazSaldo(){
 
     include 'config.php';
       // Check if user or email already exists
-      $stmt = $conn->prepare("select saldo from uzytkownicy where id_uzytkownika = ?");
-      $stmt ->bind_param("s", $id);
+      $stmt = $conn->prepare("select saldo from `{$prefix}uzytkownicy` where id_uzytkownika = ?");
+      $stmt ->bind_param("i", $id);
       $id = $_SESSION['id'];
   
       if($stmt->execute()){
@@ -27,15 +27,14 @@ function pokazSaldo(){
 
 function pokazSaldoNavbar(){
 
-    include 'config.php';
-      // Check if user or email already exists
-      $stmt = $conn->prepare("select saldo from uzytkownicy where id_uzytkownika = ?");
-      $stmt ->bind_param("s", $id);
-      $id = $_SESSION['id'];
+    include 'php/config.php';
+      $stmt = $conn->prepare("select saldo from `{$prefix}uzytkownicy` where id_uzytkownika = ?");
+      $stmt ->bind_param('i', $idXD);
+      $idXD = $_SESSION['id'];
   
       if($stmt->execute()){
         $result = $stmt->get_result();
-  
+        
         if ($result->num_rows > 0){
             $row = $result -> fetch_assoc();
             $saldo = $row['saldo'];
@@ -58,7 +57,7 @@ function dodajSaldo(){
 
         include 'config.php';
 
-        $stmt = $conn->prepare("update uzytkownicy set saldo = saldo + ? where id_uzytkownika = ?");
+        $stmt = $conn->prepare("update `{$prefix}uzytkownicy` set saldo = saldo + ? where id_uzytkownika = ?");
         $stmt->bind_param("ss", $wartoscXD,$idXD);
         $wartoscXD = $wartosc;
         $idXD = $_SESSION['id'];

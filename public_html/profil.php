@@ -69,16 +69,6 @@ require 'php/profile_functions.php';
 							?>
 							</div>
 						
-
-						<h3>Znajomi</h3>
-						<div class="friends-list">
-		  					<div class="row">
-
-							<?php 
-								load_friends();
-							?>
-</div>
-						</div>
 						</div>
 					</div>
 				</div>

@@ -3,7 +3,7 @@
 function load_description(){
     include 'config.php';
     // Check if user or email already exists
-    $stmt = $conn->prepare("select opis from uzytkownicy where id_uzytkownik = ?");
+    $stmt = $conn->prepare("select opis from `{$prefix}uzytkownicy` where id_uzytkownika = ?");
     $stmt ->bind_param("i", $id);
     $id = $_GET['id'];
 
@@ -27,7 +27,7 @@ function load_description(){
 function load_avatar(){
   include 'config.php';
     // Check if user or email already exists
-    $stmt = $conn->prepare("select avatar from uzytkownicy where id_uzytkownika = ?");
+    $stmt = $conn->prepare("select avatar from `{$prefix}uzytkownicy` where id_uzytkownika = ?");
     $stmt ->bind_param("i", $id);
     $id = $_GET['id'];
 
@@ -56,7 +56,7 @@ function load_avatar(){
 function load_name(){
   include 'config.php';
     // Check if user or email already exists
-    $stmt = $conn->prepare("select nazwa from uzytkownicy where id_uzytkownika = ?");
+    $stmt = $conn->prepare("select nazwa from `{$prefix}uzytkownicy` where id_uzytkownika = ?");
     $stmt ->bind_param("i", $id);
     $id = $_GET['id'];
 
@@ -78,7 +78,7 @@ function load_name(){
 }
 function load_friends(){
     include 'config.php';
-      $stmt = $conn->prepare("SELECT id_uzytkownik2, nazwa, avatar FROM znajomi z inner join uzytkownicy u on id_uzytkownik2 = u.id_uzytkownika where id_uzytkownik1 = ?;");
+      $stmt = $conn->prepare("SELECT id_uzytkownik2, nazwa, avatar FROM `{$prefix}znajomi` z inner join `{$prefix}uzytkownicy` u on id_uzytkownik2 = u.id_uzytkownika where id_uzytkownik1 = ?;");
       $stmt ->bind_param("i", $id);
       $id = $_GET['id'];;
   
@@ -113,8 +113,8 @@ function load_friends(){
 
 function load_games(){
     include 'config.php';
-      $stmt = $conn->prepare("SELECT produkty.id_produktu, nazwa, ikona FROM `produkty` inner join posiadane_programy on 
-      posiadane_programy.id_produkt = produkty.id_produktu where posiadane_programy.id_uzytkownika = ?;");
+      $stmt = $conn->prepare("SELECT p.id_produktu, nazwa, ikona FROM `{$prefix}produkty` p inner join `{$prefix}posiadane_programy` pp on 
+      pp.id_produktu = p.id_produktu where pp.id_uzytkownika = ?;");
       $stmt ->bind_param("i", $id);
       $id = $_GET['id'];;
   
@@ -129,7 +129,7 @@ function load_games(){
               echo '<div class="card">';      
                 
                 echo '<div class="card-body">
-                <a href="stronaGry.php?id='.$row['id_produkt'].'">
+                <a href="stronaGry.php?id='.$row['id_produktu'].'">
                     <img src="https://picsum.photos/200?image=1005" alt="Gra" />
                     <p>'.$row['nazwa'].'</p></a>
                 </div>';

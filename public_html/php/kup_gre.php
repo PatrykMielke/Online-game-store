@@ -14,7 +14,7 @@ if (isset($_POST['game_id']) && isset($_POST['game_price'])) {
     $gamePrice = floatval($_POST['game_price']);
 
     // Check if user already owns the game
-    $checkOwnershipSql = "SELECT * FROM posiadane_programy WHERE id_uzytkownika = ? AND id_produktu = ?";
+    $checkOwnershipSql = "SELECT * FROM `{$prefix}posiadane_programy` WHERE id_uzytkownika = ? AND id_produktu = ?";
     $checkStmt = $conn->prepare($checkOwnershipSql);
     $checkStmt->bind_param("ii", $userId, $gameId);
     $checkStmt->execute();
@@ -28,7 +28,7 @@ if (isset($_POST['game_id']) && isset($_POST['game_price'])) {
     }
 
     // Fetch user balance
-    $fetchBalanceSql = "SELECT saldo FROM uzytkownicy WHERE id_uzytkownika = ?";
+    $fetchBalanceSql = "SELECT `{$prefix}saldo` FROM uzytkownicy WHERE id_uzytkownika = ?";
     $stmt = $conn->prepare($fetchBalanceSql);
     $stmt->bind_param("i", $userId);
     $stmt->execute();
@@ -41,13 +41,13 @@ if (isset($_POST['game_id']) && isset($_POST['game_price'])) {
         if ($userBalance >= $gamePrice) {
             // Deduct the game price from user balance
             $newBalance = $userBalance - $gamePrice;
-            $updateBalanceSql = "UPDATE uzytkownicy SET saldo = ? WHERE id_uzytkownika = ?";
+            $updateBalanceSql = "UPDATE `{$prefix}uzytkownicy` SET saldo = ? WHERE id_uzytkownika = ?";
             $updateStmt = $conn->prepare($updateBalanceSql);
             $updateStmt->bind_param("di", $newBalance, $userId);
             $updateStmt->execute();
 
             // Add the game to user's purchases
-            $purchaseSql = "INSERT INTO posiadane_programy (id_uzytkownika, id_produktu, data_zakupu, cena) VALUES (?, ?, NOW(), ?)";
+            $purchaseSql = "INSERT INTO `{$prefix}posiadane_programy` (id_uzytkownika, id_produktu, data_zakupu, cena) VALUES (?, ?, NOW(), ?)";
             $purchaseStmt = $conn->prepare($purchaseSql);
             $purchaseStmt->bind_param("iii", $userId, $gameId, $gamePrice);
             $purchaseStmt->execute();
