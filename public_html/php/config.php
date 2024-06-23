@@ -16,7 +16,7 @@ $adres1='x';
 $adres2='x';
 $adres3='x';
 $admin_login='x';
-$admin_password='$2y$10$F4aUQocjqgyH2fiivji1y.q493KMtnSiuzhNLpzDrj//dVD3Dci1u';
+//$admin_password='$2y$10$F4aUQocjqgyH2fiivji1y.q493KMtnSiuzhNLpzDrj//dVD3Dci1u';
 
     if ( $conn->connect_error) {
     die('Connection failed: ' .$conn->connect_error);
