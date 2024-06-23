@@ -56,11 +56,11 @@
                                     <td>{$gameAvailable}</td>
                                     <td>
                                         <button class='btn btn-sm btn-primary' onclick=\"location.href='stronaGry.php?id={$gameId}'\">Zobacz stronę gry</button>
-                                        <button class='btn btn-sm btn-primary'>Edytuj</button>
+                                        <button class='btn btn-sm btn-primary' onclick=\"location.href='edytujGre.php?id={$gameId}'\">Edytuj</button>
                                         <form method='post' action='php/remove_retrieve_game.php' style='display:inline;'>
-                                            <input type='hidden' name='id_produktu' value='{$gameId}'>
-                                            <button type='submit' class='btn btn-sm {$buttonClass}'>{$buttonLabel}</button>
-                                        </form>
+											<input type='hidden' name='id_produktu' value='{$gameId}'>
+											<button type='submit' onclick=\"return areYouSure();\" class='btn btn-sm {$buttonClass}'>{$buttonLabel}</button>
+										</form>
                                     </td>
                                 </tr>";
                         }
@@ -78,6 +78,11 @@
 		<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 		<script src="js/wyszukiwarka.js">
 			// Funkcja filtrowania tabeli
+		</script>
+		<script>
+			function areYouSure() {
+				return confirm("Czy na pewno chcesz usunąć ten produkt ze sprzedaży?");
+			}
 		</script>
 	</body>
 </html>
