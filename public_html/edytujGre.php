@@ -8,26 +8,19 @@ if (!isset($_SESSION["rola"]) || $_SESSION["rola"] == "kupujący") {
 // Function to fetch data from the database
 function getProductData($productId) {
     include 'php/config.php';
-    $stmt = $conn->prepare("SELECT produkty.id_produktu, produkty.nazwa AS pn, GROUP_CONCAT(tagi.nazwa SEPARATOR ', ') AS tn, opis, cena, ikona FROM produkty INNER JOIN tagi ON tagi.id_produktu = produkty.id_produktu WHERE produkty.id_produktu = ? GROUP BY produkty.id_produktu");
+    $stmt = $conn->prepare("SELECT produkty.id_produktu, produkty.nazwa AS pn, GROUP_CONCAT(tagi.nazwa SEPARATOR ', ') AS tn, opis, cena FROM produkty INNER JOIN tagi ON tagi.id_produktu = produkty.id_produktu WHERE produkty.id_produktu = ? GROUP BY produkty.id_produktu");
     $stmt->bind_param("i", $productId);
     $stmt->execute();
     $result = $stmt->get_result();
     return $result->fetch_assoc();
 }
 
-function updateProductData($productId, $name, $description, $price, $tags, $image) {
+function updateProductData($productId, $name, $description, $price, $tags) {
     include 'php/config.php';
     
-    // Prepare the SQL statement based on whether an image is provided
-    if (!empty($image)) {
-        $sql = "UPDATE produkty SET nazwa = ?, opis = ?, cena = ?, ikona = ? WHERE id_produktu = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ssdsi", $name, $description, $price, $image, $productId);
-    } else {
         $sql = "UPDATE produkty SET nazwa = ?, opis = ?, cena = ? WHERE id_produktu = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ssdi", $name, $description, $price, $productId);
-    }
     $result = $stmt->execute();
 
     // Update product tags
@@ -51,31 +44,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $description = $_POST['productDescription'];
     $price = $_POST['productPrice'];
     $tags = $_POST['productTags']; // Assuming tags are sent as an array
-    $image = $_FILES['productImages']['name'][0]; // Handling single image upload for simplicity
-
-    // Handling file upload
-    if (!empty($image)) {
-        $uploadDir = "./img/products/";
-        $tmp_name = $_FILES['productImages']['tmp_name'][0];
-        $imageFileType = strtolower(pathinfo($image, PATHINFO_EXTENSION));
-
-        // Generate unique filename
-        $uniqueId = uniqid();
-        $newFileName = "product-img_{$uniqueId}.{$imageFileType}";
-
-        // Move uploaded file to specified directory with new filename
-        $target_file = $uploadDir . $newFileName;
-        if (!move_uploaded_file($tmp_name, $target_file)) {
-            echo "Sorry, there was an error uploading file {$image}.";
-            exit;
-        }
-    } else {
-        // If no new image is uploaded, do not update the image field
-        $newFileName = null;
-    }
 
     // Update product data in the database
-    if (updateProductData($productId, $name, $description, $price, $tags, $newFileName)) {
+    if (updateProductData($productId, $name, $description, $price, $tags)) {
         echo "Product updated successfully.";
         header("refresh: 1");
     } else {
@@ -145,14 +116,6 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                 <div class="mb-3">
                     <label for="productPrice" class="form-label">Cena (PLN)</label>
                     <input type="number" step=0.01 class="form-control" id="productPrice" name="productPrice" placeholder="Wpisz cenę" required value="<?php echo htmlspecialchars($productData['cena']); ?>">
-                </div>
-                <div class="mb-3">
-                    <label for="productImages" class="form-label">Zdjęcie Produktu</label>
-                    <?php if (!empty($productData['ikona'])): ?>
-                        <p>Produkt ma już zdjęcie, jeżeli chcesz je zamienić prześlij nowe zdjęcie.</p>
-                        <img src="./img/products/<?php echo htmlspecialchars($productData['ikona']); ?>" alt="Current Product Image" style="max-width: 200px;">
-                    <?php endif; ?>
-                    <input type="file" class="form-control" id="productImages" name="productImages[]" multiple>
                 </div>
                 <button type="submit" class="btn btn-primary w-100">Wystaw Produkt</button>
             </form>

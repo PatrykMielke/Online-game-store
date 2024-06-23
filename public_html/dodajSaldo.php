@@ -5,8 +5,6 @@
         header('location:zalogowany.php');
     }
 
-
-    require 'php/saldo.php';
 ?>
 <!DOCTYPE html>
 <html lang="pl">
