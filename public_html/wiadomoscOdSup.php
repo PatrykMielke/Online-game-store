@@ -23,20 +23,20 @@ if (!isset($_SESSION["id"])){
 
 <div class="container messages-table">
         <div class="table-wrapper">
-            <h3 class="text-center">Wiadomości od Użytkowników</h3>
+            <h3 class="text-center">Odpowiedzi od pracowników</h3>
             <table class="table table-striped">
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Nazwa</th>
                         <th>Temat</th>
-                        <th>Akcja</th>
+                        <th>Pytanie</th>
+                        <th>Odpowiedź</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
                         require 'php/load_messages.php';
-                        load_messages();
+                        load_messages_from_admin();
                     ?>
                     
                     <!-- Dodaj więcej wierszy według potrzeb -->

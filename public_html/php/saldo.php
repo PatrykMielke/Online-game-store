@@ -1,5 +1,5 @@
 <?php
-
+error_reporting(E_PARSE);
 function pokazSaldo(){
 
     include 'config.php';

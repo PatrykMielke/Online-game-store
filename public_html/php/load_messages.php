@@ -64,4 +64,38 @@ function load_messages(){
     }
 }
 
+function load_messages_from_admin(){
+    include 'config.php';
+    $stmt = $conn->prepare("SELECT * FROM `odpowiedzi_od_supportu` o inner join wiadomosci_od_uzytkownikow w on w.id_wiadomosci = o.id_wiadomosci where w.id_uzytkownik = ?;");
+    $stmt -> bind_param("i",$_SESSION['id']);
+
+    if($stmt->execute())
+    {
+        $result = $stmt -> get_result();
+        if($result -> num_rows == 0){
+            echo '<tr>
+            <td colspan="4" class="text-center">
+            Brak odpowiedzi
+            </td></tr>';
+        }
+        else{
+            $i = 1;
+            while ($row = $result -> fetch_assoc()){
+                echo '
+                <tr>
+                    <td>'.$i.'</td>
+                    <td>'.$row['temat'].'</td>
+                    <td>'.$row['opis'].'</td>
+                    <td>'.$row['odpowiedz'].'</td>
+                    
+                </tr>
+                ';
+                $i++;
+            }
+        }
+    }
+    else {
+        echo "Błąd";
+    }
+}
 ?>

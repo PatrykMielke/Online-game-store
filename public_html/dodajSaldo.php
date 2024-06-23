@@ -22,9 +22,9 @@
     include 'templates/navbar.php';
     include 'templates/header.php';
   ?>
-     <div class="container mt-5">
+     <div class="container">
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="infoCard">
                     <div class="card text-black">
                         <div class="card-body">
@@ -78,23 +78,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="account-info card text-black">
-                    <div class="card-body">
-                        <h4 class="card-title">TWÓJ PORTFEL</h4>
-                        <p class="card-text">
-                            Obecne saldo portfela <strong id="currentBalance"> 
-                                <?php 
-                                    include_once 'php/saldo.php'; 
-                                    pokazSaldo(); 
-                                ?> 
-                            </strong>zł
-                        </p>
-                        <button class="btn btn-secondary btn-block">Zobacz szczegóły konta</button>
-                        <button class="btn btn-secondary btn-block">Aktywuj kartę podarunkową lub kod portfela</button>
-                    </div>
-                </div>
-            </div>
+            
         </div>
     </div>
 
@@ -115,7 +99,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Zrezygnuj</button>
                     <form method="post">
-                        <input type="text" id="wartosc" name="wartosc" value="">
+                        <input type="hidden" id="wartosc" name="wartosc" value="">
                         <button type="submit" class="btn btn-primary" id="confirmAddFundsButton" name="submit">Dodaj środki</button>
                     </form>
                     

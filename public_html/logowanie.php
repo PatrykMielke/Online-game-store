@@ -15,7 +15,7 @@
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/Login.css">
-    <title>Document</title>
+    <title>Logowanie</title>
 </head>
 <body class="loginRej">
     <div class="falling-image-container" id="fallingIconsContainer"></div>

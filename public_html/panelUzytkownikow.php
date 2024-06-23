@@ -1,6 +1,8 @@
 <?php
 session_start();
-
+if (!isset($_SESSION["rola"]) or $_SESSION["rola"] != "administrator"){
+    header("location: index.php");
+}
 include 'php/config.php';
 
 // Handle role update if form is submitted

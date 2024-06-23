@@ -19,17 +19,20 @@
 	<?php 
     include 'templates/navbar.php';
     include 'templates/header.php';
-    
+    include 'php/edit_profile.php';
   ?>
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-6 offset-md-3 form-container">
                 <!-- Dodanie klasy form-container -->
-                <form>
+                <form method="POST" action="php/edit_profile.php">
                     <!-- Pozostałe pola formularza -->
                     <div class="form-group">
-                        <label for="opis">Opis</label>
-                        <input type="text" class="form-control" id="opis" placeholder="Opis" />
+                        <label for="opis">
+                        </label>
+                        <input type="text" class="form-control" id="opis" name="description" placeholder="Opis" value="<?php
+                            load_description();
+                        ?>"/>
                     </div>
 
 
@@ -37,7 +40,7 @@
                     <div class="profile-image-section">
                         <label for="profilePic" class="d-block">Avatar</label>
                         <img id="profileImage" src="img/default_profile.png" alt="Zdjęcie profilowe" class="img-thumbnail mb-2" />
-                        <input type="file" class="form-control-file" id="profilePic" accept="image/*" onchange="previewProfileImage(event)" />
+                        <input type="file" class="form-control-file" id="profilePic" onchange="previewProfileImage(event)" name="profilePic" />
                     </div>
 
                     <button type="submit" class="btn btn-primary mt-3">Zapisz zmiany</button>
