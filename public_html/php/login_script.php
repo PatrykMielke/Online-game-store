@@ -25,7 +25,7 @@ function login()
     
     include 'config.php';
     
-    $stmt = $conn->prepare(`SELECT * FROM {$prefix}uzytkownicy WHERE email = ?`);
+    $stmt = $conn->prepare("SELECT * FROM `{$prefix}uzytkownicy` WHERE email = ?");
     $stmt->bind_param("s", $email);
     
     
@@ -78,7 +78,7 @@ function register()
     $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
     // Check if user or email already exists
-    $stmt = $conn->prepare(`SELECT email FROM {$prefix}uzytkownicy WHERE email = ?`);
+    $stmt = $conn->prepare("SELECT email FROM `{$prefix}uzytkownicy` WHERE email = ?");
     $stmt->bind_param("s", $email);
 
     $stmt->execute();
@@ -89,7 +89,7 @@ function register()
         return;
     }
 
-    $stmt = $conn->prepare(`INSERT INTO {$prefix}uzytkownicy(nazwa, email, haslo, rola, saldo, czy_aktywny) VALUES (?,?,?,'kupujacy',0,1)`);
+    $stmt = $conn->prepare("INSERT INTO `{$prefix}uzytkownicy` (nazwa, email, haslo, rola, saldo, czy_aktywny) VALUES (?,?,?,'kupujacy',0,1)");
     $stmt->bind_param("sss", $name, $email, $hashed_password);
 
     if ($stmt->execute()) {

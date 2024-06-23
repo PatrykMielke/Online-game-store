@@ -25,7 +25,7 @@ if (isset($_GET['id'])) {
     // Fetch game details along with tags
     $sql = "SELECT p.*, GROUP_CONCAT(t.nazwa SEPARATOR ', ') AS tagi
             FROM `{$prefix}produkty` p
-            LEFT JOIN tagi t ON p.id_produktu = t.id_produktu
+            LEFT JOIN `{$prefix}tagi` t ON p.id_produktu = t.id_produktu
             WHERE p.id_produktu = ?
             GROUP BY p.id_produktu";
     
