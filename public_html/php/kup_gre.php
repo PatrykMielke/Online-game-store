@@ -28,7 +28,7 @@ if (isset($_POST['game_id']) && isset($_POST['game_price'])) {
     }
 
     // Fetch user balance
-    $fetchBalanceSql = "SELECT saldo FROM uzytkownicy WHERE id_uzytkownik = ?";
+    $fetchBalanceSql = "SELECT saldo FROM uzytkownicy WHERE id_uzytkownika = ?";
     $stmt = $conn->prepare($fetchBalanceSql);
     $stmt->bind_param("i", $userId);
     $stmt->execute();
@@ -41,7 +41,7 @@ if (isset($_POST['game_id']) && isset($_POST['game_price'])) {
         if ($userBalance >= $gamePrice) {
             // Deduct the game price from user balance
             $newBalance = $userBalance - $gamePrice;
-            $updateBalanceSql = "UPDATE uzytkownicy SET saldo = ? WHERE id_uzytkownik = ?";
+            $updateBalanceSql = "UPDATE uzytkownicy SET saldo = ? WHERE id_uzytkownika = ?";
             $updateStmt = $conn->prepare($updateBalanceSql);
             $updateStmt->bind_param("di", $newBalance, $userId);
             $updateStmt->execute();

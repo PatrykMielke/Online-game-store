@@ -27,7 +27,7 @@ function load_description(){
 function load_avatar(){
   include 'config.php';
     // Check if user or email already exists
-    $stmt = $conn->prepare("select avatar from uzytkownicy where id_uzytkownik = ?");
+    $stmt = $conn->prepare("select avatar from uzytkownicy where id_uzytkownika = ?");
     $stmt ->bind_param("i", $id);
     $id = $_GET['id'];
 
@@ -56,7 +56,7 @@ function load_avatar(){
 function load_name(){
   include 'config.php';
     // Check if user or email already exists
-    $stmt = $conn->prepare("select nazwa from uzytkownicy where id_uzytkownik = ?");
+    $stmt = $conn->prepare("select nazwa from uzytkownicy where id_uzytkownika = ?");
     $stmt ->bind_param("i", $id);
     $id = $_GET['id'];
 
@@ -78,7 +78,7 @@ function load_name(){
 }
 function load_friends(){
     include 'config.php';
-      $stmt = $conn->prepare("SELECT id_uzytkownik2, nazwa, avatar FROM znajomi z inner join uzytkownicy u on id_uzytkownik2 = u.id_uzytkownik where id_uzytkownik1 = ?;");
+      $stmt = $conn->prepare("SELECT id_uzytkownik2, nazwa, avatar FROM znajomi z inner join uzytkownicy u on id_uzytkownik2 = u.id_uzytkownika where id_uzytkownik1 = ?;");
       $stmt ->bind_param("i", $id);
       $id = $_GET['id'];;
   
@@ -114,7 +114,7 @@ function load_friends(){
 function load_games(){
     include 'config.php';
       $stmt = $conn->prepare("SELECT produkty.id_produktu, nazwa, ikona FROM `produkty` inner join posiadane_programy on 
-      posiadane_programy.id_produkt = produkty.id_produktu where posiadane_programy.id_uzytkownik = ?;");
+      posiadane_programy.id_produkt = produkty.id_produktu where posiadane_programy.id_uzytkownika = ?;");
       $stmt ->bind_param("i", $id);
       $id = $_GET['id'];;
   

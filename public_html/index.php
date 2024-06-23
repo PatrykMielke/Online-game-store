@@ -2,7 +2,7 @@
 session_start();
   // sprawdź czy instnieje plik konfiguracyjny
   if (file_exists("php/config.php")) {
-      include 'config.php';
+      include 'php/config.php';
   }
   else{
     header('location:install.php');

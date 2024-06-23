@@ -4,7 +4,7 @@ function pokazSaldo(){
 
     include 'config.php';
       // Check if user or email already exists
-      $stmt = $conn->prepare("select saldo from uzytkownicy where id_uzytkownik = ?");
+      $stmt = $conn->prepare("select saldo from uzytkownicy where id_uzytkownika = ?");
       $stmt ->bind_param("s", $id);
       $id = $_SESSION['id'];
   
@@ -29,7 +29,7 @@ function pokazSaldoNavbar(){
 
     include 'config.php';
       // Check if user or email already exists
-      $stmt = $conn->prepare("select saldo from uzytkownicy where id_uzytkownik = ?");
+      $stmt = $conn->prepare("select saldo from uzytkownicy where id_uzytkownika = ?");
       $stmt ->bind_param("s", $id);
       $id = $_SESSION['id'];
   
@@ -58,7 +58,7 @@ function dodajSaldo(){
 
         include 'config.php';
 
-        $stmt = $conn->prepare("update uzytkownicy set saldo = saldo + ? where id_uzytkownik = ?");
+        $stmt = $conn->prepare("update uzytkownicy set saldo = saldo + ? where id_uzytkownika = ?");
         $stmt->bind_param("ss", $wartoscXD,$idXD);
         $wartoscXD = $wartosc;
         $idXD = $_SESSION['id'];

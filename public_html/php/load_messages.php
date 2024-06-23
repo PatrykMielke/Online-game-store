@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 
 function load_messages(){
     include 'config.php';
-    $stmt = $conn->prepare("SELECT id_wiadomosci, nazwa,temat,wiadomosci_od_uzytkownikow.opis o FROM `wiadomosci_od_uzytkownikow` inner join uzytkownicy on uzytkownicy.id_uzytkownik = wiadomosci_od_uzytkownikow.id_uzytkownik where id_wiadomosci not in(select id_wiadomosci from odpowiedzi_od_supportu);;");
+    $stmt = $conn->prepare("SELECT id_wiadomosci, nazwa,temat,wiadomosci_od_uzytkownikow.opis o FROM `wiadomosci_od_uzytkownikow` inner join uzytkownicy on uzytkownicy.a = wiadomosci_od_uzytkownikow.id_uzytkownika where id_wiadomosci not in(select id_wiadomosci from odpowiedzi_od_supportu);;");
 
     if($stmt->execute())
     {
@@ -66,7 +66,7 @@ function load_messages(){
 
 function load_messages_from_admin(){
     include 'config.php';
-    $stmt = $conn->prepare("SELECT * FROM `odpowiedzi_od_supportu` o inner join wiadomosci_od_uzytkownikow w on w.id_wiadomosci = o.id_wiadomosci where w.id_uzytkownik = ?;");
+    $stmt = $conn->prepare("SELECT * FROM `odpowiedzi_od_supportu` o inner join wiadomosci_od_uzytkownikow w on w.id_wiadomosci = o.id_wiadomosci where w.id_uzytkownika = ?;");
     $stmt -> bind_param("i",$_SESSION['id']);
 
     if($stmt->execute())

@@ -1,6 +1,7 @@
 <?php
    session_start();
 
+   // Redirect if user is already logged in
    if (isset($_SESSION["zalogowany"])){
       header('location: index.php');
       exit;
@@ -19,10 +20,11 @@
 </head>
 <body class="loginRej">
     <div class="falling-image-container" id="fallingIconsContainer"></div>
+    
     <?php 
     include 'templates/navbar.php';
     include 'templates/header.php';
-  ?>
+    ?>
     
     <div class="wrapper">
         <div class="card-switch">
@@ -33,36 +35,32 @@
                <div class="flip-card__inner">
                   <div class="flip-card__front">
                      <div class="title">Log in</div>
-                     <?php 
-         require 'php/login_script.php'; ?>
-                     <form id="logowanie" class="flip-card__form" method="post">
+                     <form id="logowanie" class="flip-card__form" method="post" action="php/login_script.php">
                         <input class="flip-card__input" name="email" placeholder="Email" type="email">
                         <input class="flip-card__input" name="password" placeholder="Password" type="password">
                         <input type="hidden" name="action" value="login">
-                        <button name="submit" class="flip-card__btn">Let`s go!</button>
+                        <button type="submit" name="submit" class="flip-card__btn">Let's go!</button>
                      </form>
                   </div>
                   <div class="flip-card__back">
                      <div class="title">Sign up</div>
-                     <form id="rejestracja" class="flip-card__form" method="post">
-                        <input class="flip-card__input" name="name" placeholder="Name" type="name">
+                     <form id="rejestracja" class="flip-card__form" method="post" action="php/login_script.php">
+                        <input class="flip-card__input" name="name" placeholder="Name" type="text">
                         <input class="flip-card__input" name="email" placeholder="Email" type="email">
                         <input class="flip-card__input" name="password" placeholder="Password" type="password">
                         <input type="hidden" name="action" value="register">
-                        <button name="submit"  class="flip-card__btn">Confirm!</button>
+                        <button type="submit" name="submit" class="flip-card__btn">Confirm!</button>
                      </form>
                   </div>
-                  
-                
                </div>
             </label>
         </div>   
-    
-   
-    <!-- Dodanie skryptu JavaScript z innego folderu -->
-    <script src="js/register.js"></script>
+    </div>
+
+    <!-- Scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="js/register.js"></script>
 </body>
 </html>

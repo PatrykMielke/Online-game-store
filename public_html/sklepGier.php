@@ -23,7 +23,7 @@
 			<div class="row">
 				<nav class="col-md-2 d-none d-md-block sidebar">
 					<div class="sidebar-sticky">
-						<h5>Twoje Tagi</h5>
+						<h5>Tagi</h5>
 						<div class="form-check">
 							<input
 								class="form-check-input"

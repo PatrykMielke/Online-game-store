@@ -1,115 +1,100 @@
 <?php
+session_start();
 
-if($_SERVER["REQUEST_METHOD"] == "POST"){
-    if(isset($_POST['submit']))
-    {
-        if($_POST['action'] == "login"){
-           
-           
-           
-           echo '<script> alert("Please enter"); </script>';    
-            
-            
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST['submit'])) {
+        if ($_POST['action'] == "login") {
             login();
-        }
-        else if($_POST['action'] == "register"){
+        } elseif ($_POST['action'] == "register") {
             register();
-        }
-        else{
+        } else {
             exit;
         }
     }
 }
-function login(){
+
+function login()
+{
     $email = trim($_POST["email"]);
-    $password =trim($_POST["password"]);
-     
-    if(empty($email) or empty($password)){
-        echo 'Przesłano formularz z pustymi danymi';
+    // $password = trim($_POST["password"]);
+    
+    if (empty($email)) {
+        echo 'Please enter both email and password.';
         return;
     }
     
     include 'config.php';
-
-    $stmt = $conn->prepare("select * from uzytkownicy where email = ?");
-    $stmt -> bind_param("s", $emailXD);
-
-    $emailXD = $email;
     
-    if($stmt->execute()){
+    $stmt = $conn->prepare("SELECT * FROM uzytkownicy WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    
+    
+    if ($stmt->execute()) {
+        // echo $stmt;
         $result = $stmt->get_result();
         
-        if ($result->num_rows > 0){
-            $row = $result -> fetch_assoc();
-            if(password_verify($password, $row['haslo']))
-            {
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            echo trim($_POST["password"]);
+            // Debugging print statements
+            echo "Input password: " . trim($_POST["password"]) . "<br>";
+            echo "Hashed password from database: " . $row['haslo'] . "<br>";
+
+            if (password_verify(trim($_POST["password"]), $row['haslo'])) {
                 $_SESSION["zalogowany"] = true;
-                $_SESSION["id"] = $row['id_uzytkownik'];
+                $_SESSION["id"] = $row['id_uzytkownika'];
                 $_SESSION["email"] = $row['email'];                      
                 $_SESSION["rola"] = $row['rola'];
                 $_SESSION["nazwa"] = $row['nazwa'];
                 $_SESSION["saldo"] = $row['saldo'];
 
-                $result -> free_result();
+                $result->free_result();
 
-                header("location: index.php");
+                header("location: ../index.php");
                 exit;
+            } else {
+                echo "Incorrect password.";
             }
+        } else {
+            echo "Email not found.";
         }
-        else{
-            echo "Błędne dane logowania.";
-            return;
-        }
-    }
-    else{
-        echo 'Błąd';
+    } else {
+        echo 'Error executing query.';
     }
 }
 
-function register(){
+function register()
+{
+    require_once "config.php";
     $name = trim($_POST["name"]);
     $email = trim($_POST["email"]);
-    $password = password_hash(trim($_POST["password"]), PASSWORD_BCRYPT);
+    $password = trim($_POST["password"]);
 
-    if(empty($name) or empty($email) or empty($_POST["password"])){
-        echo 'Przesłano formularz z pustymi danymi';
+    if (empty($name) || empty($email) || empty($_POST["password"])) {
+        echo 'Please fill in all fields.';
         return;
     }
-
-    require_once "config.php";
+    $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
     // Check if user or email already exists
-    $stmt = $conn->prepare("select email from uzytkownicy where email = ? or nazwa = ?;");
-    $stmt ->bind_param("ss", $emailXD,$nameXD);
-    $nameXD = $name;
-    $emailXD = $email;
+    $stmt = $conn->prepare("SELECT email FROM uzytkownicy WHERE email = ?");
+    $stmt->bind_param("s", $email);
 
     $stmt->execute();
     $result = $stmt->get_result();
 
-    if ($result->num_rows > 0){
-        echo "Podana nazwa użytkownika lub adres e-mail jest już zajęty.";
+    if ($result->num_rows > 0) {
+        echo "Username or email already exists.";
         return;
     }
 
+    $stmt = $conn->prepare("INSERT INTO uzytkownicy(nazwa, email, haslo, rola, saldo, czy_aktywny) VALUES (?,?,?,'kupujący',0,1)");
+    $stmt->bind_param("sss", $name, $email, $hashed_password);
 
-    $stmt = $conn->prepare("INSERT INTO `uzytkownicy`( `nazwa`, `email`, `haslo`, `rola`, `saldo`, `czy_aktywny`) VALUES (?,?,?,'kupujący',0,1)
-    ");
-    $stmt -> bind_param("sss", $nameXD, $emailXD, $passwordXD);
-
-    $nameXD = $name;
-    $emailXD = $email;
-    $passwordXD = $password;
-
-    if($stmt->execute())
-    {
-        echo "Zarejestrowano pomyślnie, teraz można się zalogować";
-    }
-    else {
-        echo 'Błąd';
+    if ($stmt->execute()) {
+        echo "Registered successfully, you can now log in.";
+    } else {
+        echo 'Error registering user.';
     }
 }
-
-// Processing form data when form is submitted
-
 ?>
