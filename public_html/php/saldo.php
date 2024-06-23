@@ -29,7 +29,7 @@ function pokazSaldoNavbar(){
 
     include 'config.php';
       // Check if user or email already exists
-      $stmt = $conn->prepare("select saldo from uzytkownicy where id_uzytkownik = ?");
+      $stmt = $conn->prepare("select saldo from uzytkownicy where id_uzytkownika = ?");
       $stmt ->bind_param("s", $id);
       $id = $_SESSION['id'];
   

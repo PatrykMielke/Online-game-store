@@ -2,7 +2,7 @@
 session_start();
   // sprawdź czy instnieje plik konfiguracyjny
   if (file_exists("php/config.php")) {
-      include 'config.php';
+      include 'php/config.php';
   }
   else{
     header('location:install.php');
@@ -67,7 +67,7 @@ session_start();
         include './php/config.php';
         
         // Fetch the 4 most recent games
-        $query = "SELECT * FROM produkty WHERE czy_dostepny = 1 ORDER BY id_produktu DESC LIMIT 4";
+        $query = "SELECT * FROM produkty WHERE czy_dostępny = 1 ORDER BY id_produktu DESC LIMIT 4";
         $result = $conn->query($query);
         $recentGames = array();
         
@@ -98,7 +98,7 @@ session_start();
 
   <div class="wallpaper">
   <section id="nowosci-i-aktualnosci" class="my-5">
-    <h2 class="text-center mb-4 p-2">O zespole</h2><br
+    <h2 class="text-center mb-4 p-2">O zespole</h2><br>
     <div class="row">
       <div class="text-center mb-5 p-2">
         <h4>Patryk Mielke</h4>
