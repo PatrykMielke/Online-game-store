@@ -1,5 +1,4 @@
 <?php
-   session_start();
 
    // Redirect if user is already logged in
    if (isset($_SESSION["zalogowany"])){
@@ -24,6 +23,7 @@
     <?php 
     include 'templates/navbar.php';
     include 'templates/header.php';
+    include 'php/login_script.php';
     ?>
     
     <div class="wrapper">
@@ -35,7 +35,7 @@
                <div class="flip-card__inner">
                   <div class="flip-card__front">
                      <div class="title">Log in</div>
-                     <form id="logowanie" class="flip-card__form" method="post" action="php/login_script.php">
+                     <form id="logowanie" class="flip-card__form" method="post">
                         <input class="flip-card__input" name="email" placeholder="Email" type="email">
                         <input class="flip-card__input" name="password" placeholder="Password" type="password">
                         <input type="hidden" name="action" value="login">
@@ -44,7 +44,7 @@
                   </div>
                   <div class="flip-card__back">
                      <div class="title">Sign up</div>
-                     <form id="rejestracja" class="flip-card__form" method="post" action="php/login_script.php">
+                     <form id="rejestracja" class="flip-card__form" method="post">
                         <input class="flip-card__input" name="name" placeholder="Name" type="text">
                         <input class="flip-card__input" name="email" placeholder="Email" type="email">
                         <input class="flip-card__input" name="password" placeholder="Password" type="password">

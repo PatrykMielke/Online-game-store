@@ -35,10 +35,6 @@ function login()
         
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
-            echo trim($_POST["password"]);
-            // Debugging print statements
-            echo "Input password: " . trim($_POST["password"]) . "<br>";
-            echo "Hashed password from database: " . $row['haslo'] . "<br>";
 
             if (password_verify(trim($_POST["password"]), $row['haslo'])) {
                 
