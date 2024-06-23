@@ -14,59 +14,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
     }
 
-    // File upload handling
-    $uploadDir = '../img/products/'; // Directory where images will be stored
-
-    // Check if the directory exists, create it if not
-    if (!file_exists($uploadDir)) {
-        mkdir($uploadDir, 0777, true); // Create directory if it does not exist
-    }
-
-    $uploadedFiles = array();
-    $errors = array();
-
-    foreach ($_FILES['productImages']['name'] as $key => $name) {
-        $tmp_name = $_FILES['productImages']['tmp_name'][$key];
-        $target_file = $uploadDir . basename($name);
-        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-
-        // Check if image file is a actual image or fake image
-        $check = getimagesize($tmp_name);
-        if ($check === false) {
-            $errors[] = "File {$name} is not an image.";
-            continue;
-        }
-
-        // Check file size (5MB limit)
-        if ($_FILES['productImages']['size'][$key] > 5000000) {
-            $errors[] = "Sorry, file {$name} is too large.";
-            continue;
-        }
-
-        // Allow certain file formats
-        $allowedTypes = array('jpg', 'jpeg', 'png', 'gif');
-        if (!in_array($imageFileType, $allowedTypes)) {
-            $errors[] = "Sorry, only JPG, JPEG, PNG & GIF files are allowed for {$name}.";
-            continue;
-        }
-
-        // Move uploaded file to specified directory
-        $newFileName = "product-img_" . uniqid() . ".$imageFileType"; // Generate a unique filename
-        $target_file = $uploadDir . $newFileName;
-        var_dump($tmp_name);var_dump($target_file);
-        if (move_uploaded_file($tmp_name, $target_file)) {
-            $uploadedFiles[] = $target_file;
-        } else {
-            $errors[] = "Sorry, there was an error uploading file {$name}.";
-        }
-    }
-
-    // Process uploaded files or display errors
-    if (!empty($uploadedFiles)) {
         include 'config.php';
 
         // Prepare product insertion query
-        $insertProductSql = "INSERT INTO `{$prefix}produkty` (nazwa, id_wydawcy, cena, opis, ikona) VALUES (?, ?, ?, ?, ?)";
+        $insertProductSql = "INSERT INTO `{$prefix}produkty` (nazwa, id_wydawcy, cena, opis) VALUES (?, ?, ?, ?)";
         $stmt = $conn->prepare($insertProductSql);
         if (!$stmt) {
             echo "Error preparing statement: " . $conn->error;
@@ -74,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         // Bind parameters and execute product insertion
-        $stmt->bind_param("sidss", $productName,$_SESSION['id'], $productPrice, $productDescription, $newFileName);
+        $stmt->bind_param("sids", $productName,$_SESSION['id'], $productPrice, $productDescription);
         if (!$stmt->execute()) {
             echo "Error inserting product: " . $stmt->error;
             exit;
@@ -118,16 +69,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Tagi: " . implode(', ', $productTags) . "<br>";
         echo "Opis: {$productDescription}<br>";
         echo "Cena: {$productPrice} PLN<br>";
-        echo "Obraz:<br>";
-        foreach ($uploadedFiles as $file) {
-            echo "<img src='{$file}' width='200'><br>";
-        }
         header("Location: ../sprzedajacy.php");
-    } else {
-        // Display errors if any
-        foreach ($errors as $error) {
-            echo "{$error}<br>";
-        }
-    }
 }
 ?>

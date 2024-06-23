@@ -46,7 +46,7 @@
             include 'php/saldo.php';
             $navbar = pokazSaldoNavbar(); 
             echo '<li class="nav-item">
-              <a class="nav-link custom-nav-link" href="dodajSaldo.php">'.$navbar.'zł</a>
+              <a class="nav-link custom-nav-link" href="dodajSaldo.php">Saldo:'.$navbar.'zł</a>
             </li>';
             
           // sprzedający
