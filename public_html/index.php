@@ -67,7 +67,7 @@ session_start();
         include './php/config.php';
         
         // Fetch the 4 most recent games
-        $query = "SELECT * FROM produkty WHERE czy_dostepny = 1 ORDER BY id_produktu DESC LIMIT 4";
+        $query = "SELECT * FROM produkty WHERE czy_dostepny = 1 ORDER BY id_produktu DESC LIMIT 5";
         $result = $conn->query($query);
         $recentGames = array();
         
@@ -78,8 +78,8 @@ session_start();
         }
         
         foreach ($recentGames as $game) : ?>
-          <div class="col-9 col-md-2 mx-5">
-              <div class="card">
+          <div class="col-9 col-md-2 mx-5 mb-4">
+              <div class="card" style="height: 20vh; min-width: 10vw;">
                 <a href="stronaGry.php?id=<?php echo htmlspecialchars($game['id_produktu']); ?>" class="content text-decoration-none bg-gray-700 text-center"> 
                 <img src="./img/products/<?php echo htmlspecialchars($game['ikona']); ?>" alt="<?php echo htmlspecialchars($game['nazwa']); ?>" class="img-thumbnail">
                   <h4><?php echo htmlspecialchars($game['nazwa']); ?></h4>

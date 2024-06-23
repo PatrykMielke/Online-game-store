@@ -1,324 +1,117 @@
-<?php session_start(); ?>
+<?php
+session_start();
+
+// Include database connection
+include './php/config.php';
+
+// Fetch all tags from the database
+$sql_tags = "SELECT DISTINCT nazwa FROM tagi";
+$result_tags = $conn->query($sql_tags);
+
+$tags = [];
+if ($result_tags->num_rows > 0) {
+    while ($row_tag = $result_tags->fetch_assoc()) {
+        $tags[] = $row_tag['nazwa'];
+    }
+}
+
+// Initialize filter variables
+$filter_tags = [];
+if (!empty($_POST['tags'])) {
+    $filter_tags = $_POST['tags'];
+}
+
+// Construct the base SQL query
+$sql = "SELECT p.id_produktu, p.nazwa AS nazwa_produktu, p.id_wydawcy, p.ikona, p.cena, p.czy_dostepny, p.opis, GROUP_CONCAT(t.nazwa SEPARATOR ', ') AS tagi
+        FROM produkty p
+        LEFT JOIN tagi t ON p.id_produktu = t.id_produktu";
+
+// Add availability condition
+$sql .= " WHERE p.czy_dostepny = 1";
+
+// Add filter for selected tags if any
+if (!empty($filter_tags)) {
+    $sql .= " GROUP BY p.id_produktu
+              HAVING COUNT(DISTINCT CASE WHEN t.nazwa IN ('" . implode("','", $filter_tags) . "') THEN t.nazwa END) = " . count($filter_tags);
+} else {
+    $sql .= " GROUP BY p.id_produktu";
+}   
+
+// Execute the query
+$result = $conn->query($sql);
+?>
+
 <!DOCTYPE html>
 <html lang="pl">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Sklep</title>
-		<link
-			href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-			rel="stylesheet"
-		/>
-		<link rel="stylesheet" href="css/Biblioteca.css" />
-		<style></style>
-	</head>
-	<body class="body-biblo">
-	<?php 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sklep</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/Biblioteca.css">
+    <style>
+        /* Add your custom styles here */
+    </style>
+</head>
+<body class="body-biblo">
+    <?php 
     include 'templates/navbar.php';
     include 'templates/header.php';
     include 'templates/navbar2.php';
-  ?>
-    </header>
-		<div class="container-fluid">
-			<div class="row">
-				<nav class="col-md-2 d-none d-md-block sidebar">
-					<div class="sidebar-sticky">
-						<h5>Tagi</h5>
-						<div class="form-check">
-							<input
-								class="form-check-input"
-								type="checkbox"
-								value=""
-								id="tag1"
-							/>
-							<label class="form-check-label" for="tag1"> Battle royale </label>
-						</div>
-						<div class="form-check">
-							<input
-								class="form-check-input"
-								type="checkbox"
-								value=""
-								id="tag2"
-							/>
-							<label class="form-check-label" for="tag2">
-								Strzelanka z perspektywy trzeciej osoby
-							</label>
-						</div>
-						<div class="form-check">
-							<input
-								class="form-check-input"
-								type="checkbox"
-								value=""
-								id="tag3"
-							/>
-							<label class="form-check-label" for="tag3"> Strzelanka </label>
-						</div>
-						<div class="form-check">
-							<input
-								class="form-check-input"
-								type="checkbox"
-								value=""
-								id="tag4"
-							/>
-							<label class="form-check-label" for="tag4"> PvP </label>
-						</div>
-						<div class="form-check">
-							<input
-								class="form-check-input"
-								type="checkbox"
-								value=""
-								id="tag5"
-							/>
-							<label class="form-check-label" for="tag6"> FPS </label>
-						</div>
-						<h5>Polecane</h5>
-						<div class="form-check">
-							<input
-								class="form-check-input"
-								type="checkbox"
-								value=""
-								id="tag7"
-							/>
-							<label class="form-check-label" for="tag8">
-								Przez znajomych</label
-							>
-						</div>
-						<div class="form-check">
-							<input
-								class="form-check-input"
-								type="checkbox"
-								value=""
-								id="tag9"
-							/>
-							<label class="form-check-label" for="tag10">Przez kuratorów</label>
-						</div>
-						<div class="form-check">
-							<input
-								class="form-check-input"
-								type="checkbox"
-								value=""
-								id="tag11"
-							/>
-							<label class="form-check-label" for="tag5
-                            12"> Tagi</label>
-						</div>
-						<h5>Przeglądaj Kategorie</h5>
-						<div class="form-check">
-							<input
-								class="form-check-input"
-								type="checkbox"
-								value=""
-								id="tag13"
-							/>
-							<label class="form-check-label" for="tag14"> Bestsellery</label>
-						</div>
-						<div class="form-check">
-							<input
-								class="form-check-input"
-								type="checkbox"
-								value=""
-								id="tag15"
-							/>
-							<label class="form-check-label" for="tag16"> Nowości </label>
-						</div>
-						<div class="form-check">
-							<input
-								class="form-check-input"
-								type="checkbox"
-								value=""
-								id="tag17"
-							/>
-							<label class="form-check-label" for="tag18"> Nadchodzące </label>
-						</div>
-						<h5>Sprzęt</h5>
-						<p>Steam Deck<br />Stacja dokująca Steam Decka<br />Sprzęt VR</p>
-					</div>
-				</nav>
+    ?>
+    
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar with filter options -->
+            <nav class="col-md-2 d-none d-md-block sidebar">
+                <div class="sidebar-sticky">
+                    <h5>Tagi</h5>
+                    <!-- Display checkboxes for each tag -->
+                    <form id="filterForm" method="post">
+                        <?php foreach ($tags as $tag): ?>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="tags[]" value="<?php echo $tag; ?>" id="tag<?php echo $tag; ?>" <?php if (in_array($tag, $filter_tags)) echo "checked"; ?>>
+                                <label class="form-check-label" for="tag<?php echo $tag; ?>"><?php echo $tag; ?></label>
+                            </div>
+                        <?php endforeach; ?>
+                        <button type="submit" class="btn btn-primary mt-2">Filtruj</button>
+                    </form>
+                </div>
+            </nav>
 
-				<main class="col-md-10 ml-sm-auto col-lg-10 px-md-4">
-					<div class="promo-banner">
-						<div>
-							<h2>Letni Pokaz Letnich Pokazów</h2>
-							<p>
-								Nazwa, która łatwo przechodzi przez usta z mnóstwem wydarzeń i
-								zapowiedzi o grach
-							</p>
-						</div>
-					</div>
+            <!-- Main content area to display products -->
+            <main class="col-md-10 ml-sm-auto col-lg-10 px-md-4">
+				<!-- Display products based on the query result -->
+				<div class="row rounded">
+					<?php if ($result->num_rows > 0): ?>
+						<?php while ($row = $result->fetch_assoc()): ?>
+							<div class="col-md-4 rounded">
+								<div class="card m-4 shadow shadow-xl border rounded text-white">
+									<img src="./img/products/<?php echo $row['ikona']; ?>" alt="<?php echo $row['nazwa_produktu']; ?>" class="bd-placeholder-img card-img-top rounded" style="height: 18vh;">
+									<div class="card-body rounded text-white">
+										<h5 class="card-title bordered-text"><?php echo $row['nazwa_produktu']; ?></h5>
+										<p class="card-text">Cena: <?php echo $row['cena']; ?> PLN</p>
+										<p class="card-text">Opis: <?php echo $row['opis']; ?></p>
+										<p class="card-text">Tagi: <?php echo $row['tagi']; ?></p>
+										<button class="glitch text-white" onclick='location.href="stronaGry.php?id=<?php echo htmlspecialchars($row['id_produktu']); ?>"'>Zobacz teraz</button>
+									</div>
+								</div>
+							</div>
+						<?php endwhile; ?>
+					<?php else: ?>
+						<p>Brak produktów spełniających kryteria.</p>
+					<?php endif; ?>
+				</div>
+			</main>
+        </div>
+    </div>
 
-					<h2 class="mt-4">Oferty Specjalne</h2>
-					<div class="row">
-						<div class="col-md-4">
-							<div class="card mb-4 shadow-sm">
-								<img
-									src="path_to_image_wobbly_life.jpg"
-									alt="Wobbly Life"
-									class="bd-placeholder-img card-img-top"
-								/>
-								<div class="card-body">
-									<h5 class="card-title">Wobbly Life</h5>
-                                    <button class="glitch" onclick="window.location.href='../html/Game.html'">Zobacz teraz</button>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="card mb-4 shadow-sm">
-								<img
-									src="path_to_image_little_nightmares.jpg"
-									alt="Little Nightmares"
-									class="bd-placeholder-img card-img-top"
-								/>
-								<div class="card-body">
-									<h5 class="card-title">Little Nightmares</h5>
-                                    <button class="glitch" onclick="window.location.href='../html/Game.html'">Zobacz teraz</button>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="card mb-4 shadow-sm">
-								<img
-									src="path_to_image_urbek_city_builder.jpg"
-									alt="Urbek City Builder"
-									class="bd-placeholder-img card-img-top"
-								/>
-								<div class="card-body">
-									<h5 class="card-title">Urbek City Builder</h5>
-									<button class="glitch" onclick="window.location.href='../html/Game.html'">Zobacz teraz</button>
-
-								</div>
-							</div>
-						</div>
-					</div>
-                  
-					<h2 class="mt-4">Przeglądaj Więcej</h2>
-					<div class="row">
-                        <div class="col-md-4">
-							<div class="card mb-4 shadow-sm">
-								<img
-									src="path_to_image_wobbly_life.jpg"
-									alt="Wobbly Life"
-									class="bd-placeholder-img card-img-top"
-								/>
-								<div class="card-body">
-									<h5 class="card-title">Wobbly Life</h5>
-                                    <button class="glitch" onclick="window.location.href='../html/Game.html'">Zobacz teraz</button>
-								</div>
-							</div>
-						</div>
-                        <div class="col-md-4">
-							<div class="card mb-4 shadow-sm">
-								<img
-									src="path_to_image_wobbly_life.jpg"
-									alt="Wobbly Life"
-									class="bd-placeholder-img card-img-top"
-								/>
-								<div class="card-body">
-									<h5 class="card-title">Wobbly Life</h5>
-                                    <button class="glitch" onclick="window.location.href='../html/Game.html'">Zobacz teraz</button>
-								</div>
-							</div>
-						</div>
-                        <div class="col-md-4">
-							<div class="card mb-4 shadow-sm">
-								<img
-									src="path_to_image_wobbly_life.jpg"
-									alt="Wobbly Life"
-									class="bd-placeholder-img card-img-top"
-								/>
-								<div class="card-body">
-									<h5 class="card-title">Wobbly Life</h5>
-                                    <button class="glitch" onclick="window.location.href='../html/Game.html'">Zobacz teraz</button>
-								</div>
-							</div>
-						</div>
-					</div>
-                    <div class="row">
-                        <div class="col-md-4">
-							<div class="card mb-4 shadow-sm">
-								<img
-									src="path_to_image_wobbly_life.jpg"
-									alt="Wobbly Life"
-									class="bd-placeholder-img card-img-top"
-								/>
-								<div class="card-body">
-									<h5 class="card-title">Wobbly Life</h5>
-                                    <button class="glitch" onclick="window.location.href='../html/Game.html'">Zobacz teraz</button>
-								</div>
-							</div>
-						</div>
-                        <div class="col-md-4">
-							<div class="card mb-4 shadow-sm">
-								<img
-									src="path_to_image_wobbly_life.jpg"
-									alt="Wobbly Life"
-									class="bd-placeholder-img card-img-top"
-								/>
-								<div class="card-body">
-									<h5 class="card-title">Wobbly Life</h5>
-                                    <button class="glitch" onclick="window.location.href='../html/Game.html'">Zobacz teraz</button>
-								</div>
-							</div>
-						</div>
-                        <div class="col-md-4">
-							<div class="card mb-4 shadow-sm">
-								<img
-									src="path_to_image_wobbly_life.jpg"
-									alt="Wobbly Life"
-									class="bd-placeholder-img card-img-top"
-								/>
-								<div class="card-body">
-									<h5 class="card-title">Wobbly Life</h5>
-                                    <button class="glitch" onclick="window.location.href='../html/Game.html'">Zobacz teraz</button>
-								</div>
-							</div>
-						</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
-							<div class="card mb-4 shadow-sm">
-								<img
-									src="path_to_image_wobbly_life.jpg"
-									alt="Wobbly Life"
-									class="bd-placeholder-img card-img-top"
-								/>
-								<div class="card-body">
-									<h5 class="card-title">Wobbly Life</h5>
-                                    <button class="glitch" onclick="window.location.href='../html/Game.html'">Zobacz teraz</button>
-								</div>
-							</div>
-						</div>
-                        <div class="col-md-4">
-							<div class="card mb-4 shadow-sm">
-								<img
-									src="path_to_image_wobbly_life.jpg"
-									alt="Wobbly Life"
-									class="bd-placeholder-img card-img-top"
-								/>
-								<div class="card-body">
-									<h5 class="card-title">Wobbly Life</h5>
-                                    <button class="glitch" onclick="window.location.href='../html/Game.html'">Zobacz teraz</button>
-								</div>
-							</div>
-						</div>
-                        <div class="col-md-4">
-							<div class="card mb-4 shadow-sm">
-								<img
-									src="path_to_image_wobbly_life.jpg"
-									alt="Wobbly Life"
-									class="bd-placeholder-img card-img-top"
-								/>
-								<div class="card-body">
-									<h5 class="card-title">Wobbly Life</h5>
-                                    <button class="glitch" onclick="window.location.href='../html/Game.html'">Zobacz teraz</button>
-								</div>
-							</div>
-						</div>
-                    </div>
-				</main>
-			</div>
-		</div>
-		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-	</body>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
 </html>
+
+<?php
+$conn->close();
+?>

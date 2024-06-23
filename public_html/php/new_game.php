@@ -25,7 +25,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $uploadedFiles = array();
     $errors = array();
 
-    // Loop through each file
     foreach ($_FILES['productImages']['name'] as $key => $name) {
         $tmp_name = $_FILES['productImages']['tmp_name'][$key];
         $target_file = $uploadDir . basename($name);

@@ -1,52 +1,102 @@
-<?php session_start(); 
-if (!isset($_SESSION["rola"]) or $_SESSION["rola"] == "kupujący"){
+<?php 
+session_start(); 
+if (!isset($_SESSION["rola"]) || $_SESSION["rola"] == "kupujący") {
     header("location: index.php");
+    exit();
 }
 
 // Function to fetch data from the database
 function getProductData($productId) {
     include 'php/config.php';
-    $stmt = $conn->prepare("SELECT produkty.`id_produktu`,produkty.nazwa pn,GROUP_CONCAT(tagi.nazwa SEPARATOR ', ') AS tn,opis, cena from produkty inner join tagi on tagi.id_produktu = produkty.id_produktu where produkty.id_produktu = ? GROUP BY produkty.id_produktu");
+    $stmt = $conn->prepare("SELECT produkty.id_produktu, produkty.nazwa AS pn, GROUP_CONCAT(tagi.nazwa SEPARATOR ', ') AS tn, opis, cena, ikona FROM produkty INNER JOIN tagi ON tagi.id_produktu = produkty.id_produktu WHERE produkty.id_produktu = ? GROUP BY produkty.id_produktu");
     $stmt->bind_param("i", $productId);
     $stmt->execute();
     $result = $stmt->get_result();
     return $result->fetch_assoc();
 }
 
-// Function to update data in the database
 function updateProductData($productId, $name, $description, $price, $tags, $image) {
     include 'php/config.php';
-    $sql = "UPDATE products SET name = ?, description = ?, price = ?, tags = ?, image = ? WHERE id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssdsbi", $name, $description, $price, $tags, $image, $productId);
-    return $stmt->execute();
+    
+    // Prepare the SQL statement based on whether an image is provided
+    if (!empty($image)) {
+        $sql = "UPDATE produkty SET nazwa = ?, opis = ?, cena = ?, ikona = ? WHERE id_produktu = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssdsi", $name, $description, $price, $image, $productId);
+    } else {
+        $sql = "UPDATE produkty SET nazwa = ?, opis = ?, cena = ? WHERE id_produktu = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssdi", $name, $description, $price, $productId);
+    }
+    $result = $stmt->execute();
+
+    // Update product tags
+    $stmt = $conn->prepare("DELETE FROM tagi WHERE id_produktu = ?");
+    $stmt->bind_param("i", $productId);
+    $stmt->execute();
+    
+    $stmt = $conn->prepare("INSERT INTO tagi (id_produktu, nazwa) VALUES (?, ?)");
+    foreach ($tags as $tag) {
+        $stmt->bind_param("is", $productId, $tag);
+        $stmt->execute();
+    }
+
+    return $result;
 }
 
 // Handling form submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $productId = $_POST['product_id'];
-    $name = $_POST['name'];
-    $description = $_POST['description'];
-    $price = $_POST['price'];
-    $tags = implode(",", $_POST['tags']); // Assuming tags are sent as an array
-    $image = $_FILES['image']['name'];
-    
+    $name = $_POST['productName'];
+    $description = $_POST['productDescription'];
+    $price = $_POST['productPrice'];
+    $tags = $_POST['productTags']; // Assuming tags are sent as an array
+    $image = $_FILES['productImages']['name'][0]; // Handling single image upload for simplicity
+
     // Handling file upload
-    $target_dir = "uploads/";
-    $target_file = $target_dir . basename($_FILES["image"]["name"]);
-    move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
-    
-    if (updateProductData($productId, $name, $description, $price, $tags, $image)) {
+    if (!empty($image)) {
+        $uploadDir = "./img/products/";
+        $tmp_name = $_FILES['productImages']['tmp_name'][0];
+        $imageFileType = strtolower(pathinfo($image, PATHINFO_EXTENSION));
+
+        // Generate unique filename
+        $uniqueId = uniqid();
+        $newFileName = "product-img_{$uniqueId}.{$imageFileType}";
+
+        // Move uploaded file to specified directory with new filename
+        $target_file = $uploadDir . $newFileName;
+        if (!move_uploaded_file($tmp_name, $target_file)) {
+            echo "Sorry, there was an error uploading file {$image}.";
+            exit;
+        }
+    } else {
+        // If no new image is uploaded, do not update the image field
+        $newFileName = null;
+    }
+
+    // Update product data in the database
+    if (updateProductData($productId, $name, $description, $price, $tags, $newFileName)) {
         echo "Product updated successfully.";
+        header("refresh: 1");
     } else {
         echo "Error updating product.";
     }
 }
 
-// Fetching data for the form
-$productId = $_GET['id'];; // Replace with dynamic value as needed
-$productData = getProductData($productId);
-var_dump($productData);
+// Fetching data for the form if ID is provided
+if (isset($_GET['id']) && !empty($_GET['id'])) {
+    $productId = $_GET['id'];
+    $productData = getProductData($productId);
+
+    // Check if productData is empty, meaning no product found for the given ID
+    if (!$productData) {
+        echo "Brak produktu o podanym ID.";
+        exit; // Exit further execution
+    }
+} else {
+    echo "<h1>Brak id w linku.</h1>";
+    exit; // Exit further execution
+}
 ?>
 
 <!DOCTYPE html>
@@ -54,7 +104,7 @@ var_dump($productData);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nowoczesna Strona Główna</title>
+    <title>Edytuj produkt</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/NewProductPage.css">
     <!-- Dodajemy link do pliku CSS -->
@@ -70,48 +120,38 @@ var_dump($productData);
     <div class="container">
         <div class="form-container">
             <h1 class="text-center mb-4">Edytuj produkt</h1>
-            <form action="php/new_game.php" method="post" enctype="multipart/form-data">
+            <form action="" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="product_id" value="<?php echo $productId; ?>">
                 <div class="mb-3">
                     <label for="productName" class="form-label">Nazwa Produktu</label>
-                    <input type="text" class="form-control" id="productName" name="productName" placeholder="Wpisz nazwę produktu" required value="<?php echo $productData['pn']; ?>">
+                    <input type="text" class="form-control" id="productName" name="productName" placeholder="Wpisz nazwę produktu" required value="<?php echo htmlspecialchars($productData['pn']); ?>">
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Tagi</label><br>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="tagAkcja" name="productTags[]" value="Akcja" <?php if(in_array("Akcja", explode(",", $productData['tn']))) echo "checked"; ?>>
-                        <label class="form-check-label" for="tagAkcja">Akcja</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="tagMMO" name="productTags[]" value="MMO" <?php if(in_array("MMO", explode(",", $productData['tn']))) echo "checked"; ?>>
-                        <label class="form-check-label" for="tagMMO">MMO</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="tagPrzygoda" name="productTags[]" value="Przygoda" <?php if(in_array("Przygoda", explode(",", $productData['tn']))) echo "checked"; ?>>
-                        <label class="form-check-label" for="tagPrzygoda">Przygoda</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="tagRPG" name="productTags[]" value="RPG" <?php if(in_array("RPG", explode(",", $productData['tn']))) echo "checked"; ?>>
-                        <label class="form-check-label" for="tagRPG">RPG</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="tagSport" name="productTags[]" value="Sport" <?php if(in_array("Sport", explode(",", $productData['tn']))) echo "checked"; ?>>
-                        <label class="form-check-label" for="tagSport">Sport</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="tagSymulator" name="productTags[]" value="Symulator" <?php if(in_array("Symulator", explode(",", $productData['tn']))) echo "checked"; ?>>
-                        <label class="form-check-label" for="tagSymulator">Symulator</label>
-                    </div>
+                    <?php 
+                    $allTags = ["Akcja", "MMO", "Przygoda", "RPG", "Sport", "Symulator"];
+                    $productTags = explode(", ", $productData['tn']);
+                    foreach ($allTags as $tag): ?>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="tag<?php echo $tag; ?>" name="productTags[]" value="<?php echo $tag; ?>" <?php if (in_array($tag, $productTags)) echo "checked"; ?>>
+                            <label class="form-check-label" for="tag<?php echo $tag; ?>"><?php echo $tag; ?></label>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
                 <div class="mb-3">
                     <label for="productDescription" class="form-label">Opis Produktu</label>
-                    <textarea class="form-control" id="productDescription" name="productDescription" rows="4" placeholder="Wpisz opis produktu" required ><?php echo $productData['opis']; ?></textarea>
+                    <textarea class="form-control" id="productDescription" name="productDescription" rows="4" placeholder="Wpisz opis produktu" required><?php echo htmlspecialchars($productData['opis']); ?></textarea>
                 </div>
                 <div class="mb-3">
                     <label for="productPrice" class="form-label">Cena (PLN)</label>
-                    <input type="number" class="form-control" id="productPrice" name="productPrice" placeholder="Wpisz cenę" required value="<?php echo $productData['cena']; ?>">
+                    <input type="number" step=0.01 class="form-control" id="productPrice" name="productPrice" placeholder="Wpisz cenę" required value="<?php echo htmlspecialchars($productData['cena']); ?>">
                 </div>
                 <div class="mb-3">
                     <label for="productImages" class="form-label">Zdjęcie Produktu</label>
+                    <?php if (!empty($productData['ikona'])): ?>
+                        <p>Produkt ma już zdjęcie, jeżeli chcesz je zamienić prześlij nowe zdjęcie.</p>
+                        <img src="./img/products/<?php echo htmlspecialchars($productData['ikona']); ?>" alt="Current Product Image" style="max-width: 200px;">
+                    <?php endif; ?>
                     <input type="file" class="form-control" id="productImages" name="productImages[]" multiple>
                 </div>
                 <button type="submit" class="btn btn-primary w-100">Wystaw Produkt</button>

@@ -185,3 +185,10 @@
           transform: translate(0);
         }
       }
+
+.bordered-text {
+  color: transparent;
+  -webkit-text-stroke: 1px white;
+  font-size: 2rem; 
+  font-weight: bold;
+}

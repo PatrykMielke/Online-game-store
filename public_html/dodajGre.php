@@ -61,7 +61,7 @@ if (!isset($_SESSION["rola"]) or $_SESSION["rola"] == "kupujący"){
                 </div>
                 <div class="mb-3">
                     <label for="productPrice" class="form-label">Cena (PLN)</label>
-                    <input type="number" class="form-control" id="productPrice" name="productPrice" placeholder="Wpisz cenę" required>
+                    <input type="number" step=0.01 class="form-control" id="productPrice" name="productPrice" placeholder="Wpisz cenę" required>
                 </div>
                 <div class="mb-3">
                     <label for="productImages" class="form-label">Zdjęcie Produktu</label>
