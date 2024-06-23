@@ -64,10 +64,10 @@ session_start();
     <div class="row justify-content-center">
         <?php 
         // Include the database connection
-        include './php/config.php';
+        include 'php/config.php';
         
         // Fetch the 4 most recent games
-        $query = "SELECT * FROM produkty WHERE czy_dostepny = 1 ORDER BY id_produktu DESC LIMIT 4";
+        $query = `SELECT * FROM {$prefix}produkty WHERE czy_dostepny = 1 ORDER BY id_produktu DESC LIMIT 4`;
         $result = $conn->query($query);
         $recentGames = array();
         

@@ -3,7 +3,7 @@
 function load_description(){
     include 'config.php';
     // Check if user or email already exists
-    $stmt = $conn->prepare("select opis from uzytkownicy where id_uzytkownika = ?");
+    $stmt = $conn->prepare(`select opis from {$prefix}uzytkownicy where id_uzytkownik = ?`);
     $stmt ->bind_param("i", $id);
     $id = $_SESSION['id'];
 
