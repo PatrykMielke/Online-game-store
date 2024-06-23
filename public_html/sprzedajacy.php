@@ -25,17 +25,57 @@ if (!isset($_SESSION["rola"]) or $_SESSION["rola"] == "kupujący"){
         <h2>Sprzedawane produkty <a href="dodajgre.php"><button type="button" class="btn btn-primary">Wystaw nową grę</button></a></h2>
   <thead>
     <tr>
-      <th scope="col">#</th>
+      
       <th scope="col">Tytuł</th>
       <th scope="col">Cena</th>
+      <th scope="col">Czy dostępna</th>
       <th scope="col">Akcje</th>
     </tr>
   </thead>
   <tbody>
+  <?php 
+                    include './php/config.php';
+                    
+                    $stmt = $conn->prepare("SELECT * FROM `{$prefix}produkty` where id_wydawcy = ?");
+                    $stmt -> bind_param("i",$id);
+                    $id = $_SESSION["id"];
+                    if($stmt->execute())
+                    {
+                        $result = $stmt -> get_result();
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            $gameId = htmlspecialchars($row['id_produktu']);
+                            $gameName = htmlspecialchars($row['nazwa']);
+                            $gamePrice = htmlspecialchars($row['cena']) . " PLN";
+                            $gameAvailable = htmlspecialchars($row['czy_dostepny']) ? "Tak" : "Nie";
+                            $buttonLabel = htmlspecialchars($row['czy_dostepny']) ? "Usuń" : "Przywróć";
+                            $buttonClass = htmlspecialchars($row['czy_dostepny']) ? "btn-danger" : "btn-success";
+
+                            echo "<tr>
+                                    
+                                    <td>{$gameName}</td>
+                                    <td>{$gamePrice}</td>
+                                    <td>{$gameAvailable}</td>
+                                    <td>
+                                        <button class='btn btn-sm btn-primary' onclick=\"location.href='stronaGry.php?id={$gameId}'\">Zobacz stronę gry</button>
+                                        <button class='btn btn-sm btn-primary' onclick=\"location.href='edytujGre.php?id={$gameId}'\">Edytuj</button>
+                                        <form method='post' action='php/remove_retrieve_game.php' style='display:inline;'>
+											<input type='hidden' name='id_produktu' value='{$gameId}'>
+											<button type='submit' onclick=\"return areYouSure();\" class='btn btn-sm {$buttonClass}'>{$buttonLabel}</button>
+										</form>
+                                    </td>
+                                </tr>";
+                        }
+                    }
+                    } else {
+                        echo "<tr><td colspan='5'>Brak danych</td></tr>";
+                    }
+
+                    $conn->close();
+                    ?>
     <tr>
       <?php
         include 'php/sellerPanel.php';
-        load_games();
       ?>
     </tr>
   </tbody>

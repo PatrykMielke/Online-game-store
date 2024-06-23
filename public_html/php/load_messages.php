@@ -3,7 +3,7 @@ include 'config.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST'){
     if(isset($_POST['submit'])){
         
-        $stmt = $conn->prepare(`INSERT INTO {$prefix}odpowiedzi_od_supportu(id_wiadomosci, odpowiedz) VALUES (?,?)`);
+        $stmt = $conn->prepare("INSERT INTO `{$prefix}odpowiedzi_od_supportu`(id_wiadomosci, odpowiedz) VALUES (?,?)");
         $stmt -> bind_param("is",$_POST['submit'],$_POST['odpowiedz']);
 
         if ($stmt->execute()){
@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 
 function load_messages(){
     include 'config.php';
-    $stmt = $conn->prepare("SELECT id_wiadomosci, nazwa,temat,wiadomosci_od_uzytkownikow.opis o FROM `wiadomosci_od_uzytkownikow` inner join uzytkownicy on uzytkownicy.a = wiadomosci_od_uzytkownikow.id_uzytkownika where id_wiadomosci not in(select id_wiadomosci from odpowiedzi_od_supportu);;");
+    $stmt = $conn->prepare("SELECT id_wiadomosci, nazwa,temat,w.opis o FROM `{$prefix}wiadomosci_od_uzytkownikow` w inner join `{$prefix}uzytkownicy` u on u.id_uzytkownika = w.id_uzytkownika where id_wiadomosci not in(select u.id_wiadomosci from `{$prefix}odpowiedzi_od_supportu` u);");
 
     if($stmt->execute())
     {

@@ -53,6 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Move uploaded file to specified directory
         $newFileName = "product-img_" . uniqid() . ".$imageFileType"; // Generate a unique filename
         $target_file = $uploadDir . $newFileName;
+        var_dump($tmp_name);var_dump($target_file);
         if (move_uploaded_file($tmp_name, $target_file)) {
             $uploadedFiles[] = $target_file;
         } else {

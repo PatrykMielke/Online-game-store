@@ -93,6 +93,7 @@ $result = $conn->query($sql);
 										<p class="card-text">Cena: <?php echo $row['cena']; ?> PLN</p>
 										<p class="card-text">Opis: <?php echo $row['opis']; ?></p>
 										<p class="card-text">Tagi: <?php echo $row['tagi']; ?></p>
+                                        <p class="card-text">Ocena: <?php echo $row['ocena']; ?></p>
 										<button class="glitch text-white" onclick='location.href="stronaGry.php?id=<?php echo htmlspecialchars($row['id_produktu']); ?>"'>Zobacz teraz</button>
 									</div>
 								</div>

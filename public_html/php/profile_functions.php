@@ -147,7 +147,7 @@ function load_games() {
                   echo '<form method="post" action="php/ocen_gre.php">';
                   echo '<input type="hidden" name="id_produktu" value="'.$row['id_produktu'].'">';
                   echo '<label for="rating'.$row['id_produktu'].'">Oceń grę:</label>';
-                  echo '<input type="number" id="rating'.$row['id_produktu'].'" name="rating" min="0" max="5" step="1" required>';
+                  echo '<input type="number" id="rating'.$row['id_produktu'].'" name="rating" min="1" max="5" step="1" required>';
                   echo '<button type="submit">Oceń</button>';
                   echo '</form>';
               }

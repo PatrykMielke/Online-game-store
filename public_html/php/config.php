@@ -1,25 +1,25 @@
 <?php
-$host='localhost:3308';
-$user='root';
-$password='';
-$dbname='steam';
-$prefix='';
+$host='localhost';
+$user='2025_patrykm';
+$password='405651';
+$dbname='2025_patrykm';
+$prefix='tbl_test';
 $conn = mysqli_connect($host, $user, $password, $dbname);
 
 # konfiguracja aplikacji
-$base_url='x';
-$nazwa_aplikacji='x';
-$data_powstania='x';
-$wersja='x';
-$brand='x';
-$adres1='x';
-$adres2='x';
-$adres3='x';
+$base_url='https://manticore.uni.lodz.pl/~patrykm/';
+$nazwa_aplikacji='Triton';
+$data_powstania='23.06.2024';
+$wersja='1';
+$brand='PMM';
+$adres1='Przykładowa';
+$adres2='Łódź';
+$adres3='123456789';
 $admin_login='x';
-$admin_password='$2y$10$wQClOL4fY0rb2IRQhx7dweJVqbVJtTK667Hq2/aaUs7uBoTysB.By';
+$admin_password='$2y$10$OB0u7vWV5yY.wQfYiVF8vuNouhulIaqg1So6uqJ23ZCyIA5TJ4lh.';
 
-if ($conn->connect_error) {
-    die('Connection failed: ' .$conn->connect_error);
-    header('location: install.php');
-}
-?>
+                if ($conn->connect_error) {
+                die('Connection failed: ' .$conn->connect_error);
+                header('location: install.php');
+                }
+                ?>
