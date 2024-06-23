@@ -1,4 +1,4 @@
-<?php session_start(); if (!isset($_SESSION["rola"]) or $_SESSION["rola"] == "administrator"){
+<?php session_start(); if (!isset($_SESSION["rola"]) or $_SESSION["rola"] != "administrator"){
     header("location: index.php");
 }?>
 <!DOCTYPE html>

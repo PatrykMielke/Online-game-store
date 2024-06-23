@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (!isset($_SESSION["rola"]) or $_SESSION["rola"] == "administrator"){
+if (!isset($_SESSION["rola"]) or $_SESSION["rola"] != "administrator"){
     header("location: index.php");
 }
 include 'php/config.php';

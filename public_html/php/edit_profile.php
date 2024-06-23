@@ -34,7 +34,7 @@ function load_description(){
 
         $uploadedFiles = array();
         $errors = array();
-
+var_dump($_FILES) ;
         foreach ($_FILES['profilePic']['name'] as $key => $name) {
             $tmp_name = $_FILES['profilePic']['tmp_name'][$key];
             $target_file = $uploadDir . basename($name);
