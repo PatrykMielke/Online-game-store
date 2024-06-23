@@ -109,7 +109,7 @@ include 'templates/header.php';
                 if ($result) {
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
-                            $userId = $row["id_uzytkownik"];
+                            $userId = $row["id_uzytkownika"];
                             $name = $row["nazwa"];
                             $email = $row["email"];
                             $role = $row["rola"];

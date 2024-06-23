@@ -3,7 +3,7 @@
 function load_description(){
     include 'config.php';
     // Check if user or email already exists
-    $stmt = $conn->prepare("select opis from `{$prefix}uzytkownicy` where id_uzytkownik = ?");
+    $stmt = $conn->prepare("select opis from `{$prefix}uzytkownicy` where id_uzytkownika = ?");
     $stmt ->bind_param("i", $id);
     $id = $_GET['id'];
 
@@ -114,7 +114,7 @@ function load_friends(){
 function load_games(){
     include 'config.php';
       $stmt = $conn->prepare("SELECT p.id_produktu, nazwa, ikona FROM `{$prefix}produkty` p inner join `{$prefix}posiadane_programy` pp on 
-      pp.id_produkt = p.id_produktu where pp.id_uzytkownika = ?;");
+      pp.id_produktu = p.id_produktu where pp.id_uzytkownika = ?;");
       $stmt ->bind_param("i", $id);
       $id = $_GET['id'];;
   
@@ -129,7 +129,7 @@ function load_games(){
               echo '<div class="card">';      
                 
                 echo '<div class="card-body">
-                <a href="stronaGry.php?id='.$row['id_produkt'].'">
+                <a href="stronaGry.php?id='.$row['id_produktu'].'">
                     <img src="https://picsum.photos/200?image=1005" alt="Gra" />
                     <p>'.$row['nazwa'].'</p></a>
                 </div>';

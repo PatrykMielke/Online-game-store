@@ -37,7 +37,7 @@
 					<?php 
                     include './php/config.php';
                     
-                    $query = "SELECT * FROM produkty ORDER BY id_produktu";
+                    $query = "SELECT * FROM `{$prefix}produkty` ORDER BY id_produktu";
                     $result = $conn->query($query);
                     
                     if ($result->num_rows > 0) {
