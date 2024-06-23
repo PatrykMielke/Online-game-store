@@ -17,8 +17,8 @@ function send_message(){
     if( isset($_POST['subject']) and isset($_POST['message'])){
 
         include 'config.php';
-        $stmt = $conn->prepare(`INSERT INTO {$prefix}wiadomosci_od_uzytkownikow( id_uzytkownik, temat, opis) VALUES (?,?,?)
-        `);
+        $stmt = $conn->prepare("INSERT INTO `{$prefix}wiadomosci_od_uzytkownikow` ( id_uzytkownik, temat, opis) VALUES (?,?,?)
+        ");
         $stmt -> bind_param("iss", $id, $tematXD, $opisXD);
     
         $id= $_SESSION['id'];

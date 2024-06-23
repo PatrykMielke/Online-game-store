@@ -65,7 +65,7 @@ function load_messages(){
 
 function load_messages_from_admin(){
     include 'config.php';
-    $stmt = $conn->prepare(`SELECT * FROM {$prefix}odpowiedzi_od_supportu o inner join {$prefix}wiadomosci_od_uzytkownikow w on w.id_wiadomosci = o.id_wiadomosci where w.id_uzytkownika = ?;`);
+    $stmt = $conn->prepare("SELECT * FROM `{$prefix}odpowiedzi_od_supportu` o inner join `{$prefix}wiadomosci_od_uzytkownikow` w on w.id_wiadomosci = o.id_wiadomosci where w.id_uzytkownika = ?;");
     $stmt -> bind_param("i",$_SESSION['id']);
 
     if($stmt->execute())

@@ -2,7 +2,7 @@
 <?php
       function load_games(){
     include 'config.php';
-    $stmt = $conn->prepare(`SELECT * FROM {$prefix}produkty where id_wydawcy = ?`);
+    $stmt = $conn->prepare("SELECT * FROM `{$prefix}produkty` where id_wydawcy = ?");
     $stmt -> bind_param("i",$id);
     $id = $_SESSION["id"];
 

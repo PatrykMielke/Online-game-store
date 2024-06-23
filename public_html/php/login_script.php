@@ -41,6 +41,7 @@ function login()
             echo "Hashed password from database: " . $row['haslo'] . "<br>";
 
             if (password_verify(trim($_POST["password"]), $row['haslo'])) {
+                
                 $_SESSION["zalogowany"] = true;
                 $_SESSION["id"] = $row['id_uzytkownika'];
                 $_SESSION["email"] = $row['email'];                      

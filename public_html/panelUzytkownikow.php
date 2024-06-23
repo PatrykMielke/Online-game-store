@@ -12,13 +12,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $userId = $_POST['id_uzytkownik'];
         $newRole = $_POST['new_rola'];
 
-        $updateSql = "UPDATE uzytkownicy SET rola = ? WHERE id_uzytkownika = ?";
+        $updateSql = "UPDATE `{$prefix}uzytkownicy` SET rola = ? WHERE id_uzytkownika = ?";
         $stmt = $conn->prepare($updateSql);
         $stmt->bind_param('si', $newRole, $userId);
         if ($stmt->execute()) {
             // Redirect back to the current page after updating
-            header("Location: {$_SERVER['PHP_SELF']}");
-            exit();
+            header("Location: {$_SERVER['PHP_SELF']}");exit();
         } else {
             echo "Error: " . $conn->error;
         }
@@ -32,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Toggle czy_aktywny field
         $newActive = $isActive == 1 ? 0 : 1;
 
-        $updateSql = "UPDATE uzytkownicy SET czy_aktywny = ? WHERE id_uzytkownika = ?";
+        $updateSql = "UPDATE `{$prefix}uzytkownicy` SET czy_aktywny = ? WHERE id_uzytkownika = ?";
         $stmt = $conn->prepare($updateSql);
         $stmt->bind_param('ii', $newActive, $userId);
         if ($stmt->execute()) {
@@ -46,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // Select all users
-$sql = "SELECT * FROM uzytkownicy";
+$sql = "SELECT * FROM `{$prefix}uzytkownicy`";
 $result = $conn->query($sql);
 
 ?>

@@ -43,8 +43,7 @@
                   echo '<li class="nav-item">
                   <a class="nav-link custom-nav-link" href="wiadomoscOdSup.php">Odpowiedzi</a>
               </li> ';
-
-            include_once 'php/saldo.php';
+            include 'php/saldo.php';
             $navbar = pokazSaldoNavbar(); 
             echo '<li class="nav-item">
               <a class="nav-link custom-nav-link" href="dodajSaldo.php">'.$navbar.'zł</a>

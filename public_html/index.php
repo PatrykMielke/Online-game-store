@@ -67,7 +67,7 @@ session_start();
         include './php/config.php';
         
         // Fetch the 4 most recent games
-        $query = "SELECT * FROM produkty WHERE czy_dostepny = 1 ORDER BY id_produktu DESC LIMIT 4";
+        $query = "SELECT * FROM `{$prefix}produkty` WHERE czy_dostepny = 1 ORDER BY id_produktu DESC LIMIT 5";
         $result = $conn->query($query);
         $recentGames = array();
         
