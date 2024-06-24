@@ -46,8 +46,8 @@ function login()
                 $_SESSION["saldo"] = $row['saldo'];
 
                 $result->free_result();
-
-                header("location: index.php");
+		
+                header("location: $base_url/index.php");
                 exit;
             } else {
                 echo "Incorrect password.";

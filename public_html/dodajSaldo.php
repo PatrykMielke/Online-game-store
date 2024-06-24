@@ -2,9 +2,8 @@
     session_start();
     
     if (!isset($_SESSION['zalogowany'])){
-        header('location:zalogowany.php');
+        header('location:logowanie.php');
     }
-
 ?>
 <!DOCTYPE html>
 <html lang="pl">
@@ -19,6 +18,7 @@
    <?php 
     include 'templates/navbar.php';
     include 'templates/header.php';
+    
   ?>
      <div class="container">
         <div class="row">

@@ -1,6 +1,6 @@
 <?php 
 session_start(); 
-if (!isset($_SESSION["rola"]) || $_SESSION["rola"] == "kupujący") {
+if (!isset($_SESSION["rola"]) || $_SESSION["rola"] == "kupujacy") {
     header("location: index.php");
     exit();
 }
@@ -8,7 +8,7 @@ if (!isset($_SESSION["rola"]) || $_SESSION["rola"] == "kupujący") {
 // Function to fetch data from the database
 function getProductData($productId) {
     include 'php/config.php';
-    $stmt = $conn->prepare("SELECT produkty.id_produktu, produkty.nazwa AS pn, GROUP_CONCAT(tagi.nazwa SEPARATOR ', ') AS tn, opis, cena FROM produkty INNER JOIN tagi ON tagi.id_produktu = produkty.id_produktu WHERE produkty.id_produktu = ? GROUP BY produkty.id_produktu");
+    $stmt = $conn->prepare("SELECT p.id_produktu, p.nazwa AS pn, GROUP_CONCAT(t.nazwa SEPARATOR ', ') AS tn, opis, cena, ikona FROM `{$prefix}produkty` p INNER JOIN `{$prefix}tagi` t ON t.id_produktu = p.id_produktu WHERE p.id_produktu = ? GROUP BY p.id_produktu");
     $stmt->bind_param("i", $productId);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -18,17 +18,23 @@ function getProductData($productId) {
 function updateProductData($productId, $name, $description, $price, $tags) {
     include 'php/config.php';
     
-        $sql = "UPDATE produkty SET nazwa = ?, opis = ?, cena = ? WHERE id_produktu = ?";
+    // Prepare the SQL statement based on whether an image is provided
+    if (!empty($image)) {
+        $sql = "UPDATE `{$prefix}produkty `SET nazwa = ?, opis = ?, cena = ?, ikona = ? WHERE id_produktu = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssdsi", $name, $description, $price, $image, $productId);
+    } else {
+        $sql = "UPDATE `{$prefix}produkty` SET nazwa = ?, opis = ?, cena = ? WHERE id_produktu = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ssdi", $name, $description, $price, $productId);
     $result = $stmt->execute();
 
     // Update product tags
-    $stmt = $conn->prepare("DELETE FROM tagi WHERE id_produktu = ?");
+    $stmt = $conn->prepare("DELETE FROM `{$prefix}tagi` WHERE id_produktu = ?");
     $stmt->bind_param("i", $productId);
     $stmt->execute();
     
-    $stmt = $conn->prepare("INSERT INTO tagi (id_produktu, nazwa) VALUES (?, ?)");
+    $stmt = $conn->prepare("INSERT INTO `{$prefix}tagi` (id_produktu, nazwa) VALUES (?, ?)");
     foreach ($tags as $tag) {
         $stmt->bind_param("is", $productId, $tag);
         $stmt->execute();

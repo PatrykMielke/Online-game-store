@@ -1,5 +1,7 @@
 <?php
+
 //error_reporting(E_PARSE);
+/*
 function pokazSaldo(){
 
     include 'config.php';
@@ -23,7 +25,7 @@ function pokazSaldo(){
       else{
         echo "błąd";
       }
-}
+}*/
 
 function pokazSaldoNavbar(){
 
