@@ -47,7 +47,7 @@ function login()
 
                 $result->free_result();
 
-                header("location: ../index.php");
+                header("location: index.php");
                 exit;
             } else {
                 echo "Incorrect password.";
