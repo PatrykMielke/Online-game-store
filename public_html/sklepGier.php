@@ -21,15 +21,14 @@ if (!empty($_POST['tags'])) {
     $filter_tags = $_POST['tags'];
 }
 
-// Construct the base SQL query 
-
-$sql = "SELECT p.id_produktu, p.nazwa AS nazwa_produktu, p.id_wydawcy, p.ikona, p.cena, p.czy_dostepny, p.opis, GROUP_CONCAT(t.nazwa SEPARATOR ', ') AS tagi
+// Construct the base SQL query
+$sql = "SELECT p.id_produktu, p.nazwa AS nazwa_produktu, p.id_wydawcy, p.ikona, p.cena, p.czy_dostepny, p.opis, 
+               GROUP_CONCAT(t.nazwa SEPARATOR ', ') AS tagi,
+               AVG(pp.ocena) AS avg_ocena, 
+               GROUP_CONCAT(pp.ocena SEPARATOR ', ') AS oceny
         FROM `{$prefix}produkty` p
-        LEFT JOIN `{$prefix}tagi` t ON p.id_produktu = t.id_produktu";
-/*
-
-$sql = "SELECT p.id_produktu, p.nazwa AS nazwa_produktu, p.id_wydawcy, p.ikona, p.cena, p.czy_dostepny, p.opis, GROUP_CONCAT(t.nazwa SEPARATOR ', ') AS tagi, (select format( avg(ocena),2) from `{$prefix}posiadane_programy` where id_produktu = ? group by id_produktu) ocena FROM `{$prefix}produkty` p LEFT JOIN `{$prefix}tagi` t ON p.id_produktu = t.id_produktu where p.id_produktu =?;";
-$sql = "SELECT p.id_produktu, p.nazwa AS nazwa_produktu, p.id_wydawcy, p.ikona, p.cena, p.czy_dostepny, p.opis, GROUP_CONCAT(t.nazwa SEPARATOR ', ') AS tagi, COALESCE((select format( avg(ocena),2) from `{$prefix}posiadane_programy` where id_produktu = 3 group by id_produktu),'brak ocen') ocena FROM `{$prefix}produkty` p LEFT JOIN `{$prefix}tagi` t ON p.id_produktu = t.id_produktu where p.id_produktu =3;";*/
+        LEFT JOIN `{$prefix}tagi` t ON p.id_produktu = t.id_produktu
+        LEFT JOIN `{$prefix}posiadane_programy` pp ON p.id_produktu = pp.id_produktu";
 
 // Add availability condition
 $sql .= " WHERE p.czy_dostepny = 1";
@@ -40,7 +39,7 @@ if (!empty($filter_tags)) {
               HAVING COUNT(DISTINCT CASE WHEN t.nazwa IN ('" . implode("','", $filter_tags) . "') THEN t.nazwa END) = " . count($filter_tags);
 } else {
     $sql .= " GROUP BY p.id_produktu";
-}   
+}  
 
 // Execute the query
 $result = $conn->query($sql);
@@ -62,7 +61,7 @@ $result = $conn->query($sql);
     <?php 
     include 'templates/navbar.php';
     include 'templates/header.php';
-    include 'templates/navbar2.php';
+    // include 'templates/navbar2.php';
     ?>
     
     <div class="container-fluid">
@@ -86,28 +85,33 @@ $result = $conn->query($sql);
 
             <!-- Main content area to display products -->
             <main class="col-md-10 ml-sm-auto col-lg-10 px-md-4">
-				<!-- Display products based on the query result -->
-				<div class="row rounded">
-					<?php if ($result->num_rows > 0): ?>
-						<?php while ($row = $result->fetch_assoc()): ?>
-							<div class="col-md-4 rounded">
-								<div class="card m-4 shadow shadow-xl border rounded text-white">
-									<img src="./img/products/<?php echo $row['ikona']; ?>" alt="<?php echo $row['nazwa_produktu']; ?>" class="bd-placeholder-img card-img-top rounded" style="height: 18vh;">
-									<div class="card-body rounded text-white">
-										<h5 class="card-title bordered-text"><?php echo $row['nazwa_produktu']; ?></h5>
-										<p class="card-text">Cena: <?php echo $row['cena']; ?> PLN</p>
-										<p class="card-text">Opis: <?php echo $row['opis']; ?></p>
-										<p class="card-text">Tagi: <?php echo $row['tagi']; ?></p>
-										<button class="glitch text-white" onclick='location.href="stronaGry.php?id=<?php echo htmlspecialchars($row['id_produktu']); ?>"'>Zobacz teraz</button>
-									</div>
-								</div>
-							</div>
-						<?php endwhile; ?>
-					<?php else: ?>
-						<p>Brak produktów spełniających kryteria.</p>
-					<?php endif; ?>
-				</div>
-			</main>
+                <div class="text-center shadow m-2">
+                    <h1>Sklep gier</h1>
+                    <div class="p-1">Znajdź tytuł idealny dla siebie!</div>
+                </div>
+                <!-- Display products based on the query result -->
+                <div class="row rounded">
+                    <?php if ($result->num_rows > 0): ?>
+                        <?php while ($row = $result->fetch_assoc()): ?>
+                            <div class="col-md-4 rounded">
+                                <div class="card m-4 shadow shadow-xl border rounded text-white">
+                                    <img src="./img/products/<?php echo $row['ikona']; ?>" alt="<?php echo $row['nazwa_produktu']; ?>" class="bd-placeholder-img card-img-top rounded" style="height: 18vh;">
+                                    <div class="card-body rounded text-white">
+                                        <h5 class="card-title bordered-text"><?php echo $row['nazwa_produktu']; ?></h5>
+                                        <p class="card-text">Cena: <?php echo $row['cena']; ?> PLN</p>
+                                        <p class="card-text">Opis: <?php echo $row['opis']; ?></p>
+                                        <p class="card-text">Tagi: <?php echo $row['tagi']; ?></p>
+                                        <p class="card-text">Średnia ocena: <?php echo number_format($row['avg_ocena'], 2) == 0.00 ? "Brak ocen" : number_format($row['avg_ocena'], 2); ?></p>
+                                        <button class="glitch text-white" onclick='location.href="stronaGry.php?id=<?php echo htmlspecialchars($row['id_produktu']); ?>"'>Zobacz teraz</button>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endwhile; ?>
+                    <?php else: ?>
+                        <p>Brak produktów spełniających kryteria.</p>
+                    <?php endif; ?>
+                </div>
+            </main>
         </div>
     </div>
 
