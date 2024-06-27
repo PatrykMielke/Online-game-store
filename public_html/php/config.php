@@ -1,9 +1,9 @@
 <?php
 $host='localhost';
-$user='2025_patrykm';
-$password='405651';
-$dbname='2025_patrykm';
-$prefix='tbl_test';
+$user='root';
+$password='';
+$dbname='test';
+$prefix='xd_';
 $conn = mysqli_connect($host, $user, $password, $dbname);
 
 # konfiguracja aplikacji

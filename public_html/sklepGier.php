@@ -21,10 +21,15 @@ if (!empty($_POST['tags'])) {
     $filter_tags = $_POST['tags'];
 }
 
-// Construct the base SQL query
+// Construct the base SQL query 
+
 $sql = "SELECT p.id_produktu, p.nazwa AS nazwa_produktu, p.id_wydawcy, p.ikona, p.cena, p.czy_dostepny, p.opis, GROUP_CONCAT(t.nazwa SEPARATOR ', ') AS tagi
         FROM `{$prefix}produkty` p
         LEFT JOIN `{$prefix}tagi` t ON p.id_produktu = t.id_produktu";
+/*
+
+$sql = "SELECT p.id_produktu, p.nazwa AS nazwa_produktu, p.id_wydawcy, p.ikona, p.cena, p.czy_dostepny, p.opis, GROUP_CONCAT(t.nazwa SEPARATOR ', ') AS tagi, (select format( avg(ocena),2) from `{$prefix}posiadane_programy` where id_produktu = ? group by id_produktu) ocena FROM `{$prefix}produkty` p LEFT JOIN `{$prefix}tagi` t ON p.id_produktu = t.id_produktu where p.id_produktu =?;";
+$sql = "SELECT p.id_produktu, p.nazwa AS nazwa_produktu, p.id_wydawcy, p.ikona, p.cena, p.czy_dostepny, p.opis, GROUP_CONCAT(t.nazwa SEPARATOR ', ') AS tagi, COALESCE((select format( avg(ocena),2) from `{$prefix}posiadane_programy` where id_produktu = 3 group by id_produktu),'brak ocen') ocena FROM `{$prefix}produkty` p LEFT JOIN `{$prefix}tagi` t ON p.id_produktu = t.id_produktu where p.id_produktu =3;";*/
 
 // Add availability condition
 $sql .= " WHERE p.czy_dostepny = 1";
@@ -93,7 +98,6 @@ $result = $conn->query($sql);
 										<p class="card-text">Cena: <?php echo $row['cena']; ?> PLN</p>
 										<p class="card-text">Opis: <?php echo $row['opis']; ?></p>
 										<p class="card-text">Tagi: <?php echo $row['tagi']; ?></p>
-                                        <p class="card-text">Ocena: <?php echo $row['ocena']; ?></p>
 										<button class="glitch text-white" onclick='location.href="stronaGry.php?id=<?php echo htmlspecialchars($row['id_produktu']); ?>"'>Zobacz teraz</button>
 									</div>
 								</div>
