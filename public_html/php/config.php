@@ -2,21 +2,21 @@
 $host='localhost';
 $user='root';
 $password='';
-$dbname='test';
-$prefix='xd_';
+$dbname='steam';
+$prefix='tab_';
 $conn = mysqli_connect($host, $user, $password, $dbname);
 
 # konfiguracja aplikacji
-$base_url='https://manticore.uni.lodz.pl/~patrykm/';
-$nazwa_aplikacji='Triton';
-$data_powstania='23.06.2024';
-$wersja='1';
-$brand='PMM';
-$adres1='Przykładowa';
-$adres2='Łódź';
-$adres3='123456789';
-$admin_login='x';
-$admin_password='$2y$10$OB0u7vWV5yY.wQfYiVF8vuNouhulIaqg1So6uqJ23ZCyIA5TJ4lh.';
+$base_url='http://localhost/Online-game-store/public_html/';
+$nazwa_aplikacji='x';
+$data_powstania='x';
+$wersja='x';
+$brand='x';
+$adres1='x';
+$adres2='x';
+$adres3='x';
+$admin_login='administrator@admin.pl';
+$admin_password='$2y$10$l871zUIjMWSPoFjg/83FI.V.SehuU6VcDVvM0Q9t7I7JyFpUivQTy';
 
                 if ($conn->connect_error) {
                 die('Connection failed: ' .$conn->connect_error);

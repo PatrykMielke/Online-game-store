@@ -23,7 +23,7 @@ if (!empty($_POST['tags'])) {
 
 // Construct the base SQL query
 $sql = "SELECT p.id_produktu, p.nazwa AS nazwa_produktu, p.id_wydawcy, p.ikona, p.cena, p.czy_dostepny, p.opis, 
-               GROUP_CONCAT(t.nazwa SEPARATOR ', ') AS tagi,
+               GROUP_CONCAT(distinct t.nazwa SEPARATOR ', ') AS tagi,
                AVG(pp.ocena) AS avg_ocena, 
                GROUP_CONCAT(pp.ocena SEPARATOR ', ') AS oceny
         FROM `{$prefix}produkty` p

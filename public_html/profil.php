@@ -18,7 +18,7 @@ require 'php/profile_functions.php';
  
 </head>
 
-<body class="body-main">
+<body>
 
   <!-- Pierwszy navbar -->
   <?php 

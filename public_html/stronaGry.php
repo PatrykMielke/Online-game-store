@@ -26,12 +26,12 @@ if (isset($_GET['id'])) {
     
     $sql = "SELECT p.id_produktu, p.nazwa AS nazwa_produktu, p.id_wydawcy, p.ikona, p.cena, p.czy_dostepny, p.opis, GROUP_CONCAT(t.nazwa SEPARATOR ', ') AS tagi
         FROM `{$prefix}produkty` p
-        LEFT JOIN `{$prefix}tagi` t ON p.id_produktu = t.id_produktu";
-            
-   
+        LEFT JOIN `{$prefix}tagi` t ON p.id_produktu = t.id_produktu
+        WHERE p.id_produktu = ?
+        GROUP BY p.id_produktu";
 
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ii", $gameId, $gameId);
+    $stmt->bind_param("i", $gameId);
     $stmt->execute();
     $result = $stmt->get_result();
 
