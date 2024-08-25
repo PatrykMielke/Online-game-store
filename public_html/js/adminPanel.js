@@ -79,7 +79,32 @@ document.querySelectorAll('.btn-danger').forEach(function(button) {
      }
  });
 
+// User Age Data
+const userAgeLabels = JSON.parse(document.getElementById('userAgeLabels').textContent);
+const userAgeData = JSON.parse(document.getElementById('userAgeData').textContent);
 
- const userActivityBarCtx = document.getElementById('userActivityBarChart').getContext('2d');
- 
+const userAgeBarCtx = document.getElementById('userActivityBarChart').getContext('2d');
 
+new Chart(userAgeBarCtx, {
+    type: 'bar',
+    data: {
+        labels: userAgeLabels,
+        datasets: [{
+            label: 'Liczba użytkowników',
+            data: userAgeData,
+            borderColor: 'rgba(75, 192, 192, 1)',
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            fill: true
+        }]
+    },
+    options: {
+        scales: {
+            x: {
+                beginAtZero: true
+            },
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});

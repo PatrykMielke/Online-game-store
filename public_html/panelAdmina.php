@@ -1,7 +1,69 @@
-<?php session_start(); 
+<?php
+session_start(); 
 if (!isset($_SESSION["rola"]) or $_SESSION["rola"] != "administrator"){
     header("location: index.php");
+    exit();
 }
+
+// Setup database connection
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "your_database_name";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$salesData = [];
+$salesLabels = [];
+
+$sql = "SELECT product_name, SUM(quantity_sold) as total_sales FROM sales GROUP BY product_name";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    while($row = $result->fetch_assoc()) {
+        $salesLabels[] = $row['product_name'];
+        $salesData[] = $row['total_sales'];
+    }
+}
+
+$userAgeData = [];
+$userAgeLabels = ["0-18", "19-25", "26-35", "36-50", "51+"];
+
+$sql = "
+    SELECT 
+        CASE
+            WHEN age BETWEEN 0 AND 18 THEN '0-18'
+            WHEN age BETWEEN 19 AND 25 THEN '19-25'
+            WHEN age BETWEEN 26 AND 35 THEN '26-35'
+            WHEN age BETWEEN 36 AND 50 THEN '36-50'
+            ELSE '51+'
+        END as age_range,
+        COUNT(*) as count
+    FROM users
+    GROUP BY age_range
+";
+$result = $conn->query($sql);
+
+$ageDataMap = [
+    "0-18" => 0,
+    "19-25" => 0,
+    "26-35" => 0,
+    "36-50" => 0,
+    "51+" => 0,
+];
+
+if ($result->num_rows > 0) {
+    while($row = $result->fetch_assoc()) {
+        $ageDataMap[$row['age_range']] = $row['count'];
+    }
+}
+
+$userAgeData = array_values($ageDataMap);
+$conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,8 +78,7 @@ if (!isset($_SESSION["rola"]) or $_SESSION["rola"] != "administrator"){
 <?php 
     include 'templates/navbar.php';
     include 'templates/header.php';
-    
-  ?>
+?>
 
 <!-- Main Container -->
 <div class="container mt-5">
@@ -32,77 +93,43 @@ if (!isset($_SESSION["rola"]) or $_SESSION["rola"] != "administrator"){
     </div>
 
     <div class="row mt-4">
-            <div class="col-md-6">
-                <!-- New Widget: Financial Summary -->
-                <div class="card">
-                    <div class="card-header">
-                        <h4>Podsumowanie Finansowe</h4>
-                    </div>
-                    <div class="card-body">
-                        <p>Kluczowe wskaźniki finansowe:</p>
-                        <ul>
-                            <li>Całkowite przychody: 1 000 000 zł</li>
-                            <li>Wydatki operacyjne: 400 000 zł</li>
-                            <li>Zysk netto: 600 000 zł</li>
-                            <li>Średnia marża zysku: 60%</li>
-                            <li>Najlepiej sprzedający się produkt: Produkt A</li>
-                        </ul>
+        <div class="col-md-6">
+            <!-- Widget 1: Sales Data Line Chart -->
+            <div class="card">
+                <div class="card-header">
+                    <h4>Sprzedaż Produktu</h4>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container">
+                        <canvas id="salesLineChart"></canvas>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <!-- New Widget: User Feedback -->
-                <div class="card">
-                    <div class="card-header">
-                        <h4>Opinie Użytkowników</h4>
-                    </div>
-                    <div class="card-body">
-                        <p>Ostatnie opinie użytkowników:</p>
-                        <ul>
-                            <li>John Doe: "Świetna platforma!"</li>
-                            <li>Jane Smith: "Miałem problemy z płatnością."</li>
-                            <li>Adam Kowalski: "Szybka dostawa, polecam!"</li>
-                            <li>Ewa Nowak: "Brakuje niektórych funkcji."</li>
-                            <li>Anna Wiśniewska: "Support jest bardzo pomocny."</li>
-                        </ul>
+        </div>
+        <div class="col-md-6">
+            <!-- Widget 2: User Age Data Bar Chart -->
+            <div class="card">
+                <div class="card-header">
+                    <h4>Wiek Użytkowników</h4>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container">
+                        <canvas id="userActivityBarChart"></canvas>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-md-6">
-                <!-- Widget 1: User Activity Line Chart -->
-                <div class="card">
-                    <div class="card-header">
-                        <h4>Aktywność Użytkowników</h4>
-                    </div>
-                    <div class="card-body">
-                        <p>Aktywność użytkowników w ostatnich 7 dniach:</p>
-                        <div class="chart-container">
-                            <canvas id="userActivityLineChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <!-- Widget 2: Sales Data Line Chart -->
-                <div class="card">
-                    <div class="card-header">
-                        <h4>Dane Sprzedaży</h4>
-                    </div>
-                    <div class="card-body">
-                        <p>Sprzedaż produktów w ostatnim miesiącu:</p>
-                        <div class="chart-container">
-                            <canvas id="salesLineChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="js/adminPanel.js"></script>
+</div>
+
+<!-- Hidden JSON data -->
+<script id="salesLabels" type="application/json"><?php echo json_encode($salesLabels); ?></script>
+<script id="salesData" type="application/json"><?php echo json_encode($salesData); ?></script>
+<script id="userAgeLabels" type="application/json"><?php echo json_encode($userAgeLabels); ?></script>
+<script id="userAgeData" type="application/json"><?php echo json_encode($userAgeData); ?></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="js/adminPanel.js"></script>
 </body>
 </html>
