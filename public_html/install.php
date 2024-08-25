@@ -164,9 +164,9 @@ function step4() {
 
     $create[] = "CREATE TABLE IF NOT EXISTS `${prefix}uzytkownicy` (
         `id_uzytkownika` int(11) AUTO_INCREMENT primary key NOT NULL,
-        `nazwa` varchar(255) NOT NULL,
-        `email` varchar(255) NOT NULL,
-        `haslo` varchar(255) NOT NULL,
+        `nazwa` varchar(255)  NULL,
+        `email` varchar(255)  NULL,
+        `haslo` varchar(255)  NULL,
         `rola` varchar(255) DEFAULT NULL,
         `saldo` decimal(10,2) DEFAULT NULL,
         `obraz_w_tle` varchar(255) DEFAULT NULL,
@@ -193,8 +193,10 @@ function step4() {
     $create[] = "ALTER TABLE `${prefix}produkty`
   ADD PRIMARY KEY (`id_produktu`);";
     $create[] = "ALTER TABLE `${prefix}tagi`
-  ADD PRIMARY KEY (`id_tag`),
-  ADD KEY `fk_tagi_produkty` (`id_produktu`);";
+  ADD PRIMARY KEY (`id_tag`)";
+//,ADD KEY `fk_tagi_produkty` (`id_produktu`);
+
+
     $create[] = "ALTER TABLE `${prefix}wiadomosci_od_uzytkownikow`
   ADD PRIMARY KEY (`id_wiadomosci`);";
     $create[] = "ALTER TABLE `${prefix}odpowiedzi_od_supportu`
@@ -209,8 +211,8 @@ function step4() {
 ";
 
 
-    $create[] = "ALTER TABLE `{$prefix}tagi`
-  ADD CONSTRAINT `fk_tagi_produkty` FOREIGN KEY (`id_produktu`) REFERENCES `${prefix}produkty` (`id_produktu`);";
+    //$create[] = "ALTER TABLE `{$prefix}tagi`
+ // ADD CONSTRAINT `fk_tagi_produkty` FOREIGN KEY (`id_produktu`) REFERENCES `${prefix}produkty` (`id_produktu`);";
 
     echo "<div class='container'>";
     foreach ($create as $query) {
@@ -220,10 +222,12 @@ function step4() {
             echo "<p>błąd: " . mysqli_error($conn) . "</p>";
         }
     }
+    
     echo '<p><a href="install.php?step=5"><button class="btn-dark">Przejdź do kroku 5</button></a></p></div>';
 }
 
 function step5() {
+    
     global $config_file, $base_url;
     echo '<div class="container">
             <p>Base URL: ' . $base_url . '</p>
@@ -245,7 +249,7 @@ function step5() {
                 <label for="adres3">Telefon:</label>
                 <input type="text" id="adres3" name="adres3" required>
                 <label for="admin_login">Login administratora:</label>
-                <input type="text" id="admin_login" name="admin_login" required>
+                <input type="email" id="admin_login" name="admin_login" required>
                 <label for="passwd">Hasło administratora:</label>
                 <input type="password" id="passwd" name="passwd" required>
                 <label for="passwd_confirm">Potwierdź hasło:</label>
@@ -270,7 +274,7 @@ function step6() {
     $config .= "\$adres2='".$_POST['adres2']."';\n";
     $config .= "\$adres3='".$_POST['adres3']."';\n";
     $config .= "\$admin_login='".$_POST['admin_login']."';\n";
-    $config .= "\$admin_password='".password_hash($_POST['passwd'], PASSWORD_DEFAULT)."';\n";
+    $config .= "\$admin_password='".password_hash($_POST['passwd'], PASSWORD_BCRYPT)."';\n";
 
     $config .= "
                 if (".'$conn->connect_error'.") {
@@ -295,39 +299,37 @@ function step6() {
         echo "<div class='container'>Plik $config_file nie jest zapisywalny</div>";
     }
 
-    $admin_login = $_POST['admin_login'];
-    $admin_password = password_hash($_POST['passwd'], PASSWORD_DEFAULT);
 
     $insert = [];
     $insert[] = "INSERT INTO `${prefix}odpowiedzi_od_supportu` (`id_odpowiedzi`, `id_wiadomosci`, `odpowiedz`) VALUES
-(1, 12, 'Kiedyś obudziłem się w nocy, była zima... mieszkam na osiedlu w bloku na 4 piętrze. Leżałem bez ruchu, światło latarni odbijało się od pokrytej śniegiem ulicy, wszędzie było tak biało, ale uświadomiłem sobie, jaki to dźwięk mnie obudził, dobiegał jakby ze śmietnika, taki skrzek ptaka i drapanie, ten dźwięk był tak głośny, że pomyślałem, że zaraz jakiś starszy frustrat wyjdzie na balkon i coś ryknie.. albo zadzwoni na policję, ale nic takiego się nie stało. Ten dźwięk kraczenia połączonego ze skowytem i drapaniem był jednostajnie miarowy, doprowadzał mnie do takiej skrajności, że mówiłem sobie tylko: przecież to się nie może dziać naprawdę, to nie jest horror tylko prawdziwe życie, serio miałem już łzy w oczach , nie wiem ile leżałem bez ruchu, ale gdy kraczenie trochę ucichło, zebrałem się w sobie i delikatnie podeszłem do okna. Na śmietniku nic się nie działo, postanowiłem więc, że uchylę trochę firankę i zobaczę dokładniej. Chwyciłem lekko za krawędź... JEEEBBBBB! KRAAAAAA! Jak coś nie pierdolnie w szybę, chwyci mnie za rękę, patrzę a tu Cowiek maupa, największy zbrodniarz wojenny! \"Skurwysynie zostaw mnie!!!\" darłem się jak pojebany, a on tylko: KRAAAAAA! KRAAAAAA! UUUUUU...! Wjebałem się do pokoju, a on stanął przede mną na parapecie w całej okazałości, szybko wybiegłem z mieszkania, otworzyłem szafkę na bezpieczniki na korytarzu, chcąc urwać drzwiczki, aby mieć czym się bronić, ale Cowiek już był za mną... KRAAAAAAAAAAA! Odskoczyłem... a on jak nie pierdolnie w te bezpieczniki, w całym bloku zamigotało światło, a ja korzystając z okazji, zamknąłem drzwiczki i zakleiłem je gumą do żucia... A on tylko wył i prychał, po czym się uspokoił, a ja wróciłem do swojego łóżka... Cowiek Maupa siedzi już w budce na bezpieczniki drugi rok... A ja tylko modlę się, żeby nie było jakiejś awarii w bloku...\n\n'),
+(1, 12, 'Kiedyś obudziłem się w nocy, była zima... '),
 (2, 8, 'sigma')";
 
     $insert[] = "INSERT INTO `${prefix}posiadane_programy` (`id_uzytkownika`, `id_produktu`, `data_zakupu`, `cena`, `ocena`) VALUES
-(1, 1, '2024-01-15', 99.99, NULL),
-(1, 2, '2024-01-25', 49.99, NULL),
-(2, 2, '2024-02-20', 49.99, NULL),
-(2, 3, '2024-03-15', 29.99, NULL),
-(3, 3, '2024-03-10', 29.99, NULL),
-(3, 4, '2024-04-25', 19.99, NULL),
-(4, 4, '2024-04-05', 19.99, NULL),
-(4, 5, '2024-06-05', 59.99, NULL),
-(5, 5, '2024-05-25', 59.99, NULL),
-(5, 6, '2024-07-14', 79.99, NULL),
-(6, 6, '2024-06-14', 79.99, NULL),
-(6, 7, '2024-08-03', 89.99, NULL),
-(7, 7, '2024-07-03', 89.99, NULL),
-(7, 8, '2024-09-19', 39.99, NULL),
-(8, 8, '2024-08-19', 39.99, NULL),
-(8, 9, '2024-10-08', 69.99, NULL),
-(9, 9, '2024-09-08', 69.99, NULL),
-(9, 10, '2024-11-11', 109.99, NULL),
-(10, 10, '2024-10-11', 109.99, NULL),
-(10, 11, '2024-12-27', 119.99, NULL),
-(11, 11, '2024-11-27', 119.99, NULL),
-(11, 12, '2024-12-30', 129.99, NULL),
-(12, 12, '2024-12-02', 129.99, NULL),
-(13, 13, '2024-12-20', 139.99, NULL);";
+(1, 1, '2024-01-15', 99.99, 1),
+(1, 2, '2024-01-25', 49.99, 2),
+(2, 2, '2024-02-20', 49.99, 3),
+(2, 3, '2024-03-15', 29.99, 4),
+(3, 3, '2024-03-10', 29.99, 5),
+(3, 4, '2024-04-25', 19.99, 5),
+(4, 4, '2024-04-05', 19.99, 4),
+(4, 5, '2024-06-05', 59.99, 3),
+(5, 5, '2024-05-25', 59.99, 2),
+(5, 6, '2024-07-14', 79.99, 2),
+(6, 6, '2024-06-14', 79.99, 1),
+(6, 7, '2024-08-03', 89.99, 3),
+(7, 7, '2024-07-03', 89.99, 4),
+(7, 8, '2024-09-19', 39.99, 5),
+(8, 8, '2024-08-19', 39.99, 3),
+(8, 9, '2024-10-08', 69.99, 4),
+(9, 9, '2024-09-08', 69.99, 4),
+(9, 10, '2024-11-11', 109.99, 3),
+(10, 10, '2024-10-11', 109.99, 4),
+(10, 11, '2024-12-27', 119.99, 5),
+(11, 11, '2024-11-27', 119.99, 5),
+(11, 12, '2024-12-30', 129.99, 1),
+(12, 12, '2024-12-02', 129.99, 1),
+(13, 13, '2024-12-20', 139.99, 2);";
 
     $insert[] = "INSERT INTO `${prefix}produkty` (`id_produktu`, `nazwa`, `id_wydawcy`, `ikona`, `cena`, `czy_dostepny`, `opis`) VALUES
 (1, 'Drugi produkt', 1, '', 321.00, NULL, 'Drugi produkt'),
@@ -346,35 +348,43 @@ function step6() {
 (14, 'Produkt L', 12, 'product-img_66772177b6349.png', 129.99, 1, 'Opis produktu L'),
 (15, 'Produkt M', 13, 'product-img_66772177b6349.png', 139.99, 0, 'Opis produktu M');";
 
-$insert[] = "INSERT INTO `${prefix}tagi` (`id_tag`, `nazwa`, `id_produktu`) VALUES
-(1, 'Akcja', 1),
-(2, 'RPG', 1),
-(3, 'Symulator', 1),
-(4, 'Akcja', 2),
-(5, 'MMO', 2);";
+$insert[] = "INSERT INTO `${prefix}tagi` (`nazwa`, `id_produktu`) VALUES
+('Akcja', 1), ('Przygoda', 1),
+('MMO', 2), ('RPG', 2),
+('Sport', 3), ('Symulator', 3),
+('Akcja', 4), ('RPG', 4),
+('Przygoda', 5), ('Symulator', 5),
+('MMO', 6), ('Akcja', 6),
+('RPG', 7), ('Sport', 7),
+('Symulator', 8), ('Przygoda', 8),
+('Akcja', 9), ('MMO', 9),
+('RPG', 10), ('Symulator', 10),
+('Sport', 11), ('Akcja', 11),
+('Przygoda', 12), ('RPG', 12),
+('Symulator', 13), ('Sport', 13),
+('Akcja', 14), ('Przygoda', 14),
+('MMO', 15), ('Symulator', 15),
+('RPG', 16), ('Akcja', 16),
+('Przygoda', 17), ('Sport', 17);";
 
-
-
-$insert[] = "INSERT INTO `${prefix}uzytkownicy` (`id_uzytkownika`, `nazwa`, `email`, `haslo`, `rola`, `saldo`, `obraz_w_tle`, `avatar`, `czy_aktywny`, `opis`) VALUES
-(1, 'admin', 'admin@admin.pl', '$2y$10".'$D'."/MPPBS78wXJoIUJJ309HOjmffHwCxGNBbGBMEz8eW28.bUwzXf/a', 'administrator', 852.00, NULL, NULL, 1, 'XDDDDDD'),
-(2, 'admin1', 'admin1@admin.pl', '$2y$10$0PPsbqGox7Ob5go0KA3wmOluNPj6ulKd6VOPk8QhgZkIRN56oh.jq', 'sprzedajacy', 0.00, NULL, NULL, 1, NULL),
-(3, 'test', 'test@gmail.com', '$2y$10".'$SZuYqF'.".3jKP.CJqKIADZ3OPORZVZooHvQarKDTwAkK7H8HAHfrv4S', 'kupujący', 0.00, NULL, NULL, 0, NULL),
-(4, 'Jan Kowalski', 'jan.kowalski@example.com', '$2y$10".'$D'."/MPPBS78wXJoIUJJ309HOjmffHwCxGNBbGBMEz8eW28.bUwzXf/a', 'administrator', 1000.00, NULL, NULL, 1, 'XDD'),
-(5, 'Anna Nowak', 'anna.nowak@example.com', '$2y$10".'$D'."/MPPBS78wXJoIUJJ309HOjmffHwCxGNBbGBMEz8eW28.bUwzXf/a', 'sprzedający', 500.00, NULL, NULL, 1, 'XDD'),
-(6, 'Piotr Wiśniewski', 'piotr.wisniewski@example.com', '$2y$10".'$D'."/MPPBS78wXJoIUJJ309HOjmffHwCxGNBbGBMEz8eW28.bUwzXf/a', 'kupujący', 200.00, NULL, NULL, 0, 'XDD'),
-(7, 'Katarzyna Wójcik', 'katarzyna.wojcik@example.com', '$2y$10".'$D'."/MPPBS78wXJoIUJJ309HOjmffHwCxGNBbGBMEz8eW28.bUwzXf/a', 'sprzedający', 750.00, NULL, NULL, 1, 'XDD'),
-(8, 'Michał Kamiński', 'michal.kaminski@example.com', '$2y$10".'$D'."/MPPBS78wXJoIUJJ309HOjmffHwCxGNBbGBMEz8eW28.bUwzXf/a', 'kupujący', 300.00, NULL, NULL, 0, 'XDD'),
-(9, 'Agnieszka Lewandowska', 'agnieszka.lewandowska@example.com', '$2y$10".'$D'."/MPPBS78wXJoIUJJ309HOjmffHwCxGNBbGBMEz8eW28.bUwzXf/a', 'administrator', 1200.00, NULL, NULL, 1, 'XDD'),
-(10, 'Tomasz Zieliński', 'tomasz.zielinski@example.com', '$2y$10".'$D'."/MPPBS78wXJoIUJJ309HOjmffHwCxGNBbGBMEz8eW28.bUwzXf/a', 'sprzedający', 800.00, NULL, NULL, 1, 'XDD'),
-(11, 'Monika Szymańska', 'monika.szymanska@example.com', '$2y$10".'$D'."/MPPBS78wXJoIUJJ309HOjmffHwCxGNBbGBMEz8eW28.bUwzXf/a', 'kupujący', 400.00, NULL, NULL, 0, 'XDD'),
-(12, 'Marcin Woźniak', 'marcin.wozniak@example.com', '$2y$10".'$D'."/MPPBS78wXJoIUJJ309HOjmffHwCxGNBbGBMEz8eW28.bUwzXf/a', 'administrator', 1500.00, NULL, NULL, 1, 'XDD'),
-(13, 'Magdalena Kaczmarek', 'magdalena.kaczmarek@example.com', '$2y$10".'$D'."/MPPBS78wXJoIUJJ309HOjmffHwCxGNBbGBMEz8eW28.bUwzXf/a', 'sprzedający', 600.00, NULL, NULL, 1, 'XDD'),
-(14, 'Rafał Piotrowski', 'rafal.piotrowski@example.com', '$2y$10".'$D'."/MPPBS78wXJoIUJJ309HOjmffHwCxGNBbGBMEz8eW28.bUwzXf/a', 'kupujący', 500.00, NULL, NULL, 0, 'XDD'),
-(15, 'Ewa Kwiatkowska', 'ewa.kwiatkowska@example.com', '$2y$10".'$D'."/MPPBS78wXJoIUJJ309HOjmffHwCxGNBbGBMEz8eW28.bUwzXf/a', 'administrator', 1300.00, NULL, NULL, 1, 'XDD'),
-(16, 'Paweł Dudek', 'pawel.dudek@example.com', '$2y$10".'$D'."/MPPBS78wXJoIUJJ309HOjmffHwCxGNBbGBMEz8eW28.bUwzXf/a', 'sprzedający', 900.00, NULL, NULL, 1, 'XDD');";
-
-
-
+$insert[] = "INSERT INTO `${prefix}uzytkownicy` (`nazwa`, `email`, `haslo`, `rola`, `saldo`, `obraz_w_tle`, `avatar`, `czy_aktywny`, `opis`) VALUES
+('admin', 'admin@admin.pl', '$2y$10".'$D'."/MPPBS78wXJoIUJJ309HOjmffHwCxGNBbGBMEz8eW28.bUwzXf/a', 'administrator', 852.00, NULL, NULL, 1, 'XDDDDDD'),
+('admin1', 'admin1@admin.pl', '$2y$10$0PPsbqGox7Ob5go0KA3wmOluNPj6ulKd6VOPk8QhgZkIRN56oh.jq', 'sprzedajacy', 0.00, NULL, NULL, 1, NULL),
+('test', 'test@gmail.com', '$2y$10".'$SZuYqF'.".3jKP.CJqKIADZ3OPORZVZooHvQarKDTwAkK7H8HAHfrv4S', 'kupujący', 0.00, NULL, NULL, 0, NULL),
+('Jan Kowalski', 'jan.kowalski@example.com', '$2y$10".'$D'."/MPPBS78wXJoIUJJ309HOjmffHwCxGNBbGBMEz8eW28.bUwzXf/a', 'administrator', 1000.00, NULL, NULL, 1, 'XDD'),
+('Anna Nowak', 'anna.nowak@example.com', '$2y$10".'$D'."/MPPBS78wXJoIUJJ309HOjmffHwCxGNBbGBMEz8eW28.bUwzXf/a', 'sprzedający', 500.00, NULL, NULL, 1, 'XDD'),
+('Piotr Wiśniewski', 'piotr.wisniewski@example.com', '$2y$10".'$D'."/MPPBS78wXJoIUJJ309HOjmffHwCxGNBbGBMEz8eW28.bUwzXf/a', 'kupujący', 200.00, NULL, NULL, 0, 'XDD'),
+('Katarzyna Wójcik', 'katarzyna.wojcik@example.com', '$2y$10".'$D'."/MPPBS78wXJoIUJJ309HOjmffHwCxGNBbGBMEz8eW28.bUwzXf/a', 'sprzedający', 750.00, NULL, NULL, 1, 'XDD'),
+('Michał Kamiński', 'michal.kaminski@example.com', '$2y$10".'$D'."/MPPBS78wXJoIUJJ309HOjmffHwCxGNBbGBMEz8eW28.bUwzXf/a', 'kupujący', 300.00, NULL, NULL, 0, 'XDD'),
+('Agnieszka Lewandowska', 'agnieszka.lewandowska@example.com', '$2y$10".'$D'."/MPPBS78wXJoIUJJ309HOjmffHwCxGNBbGBMEz8eW28.bUwzXf/a', 'administrator', 1200.00, NULL, NULL, 1, 'XDD'),
+('Tomasz Zieliński', 'tomasz.zielinski@example.com', '$2y$10".'$D'."/MPPBS78wXJoIUJJ309HOjmffHwCxGNBbGBMEz8eW28.bUwzXf/a', 'sprzedający', 800.00, NULL, NULL, 1, 'XDD'),
+('Monika Szymańska', 'monika.szymanska@example.com', '$2y$10".'$D'."/MPPBS78wXJoIUJJ309HOjmffHwCxGNBbGBMEz8eW28.bUwzXf/a', 'kupujący', 400.00, NULL, NULL, 0, 'XDD'),
+('Marcin Woźniak', 'marcin.wozniak@example.com', '$2y$10".'$D'."/MPPBS78wXJoIUJJ309HOjmffHwCxGNBbGBMEz8eW28.bUwzXf/a', 'administrator', 1500.00, NULL, NULL, 1, 'XDD'),
+('Magdalena Kaczmarek', 'magdalena.kaczmarek@example.com', '$2y$10".'$D'."/MPPBS78wXJoIUJJ309HOjmffHwCxGNBbGBMEz8eW28.bUwzXf/a', 'sprzedający', 600.00, NULL, NULL, 1, 'XDD'),
+('Rafał Piotrowski', 'rafal.piotrowski@example.com', '$2y$10".'$D'."/MPPBS78wXJoIUJJ309HOjmffHwCxGNBbGBMEz8eW28.bUwzXf/a', 'kupujący', 500.00, NULL, NULL, 0, 'XDD'),
+('Ewa Kwiatkowska', 'ewa.kwiatkowska@example.com', '$2y$10".'$D'."/MPPBS78wXJoIUJJ309HOjmffHwCxGNBbGBMEz8eW28.bUwzXf/a', 'administrator', 1300.00, NULL, NULL, 1, 'XDD'),
+('Paweł Dudek', 'pawel.dudek@example.com', '$2y$10".'$D'."/MPPBS78wXJoIUJJ309HOjmffHwCxGNBbGBMEz8eW28.bUwzXf/a', 'sprzedający', 900.00, NULL, NULL, 1, 'XDD');
+";  
 
 $insert[] = "INSERT INTO `${prefix}wiadomosci_od_uzytkownikow` (`id_wiadomosci`, `id_uzytkownika`, `temat`, `opis`) VALUES
 (1, 0, 'fsdfsdfswdf', 'gsdhj[8gujsrd[iojg;\'[oiwserajag;\'oij;\'o'),
@@ -389,25 +399,60 @@ $insert[] = "INSERT INTO `${prefix}wiadomosci_od_uzytkownikow` (`id_wiadomosci`,
 (11, 1, 'X', 'DD'),
 (12, 1, 'Cowiek maupa', 'Opowieść o Cowieku Maupie, największym zbrodniarzu wojennym, jest stworzoną przez polskich anonów trollpastą. Jej popularność sprawiła, że powstała animowana wersja.\n\n');";
 
-
-
-
-
-
     mysqli_select_db($conn, $dbname) or die(mysqli_error($conn));
     echo "<div class='container'>";
     foreach ($insert as $query) {
         if (mysqli_query($conn, $query)) {
             echo "<p>Wykonano: <code>$query</code></p>";
         } else {
-            echo "<p>BĹ‚Ä…d: " . mysqli_error($conn) . "</p>";
+            echo "<p>Błąd: " . mysqli_error($conn) . "</p>";
         }
     }
 
-    echo '<p>Instalacja zakończona</p>';
-    echo '<p>Usuń plik install.php i zmień prawa dostępu do config.php</p>';
-    echo '<p><a href="index.php"><button class="btn-dark">Przejdź do strony głównej(index.php)</button></a></p></div>';
+    $email = trim($_POST['admin_login']);
+    $stmt = $conn -> prepare("SELECT * from {$dbname}.{$prefix}uzytkownicy where email = ?");
+
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+
+    // Get the result
+    $result = $stmt->get_result();
+
+    // Check if any rows were returned
+    if ($result->num_rows > 0) {
+        step5();
+        exit();
+    } else {
+        $stmt = $conn->prepare("INSERT INTO {$dbname}.{$prefix}uzytkownicy (nazwa, email, haslo, rola, saldo, czy_aktywny) VALUES (?,?,?,?,0,1);");
+
+        if ($stmt === false) {
+            die("Statement preparation failed: " . $conn->error);
+        }
+    
+        if($stmt){
+            $stmt ->bind_param("ssss",$nazwa,$email,$haslo,$rola);
+            $nazwa = trim($_POST['admin_login']);
+            $email = trim($_POST['admin_login']);
+            $haslo = trim(password_hash($_POST['passwd'], PASSWORD_BCRYPT));
+            $rola = trim('administrator');
+    
+            if($stmt->execute()){
+                echo "dodano admina";
+            }
+            else{
+                echo "bład przy dodawaniu admina". $stmt->error;
+            }
+        }
+        else{
+            echo "blad przy poleceniu". $stmt->error;
+        }
+        
+        echo '<p>Instalacja zakończona</p>';
+        echo '<p>Usuń plik install.php i zmień prawa dostępu do config.php</p>';
+        echo '<p><a href="index.php"><button class="btn-dark">Przejdź do strony głównej(index.php)</button></a></p></div>';
+    }
 }
+
 ?>
 
 <!DOCTYPE html>

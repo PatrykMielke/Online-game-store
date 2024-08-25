@@ -42,7 +42,7 @@ function updateProductData($productId, $name, $description, $price, $tags) {
 
     return $result;
 }
-
+}
 // Handling form submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $productId = $_POST['product_id'];

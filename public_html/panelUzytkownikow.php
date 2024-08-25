@@ -151,7 +151,7 @@ include 'templates/header.php';
                                             <input type='hidden' name='czy_aktywny' value='{$isActive}'>
                                             <button type='submit' class='btn btn-sm {$buttonClass} change-active-btn m-2'>{$buttonLabel}</button>
                                         </form>
-                                        <a href='edit_user.php?id={$userId}' class='btn btn-sm btn-primary'>Edytuj</a>
+                                        <a href='edytujUzytkownika.php?id={$userId}' class='btn btn-sm btn-primary'>Edytuj</a>
                                        
                                     </td>
                                   </tr>";
