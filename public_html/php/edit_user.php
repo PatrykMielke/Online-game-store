@@ -75,7 +75,6 @@ function load_email(){
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if(isset($_POST["zmiendane"])){
-
             if(empty($_POST['nazwa']) or empty($_POST['email'])){
                 echo "przesłano formularz z pustymi danymi";
                 exit;
