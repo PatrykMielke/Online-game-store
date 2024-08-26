@@ -248,7 +248,7 @@ function step5() {
                 <input type="text" id="adres2" name="adres2" required>
                 <label for="adres3">Telefon:</label>
                 <input type="text" id="adres3" name="adres3" required>
-                <label for="admin_login">Login administratora:</label>
+                <label for="admin_login">Login (e-mail) administratora:</label>
                 <input type="email" id="admin_login" name="admin_login" required>
                 <label for="passwd">Hasło administratora:</label>
                 <input type="password" id="passwd" name="passwd" required>
@@ -300,117 +300,8 @@ function step6() {
     }
 
 
-    $insert = [];
-    $insert[] = "INSERT INTO `${prefix}odpowiedzi_od_supportu` (`id_odpowiedzi`, `id_wiadomosci`, `odpowiedz`) VALUES
-(1, 12, 'Kiedyś obudziłem się w nocy, była zima... '),
-(2, 8, 'sigma')";
-
-    $insert[] = "INSERT INTO `${prefix}posiadane_programy` (`id_uzytkownika`, `id_produktu`, `data_zakupu`, `cena`, `ocena`) VALUES
-(1, 1, '2024-01-15', 99.99, 1),
-(1, 2, '2024-01-25', 49.99, 2),
-(2, 2, '2024-02-20', 49.99, 3),
-(2, 3, '2024-03-15', 29.99, 4),
-(3, 3, '2024-03-10', 29.99, 5),
-(3, 4, '2024-04-25', 19.99, 5),
-(4, 4, '2024-04-05', 19.99, 4),
-(4, 5, '2024-06-05', 59.99, 3),
-(5, 5, '2024-05-25', 59.99, 2),
-(5, 6, '2024-07-14', 79.99, 2),
-(6, 6, '2024-06-14', 79.99, 1),
-(6, 7, '2024-08-03', 89.99, 3),
-(7, 7, '2024-07-03', 89.99, 4),
-(7, 8, '2024-09-19', 39.99, 5),
-(8, 8, '2024-08-19', 39.99, 3),
-(8, 9, '2024-10-08', 69.99, 4),
-(9, 9, '2024-09-08', 69.99, 4),
-(9, 10, '2024-11-11', 109.99, 3),
-(10, 10, '2024-10-11', 109.99, 4),
-(10, 11, '2024-12-27', 119.99, 5),
-(11, 11, '2024-11-27', 119.99, 5),
-(11, 12, '2024-12-30', 129.99, 1),
-(12, 12, '2024-12-02', 129.99, 1),
-(13, 13, '2024-12-20', 139.99, 2);";
-
-    $insert[] = "INSERT INTO `${prefix}produkty` (`id_produktu`, `nazwa`, `id_wydawcy`, `ikona`, `cena`, `czy_dostepny`, `opis`) VALUES
-(1, 'Drugi produkt', 1, '', 321.00, NULL, 'Drugi produkt'),
-(2, 'Pierwszy produkt', 1, 'product-img_66772177b6349.png', 321.00, NULL, 'Pierwszy produkt'),
-(3, 'Produkt A', 1, 'product-img_66772177b6349.png', 99.99, 1, 'Opis produktu A'),
-(4, 'Produkt B', 2, 'product-img_66772177b6349.png', 49.99, 1, 'Opis produktu B'),
-(5, 'Produkt C', 3, 'product-img_66772177b6349.png', 29.99, 0, 'Opis produktu C'),
-(6, 'Produkt D', 4, 'product-img_66772177b6349.png', 19.99, 1, 'Opis produktu D'),
-(7, 'Produkt E', 5, 'product-img_66772177b6349.png', 59.99, 0, 'Opis produktu E'),
-(8, 'Produkt F', 6, 'product-img_66772177b6349.png', 79.99, 1, 'Opis produktu F'),
-(9, 'Produkt G', 7, 'product-img_66772177b6349.png', 89.99, 1, 'Opis produktu G'),
-(10, 'Produkt H', 8, 'product-img_66772177b6349.png', 39.99, 0, 'Opis produktu H'),
-(11, 'Produkt I', 9, 'product-img_66772177b6349.png', 69.99, 1, 'Opis produktu I'),
-(12, 'Produkt J', 10, 'product-img_66772177b6349.png', 109.99, 0, 'Opis produktu J'),
-(13, 'Produkt K', 11, 'product-img_66772177b6349.png', 119.99, 1, 'Opis produktu K'),
-(14, 'Produkt L', 12, 'product-img_66772177b6349.png', 129.99, 1, 'Opis produktu L'),
-(15, 'Produkt M', 13, 'product-img_66772177b6349.png', 139.99, 0, 'Opis produktu M');";
-
-$insert[] = "INSERT INTO `${prefix}tagi` (`nazwa`, `id_produktu`) VALUES
-('Akcja', 1), ('Przygoda', 1),
-('MMO', 2), ('RPG', 2),
-('Sport', 3), ('Symulator', 3),
-('Akcja', 4), ('RPG', 4),
-('Przygoda', 5), ('Symulator', 5),
-('MMO', 6), ('Akcja', 6),
-('RPG', 7), ('Sport', 7),
-('Symulator', 8), ('Przygoda', 8),
-('Akcja', 9), ('MMO', 9),
-('RPG', 10), ('Symulator', 10),
-('Sport', 11), ('Akcja', 11),
-('Przygoda', 12), ('RPG', 12),
-('Symulator', 13), ('Sport', 13),
-('Akcja', 14), ('Przygoda', 14),
-('MMO', 15), ('Symulator', 15),
-('RPG', 16), ('Akcja', 16),
-('Przygoda', 17), ('Sport', 17);";
-
-$insert[] = "INSERT INTO `${prefix}uzytkownicy` (`nazwa`, `email`, `haslo`, `rola`, `saldo`, `obraz_w_tle`, `avatar`, `czy_aktywny`, `opis`) VALUES
-('admin', 'admin@admin.pl', '$2y$10".'$D'."/MPPBS78wXJoIUJJ309HOjmffHwCxGNBbGBMEz8eW28.bUwzXf/a', 'administrator', 852.00, NULL, NULL, 1, 'XDDDDDD'),
-('admin1', 'admin1@admin.pl', '$2y$10$0PPsbqGox7Ob5go0KA3wmOluNPj6ulKd6VOPk8QhgZkIRN56oh.jq', 'sprzedajacy', 0.00, NULL, NULL, 1, NULL),
-('test', 'test@gmail.com', '$2y$10".'$SZuYqF'.".3jKP.CJqKIADZ3OPORZVZooHvQarKDTwAkK7H8HAHfrv4S', 'kupujący', 0.00, NULL, NULL, 0, NULL),
-('Jan Kowalski', 'jan.kowalski@example.com', '$2y$10".'$D'."/MPPBS78wXJoIUJJ309HOjmffHwCxGNBbGBMEz8eW28.bUwzXf/a', 'administrator', 1000.00, NULL, NULL, 1, 'XDD'),
-('Anna Nowak', 'anna.nowak@example.com', '$2y$10".'$D'."/MPPBS78wXJoIUJJ309HOjmffHwCxGNBbGBMEz8eW28.bUwzXf/a', 'sprzedający', 500.00, NULL, NULL, 1, 'XDD'),
-('Piotr Wiśniewski', 'piotr.wisniewski@example.com', '$2y$10".'$D'."/MPPBS78wXJoIUJJ309HOjmffHwCxGNBbGBMEz8eW28.bUwzXf/a', 'kupujący', 200.00, NULL, NULL, 0, 'XDD'),
-('Katarzyna Wójcik', 'katarzyna.wojcik@example.com', '$2y$10".'$D'."/MPPBS78wXJoIUJJ309HOjmffHwCxGNBbGBMEz8eW28.bUwzXf/a', 'sprzedający', 750.00, NULL, NULL, 1, 'XDD'),
-('Michał Kamiński', 'michal.kaminski@example.com', '$2y$10".'$D'."/MPPBS78wXJoIUJJ309HOjmffHwCxGNBbGBMEz8eW28.bUwzXf/a', 'kupujący', 300.00, NULL, NULL, 0, 'XDD'),
-('Agnieszka Lewandowska', 'agnieszka.lewandowska@example.com', '$2y$10".'$D'."/MPPBS78wXJoIUJJ309HOjmffHwCxGNBbGBMEz8eW28.bUwzXf/a', 'administrator', 1200.00, NULL, NULL, 1, 'XDD'),
-('Tomasz Zieliński', 'tomasz.zielinski@example.com', '$2y$10".'$D'."/MPPBS78wXJoIUJJ309HOjmffHwCxGNBbGBMEz8eW28.bUwzXf/a', 'sprzedający', 800.00, NULL, NULL, 1, 'XDD'),
-('Monika Szymańska', 'monika.szymanska@example.com', '$2y$10".'$D'."/MPPBS78wXJoIUJJ309HOjmffHwCxGNBbGBMEz8eW28.bUwzXf/a', 'kupujący', 400.00, NULL, NULL, 0, 'XDD'),
-('Marcin Woźniak', 'marcin.wozniak@example.com', '$2y$10".'$D'."/MPPBS78wXJoIUJJ309HOjmffHwCxGNBbGBMEz8eW28.bUwzXf/a', 'administrator', 1500.00, NULL, NULL, 1, 'XDD'),
-('Magdalena Kaczmarek', 'magdalena.kaczmarek@example.com', '$2y$10".'$D'."/MPPBS78wXJoIUJJ309HOjmffHwCxGNBbGBMEz8eW28.bUwzXf/a', 'sprzedający', 600.00, NULL, NULL, 1, 'XDD'),
-('Rafał Piotrowski', 'rafal.piotrowski@example.com', '$2y$10".'$D'."/MPPBS78wXJoIUJJ309HOjmffHwCxGNBbGBMEz8eW28.bUwzXf/a', 'kupujący', 500.00, NULL, NULL, 0, 'XDD'),
-('Ewa Kwiatkowska', 'ewa.kwiatkowska@example.com', '$2y$10".'$D'."/MPPBS78wXJoIUJJ309HOjmffHwCxGNBbGBMEz8eW28.bUwzXf/a', 'administrator', 1300.00, NULL, NULL, 1, 'XDD'),
-('Paweł Dudek', 'pawel.dudek@example.com', '$2y$10".'$D'."/MPPBS78wXJoIUJJ309HOjmffHwCxGNBbGBMEz8eW28.bUwzXf/a', 'sprzedający', 900.00, NULL, NULL, 1, 'XDD');
-";  
-
-$insert[] = "INSERT INTO `${prefix}wiadomosci_od_uzytkownikow` (`id_wiadomosci`, `id_uzytkownika`, `temat`, `opis`) VALUES
-(1, 0, 'fsdfsdfswdf', 'gsdhj[8gujsrd[iojg;\'[oiwserajag;\'oij;\'o'),
-(3, 0, 'gsdgsd', 'qgfsrgsdgsd'),
-(4, 0, 'gdsgsdgsd', 'gsdgsdghsd'),
-(5, 0, 'fsdfsdfswdf', 'fdsgsdgsd'),
-(6, 0, 'gdsfgsd', 'gfsdgdsfgdswgsdg'),
-(7, 0, 'test', 'test'),
-(8, 1, 'XD', 'XD'),
-(9, 1, 'XD', 'XD'),
-(10, 1, 'XD', 'XD'),
-(11, 1, 'X', 'DD'),
-(12, 1, 'Cowiek maupa', 'Opowieść o Cowieku Maupie, największym zbrodniarzu wojennym, jest stworzoną przez polskich anonów trollpastą. Jej popularność sprawiła, że powstała animowana wersja.\n\n');";
-
-    mysqli_select_db($conn, $dbname) or die(mysqli_error($conn));
-    echo "<div class='container'>";
-    foreach ($insert as $query) {
-        if (mysqli_query($conn, $query)) {
-            echo "<p>Wykonano: <code>$query</code></p>";
-        } else {
-            echo "<p>Błąd: " . mysqli_error($conn) . "</p>";
-        }
-    }
 
     $email = trim($_POST['admin_login']);
-    $stmt = $conn -> prepare("SELECT * from {$dbname}.{$prefix}uzytkownicy where email = ?");
 
     $stmt->bind_param("s", $email);
     $stmt->execute();
@@ -430,7 +321,7 @@ $insert[] = "INSERT INTO `${prefix}wiadomosci_od_uzytkownikow` (`id_wiadomosci`,
         }
     
         if($stmt){
-            $stmt ->bind_param("ssss",$nazwa,$email,$haslo,$rola);
+            $stmt -> bind_param("ssss",$nazwa,$email,$haslo,$rola);
             $nazwa = trim($_POST['admin_login']);
             $email = trim($_POST['admin_login']);
             $haslo = trim(password_hash($_POST['passwd'], PASSWORD_BCRYPT));
