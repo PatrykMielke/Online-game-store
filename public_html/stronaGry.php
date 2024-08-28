@@ -142,7 +142,7 @@ if (isset($_GET['id'])) {
 
     <footer class="bg-dark text-white text-center py-4">
         <div class="container">
-            <p>&copy; 2024 Nazwa Gry. Wszelkie prawa zastrzeżone.</p>
+            <p>2024 TRITON. Wszelkie prawa zastrzeżone.</p>
         </div>
     </footer>
 

@@ -68,7 +68,7 @@ if (!isset($_SESSION["rola"]) or $_SESSION["rola"] == "kupujący"){
         </div>
     </div>
     <footer class="bg-dark text-light text-center py-3 custom-footer">
-        <p>© 2024 Your Company. All rights reserved.</p>
+        <p>2024 TRITON. Wszelkie prawa zastrzeżone.</p>
     </footer>
 
     <!-- Skrypty JavaScript -->

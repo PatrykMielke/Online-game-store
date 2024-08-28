@@ -31,8 +31,7 @@
 				<h3 class="text-center">Wprowadzenie</h3>
 			<ul class="list-group list-group-flush">
 				<li class="list-group-item ">
-					Niniejszy Regulamin określa zasady korzystania z platformy [Nazwa
-					Twojej Platformy], dostępnej pod adresem [adres URL], umożliwiającej
+					Niniejszy Regulamin określa zasady korzystania z platformy TRITON, umożliwiającej
 					zakup, sprzedaż i pobieranie gier komputerowych oraz innych treści
 					cyfrowych.
 				</li>
@@ -46,8 +45,7 @@
 			<h3 class="text-center">Definicje</h3>
 			<ul class="list-group list-group-flush">
 				<li class="list-group-item">
-					<strong>Serwis</strong> – platforma internetowa [Nazwa Twojej
-					Platformy], umożliwiająca zakup, sprzedaż i pobieranie gier
+					<strong>Serwis</strong> – platforma internetowa TRITON, umożliwiająca zakup, sprzedaż i pobieranie gier
 					komputerowych oraz innych treści cyfrowych.
 				</li>
 				<li class="list-group-item">

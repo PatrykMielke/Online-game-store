@@ -2,8 +2,8 @@
 $host='localhost';
 $user='root';
 $password='';
-$dbname='steam';
-$prefix='CHUJ__';
+$dbname='onlineGameStore';
+$prefix='';
 $conn = mysqli_connect($host, $user, $password, $dbname);
 
 # konfiguracja aplikacji
@@ -15,8 +15,8 @@ $brand='x';
 $adres1='x';
 $adres2='x';
 $adres3='x';
-$admin_login='x@x.x';
-$admin_password='$2y$10$fpbKPu6nfZ9sBDJ/tF7yeOH0WNz9CM7sp7rUZUKPFOsx2jYJAJB.q';
+$admin_login='admin1@onet.pl';
+$admin_password='$2y$10$nxwBvcxTpO9zFtwPkDQ/R.kweF2oGMqrz0rD9X0wLBgt0pUl2UdKm';
 
                 if ($conn->connect_error) {
                 die('Connection failed: ' .$conn->connect_error);
