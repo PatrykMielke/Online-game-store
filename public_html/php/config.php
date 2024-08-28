@@ -3,7 +3,7 @@ $host='localhost';
 $user='root';
 $password='';
 $dbname='steam';
-$prefix='tab_';
+$prefix='CHUJ__';
 $conn = mysqli_connect($host, $user, $password, $dbname);
 
 # konfiguracja aplikacji
@@ -15,8 +15,8 @@ $brand='x';
 $adres1='x';
 $adres2='x';
 $adres3='x';
-$admin_login='administrator@admin.pl';
-$admin_password='$2y$10$l871zUIjMWSPoFjg/83FI.V.SehuU6VcDVvM0Q9t7I7JyFpUivQTy';
+$admin_login='x@x.x';
+$admin_password='$2y$10$fpbKPu6nfZ9sBDJ/tF7yeOH0WNz9CM7sp7rUZUKPFOsx2jYJAJB.q';
 
                 if ($conn->connect_error) {
                 die('Connection failed: ' .$conn->connect_error);

@@ -300,20 +300,6 @@ function step6() {
     }
 
 
-
-    $email = trim($_POST['admin_login']);
-
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-
-    // Get the result
-    $result = $stmt->get_result();
-
-    // Check if any rows were returned
-    if ($result->num_rows > 0) {
-        step5();
-        exit();
-    } else {
         $stmt = $conn->prepare("INSERT INTO {$dbname}.{$prefix}uzytkownicy (nazwa, email, haslo, rola, saldo, czy_aktywny) VALUES (?,?,?,?,0,1);");
 
         if ($stmt === false) {
@@ -342,7 +328,6 @@ function step6() {
         echo '<p>Usuń plik install.php i zmień prawa dostępu do config.php</p>';
         echo '<p><a href="index.php"><button class="btn-dark">Przejdź do strony głównej(index.php)</button></a></p></div>';
     }
-}
 
 ?>
 
