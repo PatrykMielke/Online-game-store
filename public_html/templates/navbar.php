@@ -50,8 +50,8 @@
             </li>';
             
           // sprzedający
-          if(isset($_SESSION['zalogowany']) and $_SESSION['rola'] == "sprzedajacy"){
-            echo '<li class="nav-item">
+          if(isset($_SESSION['zalogowany']) and $_SESSION['rola'] == "sprzedajacy" or $_SESSION['rola'] == "administrator"){
+            echo '<li class="nav-item"> 
           <a class="nav-link custom-nav-link" href="sprzedajacy.php">Panel sprzedaży</a>
         </li>';
           }

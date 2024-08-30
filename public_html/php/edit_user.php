@@ -5,7 +5,7 @@ function load_description(){
     // Check if user or email already exists
     $stmt = $conn->prepare("select opis from `{$prefix}uzytkownicy` where id_uzytkownika = ?");
     $stmt ->bind_param("i", $id);
-    $id = $_SESSION['id'];
+    $id = $_GET['id'];
 
     if($stmt->execute()){
       $result = $stmt->get_result();
@@ -29,7 +29,7 @@ function load_name(){
     // Check if user or email already exists
     $stmt = $conn->prepare("select nazwa from `{$prefix}uzytkownicy` where id_uzytkownika = ?");
     $stmt ->bind_param("i", $id);
-    $id = $_SESSION['id'];
+    $id = $_GET['id'];
 
     if($stmt->execute()){
       $result = $stmt->get_result();
@@ -53,7 +53,7 @@ function load_email(){
     // Check if user or email already exists
     $stmt = $conn->prepare("select email from `{$prefix}uzytkownicy` where id_uzytkownika = ?");
     $stmt ->bind_param("i", $id);
-    $id = $_SESSION['id'];
+    $id = $_GET['id'];
 
     if($stmt->execute()){
       $result = $stmt->get_result();
@@ -75,6 +75,7 @@ function load_email(){
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if(isset($_POST["zmiendane"])){
+
             if(empty($_POST['nazwa']) or empty($_POST['email'])){
                 echo "przesłano formularz z pustymi danymi";
                 exit;
@@ -85,9 +86,10 @@ function load_email(){
             // Check if user or email already exists
             $id_query = $_GET['id'];
 
-            $stmt = $conn->prepare("SELECT email FROM `{$prefix}uzytkownicy` WHERE email = ? and id_uzytkownika not in (?)");
+            $stmt = $conn->prepare("SELECT email FROM `{$prefix}uzytkownicy` WHERE email = ? ");
+            //and id_uzytkownika not in (?)
             $stmt->bind_param("s", $email);
-            $stmt->bind_param("s", $id_query);
+            //$stmt->bind_param("i", $id_query);
 
             $email = trim($_POST['email']);
             $stmt->execute();
@@ -102,11 +104,11 @@ function load_email(){
 
             $sql = "UPDATE `{$prefix}uzytkownicy` SET nazwa = ?, opis = ?, email = ? WHERE id_uzytkownika = ?";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("sssi", $_POST['nazwa'], $_POST['opis'], $_POST['email'], $_SESSION['id']);
+            $stmt->bind_param("sssi", $_POST['nazwa'], $_POST['opis'], $_POST['email'], $_GET['id']);
            
             if($stmt->execute()){
-                $id_sesji = $_SESSION['id'];
-                header("location: profil.php?id=$id_sesji");
+                $id_sesji = $_GET['id'];
+                header("location: panelAdmina.php");
             }
             else{
                 echo "blad";
@@ -138,10 +140,9 @@ function load_email(){
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("si", $noweHaslo,$id);
             $noweHaslo = password_hash(trim($_POST['password']),PASSWORD_BCRYPT) ;
-            $id = $_SESSION['id'];
+            $id = $_GET['id'];
             if($stmt->execute()){
-                $id_sesji = $_SESSION['id'];
-                header("location: profil.php?id=$id_sesji");
+                header("location: [panelAdmina.php]");
             }
             else{
                 echo "blad";
